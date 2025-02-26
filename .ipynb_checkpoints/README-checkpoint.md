@@ -28,7 +28,6 @@ At the moment, the project is using a "mean proportional" and "max proportional"
  - Investigate specific case studies in more depth
  - Determine conclusions that can be drawn
  - Decide on journal for publication
- - Extend data back further
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

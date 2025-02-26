@@ -20,11 +20,19 @@ import os
 # In[2]:
 
 
+# TO DO: rename variables so that datetime objects and strings are recognisable
+
 def get_irradiance_dataset(dir_dt):
     utc_dt = dir_dt - timedelta(hours=5, minutes=30)
     file_dt = utc_dt.strftime("%Y%m%d%H%M")
     filename='IDE00326.'+file_dt+'.nc'
-    dirin='/g/data/rv74/satellite-products/arc/der/himawari-ahi/solar/p1s/latest/'+f"{dir_dt.year:04}"+'/'+f"{dir_dt.month:02}"+'/'+f"{dir_dt.day:02}"+"/"
+
+    if utc_dt < datetime.strptime('2019-03-31', '%Y-%m-%d'):
+        file = 'v1.0'
+    else:
+        file = 'v1.1'
+    
+    dirin=f'/g/data/rv74/satellite-products/arc/der/himawari-ahi/solar/p1s/{file}/'+f"{dir_dt.year:04}"+'/'+f"{dir_dt.month:02}"+'/'+f"{dir_dt.day:02}"+"/"
     try:
         dataset = Dataset(dirin+filename)
     except FileNotFoundError:
@@ -142,7 +150,7 @@ def plot_area(data, fig_name, area_bounds=None, vmax=None):
     ax.set_ylabel('Latitude')
     
     plt.tight_layout()
-    plt.savefig(f'/home/548/cd3022/figs/heatmaps/{fig_name}.png')
+    plt.savefig(f'/home/548/cd3022/aus-historical-solar-droughts/figs/heatmaps/{fig_name}.png')
     plt.show()
 
 
@@ -237,30 +245,31 @@ def regional_drought_lengths(df, regions):
     # Make dict of drought lengths, and count how many droughts of each length there are
     regional_drought_lengths = {}
     for i, region in enumerate(regions):
-        drought_lengths = {}
+        # Make dict of possible drought lengths up to 7 days
+        drought_lengths = {length: 0 for length in [str(i) for i in range(1, 8)]}
+
+        # count droughts
         for j in range(len(cumulative_droughts[:, i])-1):
             if cumulative_droughts[j, i] == 0:
                 continue
             if cumulative_droughts[j+1, i] != 0:
                 continue
             length = cumulative_droughts[j, i]
-            if f'{length}' not in drought_lengths:
-                drought_lengths[f'{length}'] = 1
-            else:
-                drought_lengths[f'{length}'] += 1
+            drought_lengths[f'{length}'] += 1
+            
         if cumulative_droughts[-1, i] != 0:
             length = cumulative_droughts[-1, i]
             if f'{length}' not in drought_lengths:
                 drought_lengths[f'{length}'] = 1
         regional_drought_lengths[region] = drought_lengths
-    return regional_drought_lengths
+    return regional_drought_lengths, cumulative_droughts
 
 
-# In[7]:
+# In[1]:
 
 
 # Convert to .py file to be imported by other modules
 if __name__ == '__main__':
-    get_ipython().system('jupyter nbconvert --to script "/home/548/cd3022/code/python/notebooks/utils.ipynb" --output "/home/548/cd3022/code/python/scripts/utils"')
+    get_ipython().system('jupyter nbconvert --to script "/home/548/cd3022/aus-historical-solar-droughts/code/python/notebooks/utils.ipynb" --output "/home/548/cd3022/aus-historical-solar-droughts/code/python/scripts/utils"')
     print('name == main')
 
