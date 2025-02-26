@@ -1,0 +1,14 @@
+#!/bin/bash 
+#PBS -l walltime=1:00:00 
+#PBS -l mem=100GB 
+#PBS -l ncpus=1 
+#PBS -l jobfs=1GB 
+#PBS -l storage=gdata/hh5+gdata/er8+scratch/er8+gdata/rv74 
+#PBS -l other=hyperthread 
+#PBS -q normal 
+#PBS -P er8 
+##how to run with qsub -I interactive.qsub 
+module use /g/data3/hh5/public/modules 
+module load conda/analysis3 
+conda 
+python3 /home/548/cd3022/aus-historical-solar-droughts/code/python/scripts/007_read-batches.py Autumn mean 0.5 

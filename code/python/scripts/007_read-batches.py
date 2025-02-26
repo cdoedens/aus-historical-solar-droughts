@@ -9,7 +9,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 import sys
-sys.path.append('/home/548/cd3022/code/python/scripts')
+sys.path.append('/home/548/cd3022/aus-historical-solar-droughts/code/python/scripts')
 import utils
 
 
@@ -18,13 +18,13 @@ import utils
 
 # # Only look at one season at a time,
 # # notebook crashes if too many seasons opened at once
-# season = 'Winter'
+# season = 'Autumn'
 
 # # "definition" can mean (mean of daily irradiance is baseline) or max (max of daily irradiance)
 # # "threshold" is the proportion of mean/max that distinguishes drought and non-drought days
 
-# definition = 'mean'
-# threshold = 0.5
+# definition = 'max'
+# threshold = 0.33
 
 
 # In[3]:
@@ -40,10 +40,24 @@ threshold = float(sys.argv[3])
 
 # Read data into pd DFs, based on above season
 
-
 # this is copied from notebook 999. should store in a config.py file and import instead
 seasons = [
-    # ('1-4-2019', '31-5-2019'), # Autumn 2019, incomplete season
+    ('7-7-2015', '31-8-2015'), # Winter 2015
+    ('1-9-2015', '30-11-2015'), # Spring 2015
+    ('1-12-2015', '29-2-2016'), # Summer 2015/2016
+    ('1-3-2016', '31-5-2016'), # Autumn 2016
+    ('1-6-2016', '31-8-2016'), # Winter 2016
+    ('1-9-2016', '30-11-2016'), # Spring 2016
+    ('1-12-2016', '28-2-2017'), # Summer 2016/2017
+    ('1-3-2017', '31-5-2017'), 
+    ('1-6-2017', '31-8-2017'), 
+    ('1-9-2017', '30-11-2017'),
+    ('1-12-2017', '28-2-2018'),
+    ('1-3-2018', '31-5-2018'),
+    ('1-6-2018', '31-8-2018'),
+    ('1-9-2018', '30-11-2018'),
+    ('1-12-2018', '28-2-2019'),    
+    ('1-3-2019', '31-5-2019'),
     ('1-6-2019', '31-8-2019'), # Winter 2019
     ('1-9-2019', '30-11-2019'), # Spring 2019
     ('1-12-2019', '29-2-2020'), # Summer 2019/2020
@@ -63,6 +77,8 @@ seasons = [
     ('1-6-2023', '31-8-2023'), # Winter 2023
     ('1-9-2023', '30-11-2023'), # Spring 2023
     ('1-12-2023', '29-2-2024'), # Summer 2023/2024
+    ('1-3-2024', '31-5-2024'), # Autumn 2023
+    ('1-6-2024', '31-8-2024'), # Winter 2023
 ]
 
 dir_path = '/g/data/er8/users/cd3022/solar_drought/seasonal_daily_means/'
@@ -109,7 +125,7 @@ regions = [
 ]
 
 # https://www.abs.gov.au/statistics/standards/australian-statistical-geography-standard-asgs-edition-3/jul2021-jun2026/access-and-downloads/digital-boundary-files
-shape_file = '/home/548/cd3022/data/boundary_files/GCCSA/GCCSA_2021_AUST_GDA2020.shp'
+shape_file = '/home/548/cd3022/aus-historical-solar-droughts/data/boundary_files/GCCSA/GCCSA_2021_AUST_GDA2020.shp'
 
 region_masks = utils.get_region_mask(
     shape_file=shape_file,
@@ -188,11 +204,16 @@ utils.plot_area(
 # In[9]:
 
 
-regional_drought_lengths = utils.regional_drought_lengths(df=region_droughts, regions=regions)
+colours = ['red', 'blue', 'green', 'orange', 'purple', 'brown', 'magenta', 'cyan']
+
+
+# In[11]:
+
+
+regional_drought_lengths, cumulative_droughts = utils.regional_drought_lengths(df=region_droughts, regions=regions)
 
 fig, axes = plt.subplots(2, 4, figsize=(10, 6))  # 4 rows and 2 columns of subplots
 axes = axes.ravel()
-max_num = 1
 
 # Plot data for each region
 for idx, (region, data) in enumerate(regional_drought_lengths.items()):
@@ -204,13 +225,15 @@ for idx, (region, data) in enumerate(regional_drought_lengths.items()):
         # get the drought lengths in order for the plot
         sorted_data = sorted(data.items(), key=lambda x: int(x[0]))
         sorted_keys, sorted_values = zip(*sorted_data)
-
-
-    if np.max(sorted_values) > max_num:
-        max_num = np.max(sorted_values)
     
-    ax.bar(sorted_keys, np.array(sorted_values) / num_seasons)
-    ax.set_title(region)
+    ax.bar(sorted_keys, np.array(sorted_values) / num_seasons, color = colours[idx])
+
+    # subplot names
+    if region[1] == 'G':
+        name = region[2:]
+    else:
+        name = region[1:-1]
+    ax.set_title(name)
 
 # set equal y axis
 for i in range(8):
@@ -223,11 +246,11 @@ fig.text(0.04, 0.5, 'Number of Droughts / season', va='center', rotation='vertic
 
 plt.suptitle(f'{season}_{definition}_{threshold}')
 plt.tight_layout(rect=[0.05, 0.05, 1, 1])
-plt.savefig(f'/home/548/cd3022/figs/regional_histograms/{season}_{definition}_{threshold}.png')
+plt.savefig(f'/home/548/cd3022/aus-historical-solar-droughts/figs/regional_histograms/{season}_{definition}_{threshold}.png')
 plt.show()
 
 
-# In[11]:
+# In[ ]:
 
 
 # Produce Figure 4 from Raynaud et al. (2018)
@@ -248,21 +271,25 @@ y_values = [coords[1] for coords in raynaud_plot_data.values()]
 
 # Create the scatter plot
 plt.figure(figsize=(10, 6))
-plt.scatter(x_values, y_values, color="blue", label="Regions")
+plt.scatter(x_values, y_values, c=colours, s=300, marker='x')
 
 # Annotate points with region names
 for region, (x, y) in raynaud_plot_data.items():
-    plt.text(x, y, region, fontsize=9, ha="right")
+    if region[1] == 'G':
+        name = region[2:]
+    else:
+        name = region[1:-1]
+    plt.text(x, y, name, fontsize=12, ha="right")
 
 # Add contours of constant total drought days (x * y)
-x = np.linspace(0, max(x_values) * 1.2, 100)
-y = np.linspace(0, max(y_values) * 1.2, 100)
+x = np.linspace(0, 2 * 1.2, 100)
+y = np.linspace(0, 12 * 1.2, 100)
 X, Y = np.meshgrid(x, y)
 Z = X * Y  # Total drought days
 
 # Contour levels
-contour_levels = [x for x in range(2, 16)]
-contours = plt.contour(X, Y, Z, levels=contour_levels, colors='gray', linestyles='dotted')
+contour_levels = [x for x in range(2, 20, 2)]
+contours = plt.contour(X, Y, Z, levels=contour_levels, colors='grey', linestyles='--')
 plt.clabel(contours, inline=True, fontsize=8, fmt='%d')  # Label contours
 
 # Final plot customizations
@@ -270,25 +297,34 @@ plt.xlabel("Mean Drought Length (days)")
 plt.ylabel("Number of Droughts / season")
 plt.title(f'{season}_{definition}_{threshold}')
 plt.grid(True)
-plt.legend()
+
 plt.xlim(1,2)
 plt.ylim(0,12)
-plt.savefig(f'/home/548/cd3022/figs/Raynaud_plots/{season}_{definition}_{threshold}.png')
+plt.savefig(f'/home/548/cd3022/aus-historical-solar-droughts/figs/Raynaud_plots/{season}_{definition}_{threshold}.png')
 plt.show()
 
 
-# In[2]:
+# In[52]:
+
+
+# Cumulative drought data for each region, so dates for long droughts in particular locations can be identified
+cumulative_regions = {region:cumulative_droughts[:,i] for i, region in enumerate(regions)}
+cr_df = pd.DataFrame(data = cumulative_regions, index = region_droughts.index)
+cr_df.to_pickle(f'/g/data/er8/users/cd3022/solar_drought/coincident_time_series/{season}_{definition}_{threshold}_REGIONS.pkl')
+
+
+# In[1]:
 
 
 if __name__ == '__main__':
     
-    NOTEBOOK_PATH="/home/548/cd3022/code/python/notebooks/007_read-batches.ipynb"
-    SCRIPT_PATH="/home/548/cd3022/code/python/scripts/007_read-batches"
+    NOTEBOOK_PATH="/home/548/cd3022/aus-historical-solar-droughts/code/python/notebooks/007_read-batches.ipynb"
+    SCRIPT_PATH="/home/548/cd3022/aus-historical-solar-droughts/code/python/scripts/007_read-batches"
     
     get_ipython().system('jupyter nbconvert --to script {NOTEBOOK_PATH} --output {SCRIPT_PATH}')
 
 
-# In[13]:
+# In[ ]:
 
 
 print('Notebook finished')
