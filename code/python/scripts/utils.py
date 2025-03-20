@@ -62,7 +62,7 @@ def get_coords(area_bounds=None):
 # In[9]:
 
 
-def read_irradiance(start_date, end_date, area_bounds=None, region_masks=None):
+def read_irradiance(start_date, end_date, area_bounds=None, mask=None):
 
     '''
     INPUTS
@@ -102,10 +102,10 @@ def read_irradiance(start_date, end_date, area_bounds=None, region_masks=None):
                 irradiance = np.squeeze(dataset.variables['surface_global_irradiance'][:, lat_indices, :][:, :, lon_indices])
                 daily_data.append(irradiance)
                 
-            elif region_masks is not None:
+            elif mask is not None:
                 irradiance = np.squeeze(dataset.variables['surface_global_irradiance'][:,:,:][:,:,:])
-                region_means = np.ma.masked_array(np.repeat(irradiance[None, ...], len(region_masks), axis=0), mask=~region_masks).mean(axis=(1, 2))
-                daily_data.append(region_means)
+                masked_irradiance = np.where(mask, irradiance, np.nan)
+                daily_data.append(masked_irradiance)
             else:
                 irradiance = np.squeeze(dataset.variables['surface_global_irradiance'][:,:,:][:,:,:])
                 daily_data.append(irradiance)
@@ -186,7 +186,7 @@ def get_region_mask(shape_file, regions):
 
 def find_droughts(data, definition, threshold):
     '''
-    df: DataFrame contain mean daily values as 2D masked arrays
+    data: DataFrame contain mean daily values as 2D masked arrays
 
     definition: how droughts are being defined
 
