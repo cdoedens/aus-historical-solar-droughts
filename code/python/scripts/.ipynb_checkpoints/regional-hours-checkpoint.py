@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# # Read Himawari data, apply solar PV model, and save solar drought data 
+# # Count the number of "droughts" experienced at each grid cell for each time period in the day
 
-# In[1]:
+# In[2]:
 
 
 import sys
@@ -17,20 +17,20 @@ import numpy as np
 import xarray as xr
 import pathlib
 
-import psutil
+
+# In[44]:
 
 
-# In[2]:
+start_date = sys.argv[1]
+end_date = sys.argv[2]
+
+# start_date = '1-2-2022'
+# end_date = '2-2-2022'
+
+threshold = 0.1
 
 
-# start_date = sys.argv[1]
-# end_date = sys.argv[2]
-
-start_date = '1-2-2022'
-end_date = '5-2-2022'
-
-
-# In[3]:
+# In[45]:
 
 
 # REZ mask
@@ -39,7 +39,7 @@ loaded_mask = np.load(mask_file)
 mask = loaded_mask["mask"]
 
 
-# In[4]:
+# In[46]:
 
 
 start_dt = datetime.strptime(start_date, "%d-%m-%Y")
@@ -49,7 +49,17 @@ end_dt = datetime.strptime(end_date, "%d-%m-%Y")
 date_range = [start_dt + timedelta(days=i) for i in range((end_dt - start_dt).days + 1)]
 
 
-# In[6]:
+# In[47]:
+
+
+# Counting the droughts
+# Count the specific regions that are in drought
+drought_counts = xr.DataArray(np.zeros([103, 1155, 913]), dims=("time", "latitude", "longitude"))
+time_coord = [t.time() for t in pd.date_range(start="18:30", periods=103, freq="10min")]
+drought_counts = drought_counts.assign_coords(time = time_coord)
+
+
+# In[48]:
 
 
 # loop through all files in date range
@@ -98,49 +108,37 @@ for dir_dt in date_range:
         lon=lon_1d_expanded_clean
     )  
 
-    # PREVIOUSLY WAS CONVERTING BACK INTO 3D ARRAY
-    # # template to refit data to
-    # mask_template = masked_ds.surface_global_irradiance
+    # template to refit data to
+    mask_template = masked_ds.surface_global_irradiance
     
-    # # Now need to get data back in line with coordinates
-    # # fill cf array with nan values so it can fit back into lat/lon coords
-    # filled = np.empty_like(ghi)
-    # # nan values outside the data
-    # filled[nan_mask] = np.nan
-    # # add the data to the same mask the input irradiance data was taken from
-    # filled[~nan_mask] = actual_ideal_ratio
-    # # convert data back into 3D xarray
-    # reshaped = filled.reshape(mask_template.shape)
-    # ratio_da = xr.DataArray(reshaped, coords=mask_template.coords, dims=mask_template.dims)
+    # Now need to get data back in line with coordinates
+    # fill cf array with nan values so it can fit back into lat/lon coords
+    filled = np.empty_like(ghi)
+    # nan values outside the data
+    filled[nan_mask] = np.nan
+    # add the data to the same mask the input irradiance data was taken from
+    filled[~nan_mask] = actual_ideal_ratio
+    # convert data back into 3D xarray
+    reshaped = filled.reshape(mask_template.shape)
+    ratio_da = xr.DataArray(reshaped, coords=mask_template.coords, dims=mask_template.dims)
+    # convert full date to just time of day, so multiple days can be summed up
+    ratio_da = ratio_da.assign_coords(time = ratio_da['time'].dt.time)
+    # fill missing time coordinates with nan, so arrays are aligned and can be added
+    ratio_da = ratio_da.reindex_like(drought_counts)
 
-    # NEW METHOD, USE 1D DATA AND COORDINATES DIRECTLY AND SAVE EACH DAY AS ITS OWN FILE
-    d_times = time_1d_clean[actual_ideal_ratio < 0.1]
-    d_lats = lat_1d_expanded_clean[actual_ideal_ratio < 0.1]
-    d_lons = lon_1d_expanded_clean[actual_ideal_ratio < 0.1]
-    
-    drought_df = pd.DataFrame(
-        {
-            'time': d_times,
-            'latitude': d_lats,
-            'longitude': d_lons
-        }
-    )
-    file_name = dir_dt.strftime('%d-%m-%y')
-    drought_df.to_hdf(f'/g/data/er8/users/cd3022/solar_drought/REZ_tilting/ideal_ratio/regional/0.10/{file_name}.h5', key='my_data')
+    drought_counts += ratio_da.where(ratio_da < threshold, other=np.nan).notnull().astype(float)
 
 
-# In[7]:
+# In[54]:
 
 
-if __name__ == '__main__':
-    
-    NOTEBOOK_PATH="/home/548/cd3022/aus-historical-solar-droughts/code/python/notebooks/data-collect-tilting.ipynb"
-    SCRIPT_PATH="/home/548/cd3022/aus-historical-solar-droughts/code/python/scripts/data-collect-tilting"
-    
-    get_ipython().system('jupyter nbconvert --to script {NOTEBOOK_PATH} --output {SCRIPT_PATH}')
+drought_counts = drought_counts.assign_coords(time=[t.strftime("%H:%M:%S") for t in drought_counts.time.values])
+file_path = '/g/data/er8/users/cd3022/solar_drought/REZ_tilting/ideal_ratio/drought_heatmap'
+os.makedirs(file_path, exist_ok=True)
+drought_counts.to_netcdf(f'{file_path}/{start_date}___{end_date}___{threshold}.nc')
 
 
-# In[ ]:
+# In[1]:
 
 
 
