@@ -1,6 +1,7 @@
 import datetime as dt
 import xarray as xr
 import sys, os
+import pytest
 
 from config import *
 from modules import logger
@@ -20,3 +21,12 @@ def test_version():
     versions = [ get_version(date) for date in dates ]
 
     assert versions == ['v1.0', 'v1.0', 'v1.1', 'v1.1']
+
+    # Test the SystemExist for bad values
+    with pytest.raises(SystemExit) as pytest_exit:
+        get_version(20190401)
+    assert pytest_exit.type == SystemExit
+
+    with pytest.raises(SystemExit) as pytest_exit:
+        get_version('20190401')
+    assert pytest_exit.type == SystemExit
