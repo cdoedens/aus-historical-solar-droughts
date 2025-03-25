@@ -18,7 +18,8 @@ def get_version(date):
         pass
     else:
         LOG.fatal(f'{date} is not a datetime object')
-        print ('raise SystemExit')
+        LOG.fatal('Check the processing of datetime objects for irradiance retrieval')
+        raise SystemExit
     
     if date < valid_date:
         return 'v1.0'
@@ -30,3 +31,4 @@ def load_day(resolution,date):
     """
     Loads a day's worth of irradiance data
     """
+    return
