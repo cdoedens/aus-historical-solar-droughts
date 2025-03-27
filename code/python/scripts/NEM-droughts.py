@@ -3,11 +3,9 @@
 
 # # Read Himawari data, apply solar PV model, and save solar drought data 
 
-# In[1]:
-
-
 import sys
-sys.path.append('/home/548/cd3022/aus-historical-solar-droughts/code/python/scripts')
+#sys.path.append('/home/548/cd3022/aus-historical-solar-droughts/code/python/scripts')
+sys.path.append('/home/548/pag548/code/aus-historical-solar-droughts/code/python/scripts')
 import utils_V2
 import os
 
@@ -17,27 +15,17 @@ import numpy as np
 import xarray as xr
 import pathlib
 
+#start_date = sys.argv[1]
+#end_date = sys.argv[2]
 
-# In[2]:
-
-
-start_date = sys.argv[1]
-end_date = sys.argv[2]
-
-# start_date = '1-2-2022'
-# end_date = '2-2-2022'
-
-
-# In[3]:
+start_date = '1-2-2022'
+end_date = '2-2-2022'
 
 
 # REZ mask
-mask_file = "/home/548/cd3022/aus-historical-solar-droughts/data/boundary_files/REZ_mask.npz"
+mask_file = "/home/548/pag548/code/aus-historical-solar-droughts/data/boundary_files/REZ_mask.npz"
 loaded_mask = np.load(mask_file)
 mask = loaded_mask["mask"]
-
-
-# In[4]:
 
 
 start_dt = datetime.strptime(start_date, "%d-%m-%Y")
@@ -47,13 +35,7 @@ end_dt = datetime.strptime(end_date, "%d-%m-%Y")
 date_range = [start_dt + timedelta(days=i) for i in range((end_dt - start_dt).days + 1)]
 
 
-# In[5]:
-
-
 NEM_performance = []
-
-
-# In[6]:
 
 
 # loop through all files in date range
@@ -121,13 +103,7 @@ for dir_dt in date_range:
     NEM_performance.append(mean_daily)
 
 
-# In[15]:
-
-
 NEM_performance_timeseries = xr.concat(NEM_performance, dim='time')
-
-
-# In[17]:
 
 
 file_path = '/g/data/er8/users/cd3022/solar_drought/REZ_tilting/ideal_ratio/NEM_timeseries'

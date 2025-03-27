@@ -1,9 +1,12 @@
 import datetime as dt
 import xarray as xr
 from modules import logger
+from pathlib import Path
+
 
 LOG = logger.get_logger(__name__)
 
+HIMAWARI_SOLAR_DIR=Path('/g/data/rv74/satellite-products/arc/der/himawari-ahi/solar/')
 
 def get_version(date):
     """
@@ -31,4 +34,11 @@ def load_day(resolution,date):
     """
     Loads a day's worth of irradiance data
     """
-    return
+
+    version = get_version(date)
+
+    dir = HIMAWARI_SOLAR_DIR / resolution / version / f"{date.year:04}" / f"{date.month:02}" / f"{date.day:02}"
+    
+    day = xr.open_mfdataset(dir.glob('*.nc'), combine="by_coords")
+
+    return day

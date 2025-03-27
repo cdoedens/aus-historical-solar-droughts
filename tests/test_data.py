@@ -3,7 +3,6 @@ import xarray as xr
 import sys, os
 import pytest
 
-from config import *
 from modules import logger
 from modules.load_data import get_version
 
