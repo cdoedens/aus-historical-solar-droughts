@@ -1,14 +1,18 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# # Read Himawari data, apply solar PV model, and save solar drought data 
+# # Time series for aggregated area
+
+# Read himawari data, apply the solar PV model, and save the mean value for each time step.
+# Hence, output is a 1D time series of PV generation
 
 # In[1]:
 
 
 import sys
 sys.path.append('/home/548/cd3022/aus-historical-solar-droughts/code/python/scripts')
-import utils_V2
+# sys.path.append('/home/548/pag548/code/aus-historical-solar-droughts/code/python/scripts')
+import utils
 import os
 
 from datetime import datetime, timedelta
@@ -50,16 +54,12 @@ date_range = [start_dt + timedelta(days=i) for i in range((end_dt - start_dt).da
 # In[5]:
 
 
+# list for time series
 NEM_performance = []
-
-
-# In[6]:
-
-
 # loop through all files in date range
 for dir_dt in date_range:
 
-    dataset = utils_V2.get_irradiance_day(resolution='p1s', dir_dt=dir_dt)
+    dataset = utils.get_irradiance_day(resolution='p1s', dir_dt=dir_dt)
 
     # apply REZ mask to lat/lon coordinates
     mask_da = xr.DataArray(mask, coords={"latitude": dataset.latitude, "longitude": dataset.longitude}, dims=["latitude", "longitude"])
@@ -91,7 +91,7 @@ for dir_dt in date_range:
         
     # calculate capacity factors using pvlib
     # the function defined in utils_V2 is essentially the same as the workflow in pv-output-tilting.ipynb
-    actual_ideal_ratio = utils_V2.tilting_panel_pr(
+    actual_ideal_ratio = utils.tilting_panel_pr(
         pv_model = 'Canadian_Solar_CS5P_220M___2009_',
         inverter_model = 'ABB__MICRO_0_25_I_OUTD_US_208__208V_',
         ghi=ghi_clean,
@@ -116,24 +116,22 @@ for dir_dt in date_range:
     reshaped = filled.reshape(mask_template.shape)
     ratio_da = xr.DataArray(reshaped, coords=mask_template.coords, dims=mask_template.dims)
 
-
+    # get mean for each time slice and add it to the list
     mean_daily = ratio_da.mean(dim=["latitude", "longitude"], skipna=True)
     NEM_performance.append(mean_daily)
 
 
-# In[15]:
+# In[6]:
 
 
 NEM_performance_timeseries = xr.concat(NEM_performance, dim='time')
 
 
-# In[17]:
+# In[7]:
 
 
 file_path = '/g/data/er8/users/cd3022/solar_drought/REZ_tilting/ideal_ratio/NEM_timeseries'
 os.makedirs(file_path, exist_ok=True)
 NEM_performance_timeseries.to_netcdf(f'{file_path}/{start_date}___{end_date}.nc')
-
-
 
 
