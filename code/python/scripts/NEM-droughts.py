@@ -25,11 +25,11 @@ import pathlib
 # In[2]:
 
 
-#start_date = sys.argv[1]
-#end_date = sys.argv[2]
+start_date = sys.argv[1]
+end_date = sys.argv[2]
 
-start_date = '1-2-2022'
-end_date = '2-2-2022'
+# start_date = '1-2-2022'
+# end_date = '2-2-2022'
 
 
 # In[3]:
@@ -51,7 +51,7 @@ end_dt = datetime.strptime(end_date, "%d-%m-%Y")
 date_range = [start_dt + timedelta(days=i) for i in range((end_dt - start_dt).days + 1)]
 
 
-# In[ ]:
+# In[5]:
 
 
 # list for time series
@@ -121,27 +121,17 @@ for dir_dt in date_range:
     NEM_performance.append(mean_daily)
 
 
-# In[ ]:
+# In[6]:
 
 
 NEM_performance_timeseries = xr.concat(NEM_performance, dim='time')
 
 
-# In[ ]:
+# In[7]:
 
 
 file_path = '/g/data/er8/users/cd3022/solar_drought/REZ_tilting/ideal_ratio/NEM_timeseries'
 os.makedirs(file_path, exist_ok=True)
 NEM_performance_timeseries.to_netcdf(f'{file_path}/{start_date}___{end_date}.nc')
 
-
-# In[ ]:
-
-
-if __name__ == '__main__':
-    
-    NOTEBOOK_PATH="/home/548/cd3022/aus-historical-solar-droughts/code/python/notebooks/NEM-droughts.ipynb"
-    SCRIPT_PATH="/home/548/cd3022/aus-historical-solar-droughts/code/python/scripts/NEM-droughts"
-    
-    get_ipython().system('jupyter nbconvert --to script {NOTEBOOK_PATH} --output {SCRIPT_PATH}')
 
