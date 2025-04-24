@@ -1,0 +1,15 @@
+#!/bin/bash 
+#PBS -l walltime=1:00:00 
+#PBS -l mem=192GB 
+#PBS -l ncpus=48 
+#PBS -l jobfs=10GB 
+#PBS -l storage=gdata/hh5+gdata/er8+scratch/er8+gdata/rv74 
+#PBS -l other=hyperthread 
+#PBS -q normal 
+#PBS -P er8 
+#PBS -o /home/548/cd3022/aus-historical-solar-droughts/logs/CONCURRENT-FUTURES-SOLAR_capacity_factor_REZ_T_01-11-2021.oe 
+#PBS -j oe 
+module use /g/data3/hh5/public/modules 
+module load conda/analysis3 
+conda 
+python3 /home/548/cd3022/aus-historical-solar-droughts/code/python/scripts/CONCURRENT-FUTURES-SOLAR.py 01-11-2021 30-11-2021 REZ_T capacity_factor

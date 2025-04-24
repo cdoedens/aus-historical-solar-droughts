@@ -1,0 +1,733 @@
+usage: conda [-h] [-V] command ...
+
+conda is a tool for managing and deploying applications, environments and packages.
+
+Options:
+
+positional arguments:
+  command
+    clean        Remove unused packages and caches.
+    compare      Compare packages between conda environments.
+    config       Modify configuration values in .condarc. This is modeled
+                 after the git config command. Writes to the user .condarc
+                 file (/home/548/cd3022/.condarc) by default.
+    create       Create a new conda environment from a list of specified
+                 packages.
+    info         Display information about current conda install.
+    init         Initialize conda for shell interaction. [Experimental]
+    install      Installs a list of packages into a specified conda
+                 environment.
+    list         List linked packages in a conda environment.
+    package      Low-level conda package utility. (EXPERIMENTAL)
+    remove       Remove a list of packages from a specified conda environment.
+    uninstall    Alias for conda remove.
+    run          Run an executable in a conda environment.
+    search       Search for packages and display associated information. The
+                 input is a MatchSpec, a query language for conda packages.
+                 See examples below.
+    update       Updates conda packages to the latest compatible version.
+    upgrade      Alias for conda update.
+
+optional arguments:
+  -h, --help     Show this help message and exit.
+  -V, --version  Show the conda version number and exit.
+
+conda commands available from other packages:
+  build
+  content-trust
+  convert
+  debug
+  develop
+  env
+  index
+  inspect
+  metapackage
+  render
+  server
+  skeleton
+2025-04-08 12:01:33,579:__main__:INFO: Computing ratio of tilting to clearsky irradiance for 2016/12/01
+2025-04-08 12:01:33,615:__main__:INFO: Computing ratio of tilting to clearsky irradiance for 2016/12/02
+2025-04-08 12:01:33,616:__main__:INFO: Computing ratio of tilting to clearsky irradiance for 2016/12/03
+2025-04-08 12:01:33,616:__main__:INFO: Computing ratio of tilting to clearsky irradiance for 2016/12/04
+2025-04-08 12:01:33,616:__main__:INFO: Computing ratio of tilting to clearsky irradiance for 2016/12/05
+2025-04-08 12:01:33,616:__main__:INFO: Computing ratio of tilting to clearsky irradiance for 2016/12/06
+2025-04-08 12:01:33,616:__main__:INFO: Computing ratio of tilting to clearsky irradiance for 2016/12/07
+2025-04-08 12:01:33,616:__main__:INFO: Computing ratio of tilting to clearsky irradiance for 2016/12/08
+2025-04-08 12:01:33,616:__main__:INFO: Computing ratio of tilting to clearsky irradiance for 2016/12/09
+2025-04-08 12:01:33,616:__main__:INFO: Computing ratio of tilting to clearsky irradiance for 2016/12/10
+2025-04-08 12:01:33,616:__main__:INFO: Computing ratio of tilting to clearsky irradiance for 2016/12/11
+2025-04-08 12:01:33,616:__main__:INFO: Computing ratio of tilting to clearsky irradiance for 2016/12/12
+2025-04-08 12:01:33,616:__main__:INFO: Computing ratio of tilting to clearsky irradiance for 2016/12/13
+2025-04-08 12:01:33,616:__main__:INFO: Computing ratio of tilting to clearsky irradiance for 2016/12/14
+2025-04-08 12:01:33,616:__main__:INFO: Computing ratio of tilting to clearsky irradiance for 2016/12/15
+2025-04-08 12:01:33,616:__main__:INFO: Computing ratio of tilting to clearsky irradiance for 2016/12/16
+2025-04-08 12:01:33,616:__main__:INFO: Computing ratio of tilting to clearsky irradiance for 2016/12/17
+2025-04-08 12:01:33,616:__main__:INFO: Computing ratio of tilting to clearsky irradiance for 2016/12/18
+2025-04-08 12:01:33,616:__main__:INFO: Computing ratio of tilting to clearsky irradiance for 2016/12/19
+2025-04-08 12:01:33,616:__main__:INFO: Computing ratio of tilting to clearsky irradiance for 2016/12/20
+2025-04-08 12:01:33,616:__main__:INFO: Computing ratio of tilting to clearsky irradiance for 2016/12/21
+2025-04-08 12:01:33,616:__main__:INFO: Computing ratio of tilting to clearsky irradiance for 2016/12/22
+2025-04-08 12:01:33,616:__main__:INFO: Computing ratio of tilting to clearsky irradiance for 2016/12/23
+2025-04-08 12:01:33,617:__main__:INFO: Computing ratio of tilting to clearsky irradiance for 2016/12/24
+2025-04-08 12:01:33,617:__main__:INFO: Computing ratio of tilting to clearsky irradiance for 2016/12/25
+2025-04-08 12:01:33,617:__main__:INFO: Computing ratio of tilting to clearsky irradiance for 2016/12/26
+2025-04-08 12:01:33,617:__main__:INFO: Computing ratio of tilting to clearsky irradiance for 2016/12/27
+2025-04-08 12:01:33,617:__main__:INFO: Computing ratio of tilting to clearsky irradiance for 2016/12/28
+2025-04-08 12:01:33,617:__main__:INFO: Computing ratio of tilting to clearsky irradiance for 2016/12/29
+2025-04-08 12:01:33,617:__main__:INFO: Computing ratio of tilting to clearsky irradiance for 2016/12/30
+2025-04-08 12:01:33,617:__main__:INFO: Computing ratio of tilting to clearsky irradiance for 2016/12/31
+2025-04-08 12:01:33,620:compute_solar:INFO: reading data for 2016/12/01
+2025-04-08 12:01:33,620:compute_solar:INFO: reading data for 2016/12/02
+2025-04-08 12:01:33,621:compute_solar:INFO: reading data for 2016/12/06
+2025-04-08 12:01:33,621:compute_solar:INFO: reading data for 2016/12/03
+2025-04-08 12:01:33,621:compute_solar:INFO: reading data for 2016/12/04
+2025-04-08 12:01:33,621:compute_solar:INFO: reading data for 2016/12/05
+2025-04-08 12:01:33,621:compute_solar:INFO: reading data for 2016/12/07
+2025-04-08 12:01:33,621:compute_solar:INFO: reading data for 2016/12/08
+2025-04-08 12:01:33,622:compute_solar:INFO: getting region shape for: V
+2025-04-08 12:01:33,622:compute_solar:INFO: reading data for 2016/12/09
+2025-04-08 12:01:33,622:compute_solar:INFO: reading data for 2016/12/10
+2025-04-08 12:01:33,623:compute_solar:INFO: getting region shape for: V
+2025-04-08 12:01:33,623:compute_solar:INFO: getting region shape for: V
+2025-04-08 12:01:33,624:compute_solar:INFO: getting region shape for: V
+2025-04-08 12:01:33,624:compute_solar:INFO: getting region shape for: V
+2025-04-08 12:01:33,624:compute_solar:INFO: getting region shape for: V
+2025-04-08 12:01:33,625:compute_solar:INFO: getting region shape for: V
+2025-04-08 12:01:33,625:compute_solar:INFO: getting region shape for: V
+2025-04-08 12:01:33,626:compute_solar:INFO: getting region shape for: V
+2025-04-08 12:01:33,626:compute_solar:INFO: getting region shape for: V
+2025-04-08 12:01:33,860:compute_solar:INFO: chunking data with lat/lon size of: 50
+2025-04-08 12:01:33,864:compute_solar:INFO: Loading 103 files
+2025-04-08 12:01:33,884:compute_solar:INFO: chunking data with lat/lon size of: 50
+2025-04-08 12:01:33,886:compute_solar:INFO: chunking data with lat/lon size of: 50
+2025-04-08 12:01:33,886:compute_solar:INFO: Loading 103 files
+2025-04-08 12:01:33,888:compute_solar:INFO: Loading 103 files
+2025-04-08 12:01:33,902:compute_solar:INFO: chunking data with lat/lon size of: 50
+2025-04-08 12:01:33,904:compute_solar:INFO: Loading 103 files
+2025-04-08 12:01:33,917:compute_solar:INFO: chunking data with lat/lon size of: 50
+2025-04-08 12:01:33,917:compute_solar:INFO: chunking data with lat/lon size of: 50
+2025-04-08 12:01:33,920:compute_solar:INFO: Loading 103 files
+2025-04-08 12:01:33,920:compute_solar:INFO: Loading 103 files
+2025-04-08 12:01:33,967:compute_solar:INFO: chunking data with lat/lon size of: 50
+2025-04-08 12:01:33,970:compute_solar:INFO: Loading 102 files
+2025-04-08 12:01:33,983:compute_solar:INFO: chunking data with lat/lon size of: 50
+2025-04-08 12:01:33,986:compute_solar:INFO: Loading 103 files
+2025-04-08 12:01:33,986:compute_solar:INFO: chunking data with lat/lon size of: 50
+2025-04-08 12:01:33,988:compute_solar:INFO: Loading 103 files
+2025-04-08 12:01:34,017:compute_solar:INFO: chunking data with lat/lon size of: 50
+2025-04-08 12:01:34,019:compute_solar:INFO: Loading 103 files
+2025-04-08 12:01:51,573:compute_solar:INFO: apply mask for region: V
+INFO:compute_solar:apply mask for region: V
+2025-04-08 12:01:51,590:compute_solar:INFO: reading dataset variables
+INFO:compute_solar:reading dataset variables
+2025-04-08 12:01:52,995:compute_solar:INFO: apply mask for region: V
+INFO:compute_solar:apply mask for region: V
+2025-04-08 12:01:53,010:compute_solar:INFO: reading dataset variables
+INFO:compute_solar:reading dataset variables
+2025-04-08 12:01:58,237:compute_solar:INFO: apply mask for region: V
+INFO:compute_solar:apply mask for region: V
+2025-04-08 12:01:58,253:compute_solar:INFO: reading dataset variables
+INFO:compute_solar:reading dataset variables
+2025-04-08 12:01:58,515:compute_solar:INFO: apply mask for region: V
+INFO:compute_solar:apply mask for region: V
+2025-04-08 12:01:58,530:compute_solar:INFO: reading dataset variables
+INFO:compute_solar:reading dataset variables
+2025-04-08 12:02:02,935:compute_solar:INFO: apply mask for region: V
+INFO:compute_solar:apply mask for region: V
+2025-04-08 12:02:02,950:compute_solar:INFO: reading dataset variables
+INFO:compute_solar:reading dataset variables
+2025-04-08 12:02:03,139:compute_solar:INFO: apply mask for region: V
+INFO:compute_solar:apply mask for region: V
+2025-04-08 12:02:03,160:compute_solar:INFO: reading dataset variables
+INFO:compute_solar:reading dataset variables
+2025-04-08 12:02:05,425:compute_solar:INFO: apply mask for region: V
+INFO:compute_solar:apply mask for region: V
+2025-04-08 12:02:05,439:compute_solar:INFO: reading dataset variables
+INFO:compute_solar:reading dataset variables
+2025-04-08 12:02:07,065:compute_solar:INFO: apply mask for region: V
+INFO:compute_solar:apply mask for region: V
+2025-04-08 12:02:07,080:compute_solar:INFO: reading dataset variables
+INFO:compute_solar:reading dataset variables
+2025-04-08 12:02:19,629:compute_solar:INFO: apply mask for region: V
+INFO:compute_solar:apply mask for region: V
+2025-04-08 12:02:19,645:compute_solar:INFO: reading dataset variables
+INFO:compute_solar:reading dataset variables
+2025-04-08 12:02:19,726:compute_solar:INFO: apply mask for region: V
+INFO:compute_solar:apply mask for region: V
+2025-04-08 12:02:19,740:compute_solar:INFO: reading dataset variables
+INFO:compute_solar:reading dataset variables
+2025-04-08 12:02:46,711:compute_solar:INFO: irradiance read
+INFO:compute_solar:irradiance read
+2025-04-08 12:02:46,745:compute_solar:INFO: mask applied to irradiance
+INFO:compute_solar:mask applied to irradiance
+2025-04-08 12:02:46,797:compute_solar:INFO: running pvlib functions
+INFO:compute_solar:running pvlib functions
+2025-04-08 12:02:48,135:compute_solar:INFO: irradiance read
+INFO:compute_solar:irradiance read
+2025-04-08 12:02:48,183:compute_solar:INFO: mask applied to irradiance
+INFO:compute_solar:mask applied to irradiance
+2025-04-08 12:02:48,229:compute_solar:INFO: running pvlib functions
+INFO:compute_solar:running pvlib functions
+2025-04-08 12:02:53,382:compute_solar:INFO: irradiance read
+INFO:compute_solar:irradiance read
+2025-04-08 12:02:53,413:compute_solar:INFO: mask applied to irradiance
+INFO:compute_solar:mask applied to irradiance
+2025-04-08 12:02:53,459:compute_solar:INFO: running pvlib functions
+INFO:compute_solar:running pvlib functions
+2025-04-08 12:02:54,586:compute_solar:INFO: Writing data to /g/data/er8/users/cd3022/solar_drought/REZ_tilting/V/2016/12//V_timeseries_2016-12-01.nc
+INFO:compute_solar:Writing data to /g/data/er8/users/cd3022/solar_drought/REZ_tilting/V/2016/12//V_timeseries_2016-12-01.nc
+2025-04-08 12:02:54,696:compute_solar:INFO: END OF SOLAR_WORKFLOW
+INFO:compute_solar:END OF SOLAR_WORKFLOW
+2025-04-08 12:02:54,697:compute_solar:INFO: reading data for 2016/12/11
+INFO:compute_solar:reading data for 2016/12/11
+2025-04-08 12:02:54,697:compute_solar:INFO: getting region shape for: V
+INFO:compute_solar:getting region shape for: V
+2025-04-08 12:02:54,804:compute_solar:INFO: chunking data with lat/lon size of: 50
+INFO:compute_solar:chunking data with lat/lon size of: 50
+2025-04-08 12:02:54,807:compute_solar:INFO: Loading 103 files
+INFO:compute_solar:Loading 103 files
+2025-04-08 12:02:55,720:compute_solar:INFO: irradiance read
+INFO:compute_solar:irradiance read
+2025-04-08 12:02:55,756:compute_solar:INFO: mask applied to irradiance
+INFO:compute_solar:mask applied to irradiance
+2025-04-08 12:02:55,802:compute_solar:INFO: running pvlib functions
+INFO:compute_solar:running pvlib functions
+2025-04-08 12:02:56,100:compute_solar:INFO: Writing data to /g/data/er8/users/cd3022/solar_drought/REZ_tilting/V/2016/12//V_timeseries_2016-12-08.nc
+INFO:compute_solar:Writing data to /g/data/er8/users/cd3022/solar_drought/REZ_tilting/V/2016/12//V_timeseries_2016-12-08.nc
+2025-04-08 12:02:56,208:compute_solar:INFO: END OF SOLAR_WORKFLOW
+INFO:compute_solar:END OF SOLAR_WORKFLOW
+2025-04-08 12:02:56,210:compute_solar:INFO: reading data for 2016/12/12
+INFO:compute_solar:reading data for 2016/12/12
+2025-04-08 12:02:56,211:compute_solar:INFO: getting region shape for: V
+INFO:compute_solar:getting region shape for: V
+2025-04-08 12:02:56,301:compute_solar:INFO: chunking data with lat/lon size of: 50
+INFO:compute_solar:chunking data with lat/lon size of: 50
+2025-04-08 12:02:56,304:compute_solar:INFO: Loading 103 files
+INFO:compute_solar:Loading 103 files
+2025-04-08 12:02:58,240:compute_solar:INFO: irradiance read
+INFO:compute_solar:irradiance read
+2025-04-08 12:02:58,271:compute_solar:INFO: mask applied to irradiance
+INFO:compute_solar:mask applied to irradiance
+2025-04-08 12:02:58,316:compute_solar:INFO: running pvlib functions
+INFO:compute_solar:running pvlib functions
+2025-04-08 12:02:58,651:compute_solar:INFO: irradiance read
+INFO:compute_solar:irradiance read
+2025-04-08 12:02:58,680:compute_solar:INFO: mask applied to irradiance
+INFO:compute_solar:mask applied to irradiance
+2025-04-08 12:02:58,725:compute_solar:INFO: running pvlib functions
+INFO:compute_solar:running pvlib functions
+2025-04-08 12:03:01,223:compute_solar:INFO: irradiance read
+INFO:compute_solar:irradiance read
+2025-04-08 12:03:01,255:compute_solar:INFO: mask applied to irradiance
+INFO:compute_solar:mask applied to irradiance
+2025-04-08 12:03:01,268:compute_solar:INFO: irradiance read
+INFO:compute_solar:irradiance read
+2025-04-08 12:03:01,300:compute_solar:INFO: mask applied to irradiance
+INFO:compute_solar:mask applied to irradiance
+2025-04-08 12:03:01,303:compute_solar:INFO: running pvlib functions
+INFO:compute_solar:running pvlib functions
+2025-04-08 12:03:01,345:compute_solar:INFO: running pvlib functions
+INFO:compute_solar:running pvlib functions
+2025-04-08 12:03:01,451:compute_solar:INFO: Writing data to /g/data/er8/users/cd3022/solar_drought/REZ_tilting/V/2016/12//V_timeseries_2016-12-10.nc
+INFO:compute_solar:Writing data to /g/data/er8/users/cd3022/solar_drought/REZ_tilting/V/2016/12//V_timeseries_2016-12-10.nc
+2025-04-08 12:03:01,543:compute_solar:INFO: END OF SOLAR_WORKFLOW
+INFO:compute_solar:END OF SOLAR_WORKFLOW
+2025-04-08 12:03:01,543:compute_solar:INFO: reading data for 2016/12/13
+INFO:compute_solar:reading data for 2016/12/13
+2025-04-08 12:03:01,544:compute_solar:INFO: getting region shape for: V
+INFO:compute_solar:getting region shape for: V
+2025-04-08 12:03:01,642:compute_solar:INFO: chunking data with lat/lon size of: 50
+INFO:compute_solar:chunking data with lat/lon size of: 50
+2025-04-08 12:03:01,644:compute_solar:INFO: Loading 103 files
+INFO:compute_solar:Loading 103 files
+2025-04-08 12:03:02,285:compute_solar:INFO: apply mask for region: V
+INFO:compute_solar:apply mask for region: V
+2025-04-08 12:03:02,295:compute_solar:INFO: reading dataset variables
+INFO:compute_solar:reading dataset variables
+2025-04-08 12:03:03,373:compute_solar:INFO: Writing data to /g/data/er8/users/cd3022/solar_drought/REZ_tilting/V/2016/12//V_timeseries_2016-12-05.nc
+INFO:compute_solar:Writing data to /g/data/er8/users/cd3022/solar_drought/REZ_tilting/V/2016/12//V_timeseries_2016-12-05.nc
+2025-04-08 12:03:03,465:compute_solar:INFO: END OF SOLAR_WORKFLOW
+INFO:compute_solar:END OF SOLAR_WORKFLOW
+2025-04-08 12:03:03,466:compute_solar:INFO: reading data for 2016/12/14
+INFO:compute_solar:reading data for 2016/12/14
+2025-04-08 12:03:03,466:compute_solar:INFO: getting region shape for: V
+INFO:compute_solar:getting region shape for: V
+2025-04-08 12:03:03,570:compute_solar:INFO: chunking data with lat/lon size of: 50
+INFO:compute_solar:chunking data with lat/lon size of: 50
+2025-04-08 12:03:03,574:compute_solar:INFO: Loading 103 files
+INFO:compute_solar:Loading 103 files
+2025-04-08 12:03:03,927:compute_solar:INFO: apply mask for region: V
+INFO:compute_solar:apply mask for region: V
+2025-04-08 12:03:03,938:compute_solar:INFO: reading dataset variables
+INFO:compute_solar:reading dataset variables
+2025-04-08 12:03:06,184:compute_solar:INFO: Writing data to /g/data/er8/users/cd3022/solar_drought/REZ_tilting/V/2016/12//V_timeseries_2016-12-03.nc
+INFO:compute_solar:Writing data to /g/data/er8/users/cd3022/solar_drought/REZ_tilting/V/2016/12//V_timeseries_2016-12-03.nc
+2025-04-08 12:03:06,267:compute_solar:INFO: END OF SOLAR_WORKFLOW
+INFO:compute_solar:END OF SOLAR_WORKFLOW
+2025-04-08 12:03:06,268:compute_solar:INFO: reading data for 2016/12/15
+INFO:compute_solar:reading data for 2016/12/15
+2025-04-08 12:03:06,268:compute_solar:INFO: getting region shape for: V
+INFO:compute_solar:getting region shape for: V
+2025-04-08 12:03:06,367:compute_solar:INFO: chunking data with lat/lon size of: 50
+INFO:compute_solar:chunking data with lat/lon size of: 50
+2025-04-08 12:03:06,370:compute_solar:INFO: Loading 103 files
+INFO:compute_solar:Loading 103 files
+2025-04-08 12:03:06,520:compute_solar:INFO: Writing data to /g/data/er8/users/cd3022/solar_drought/REZ_tilting/V/2016/12//V_timeseries_2016-12-07.nc
+INFO:compute_solar:Writing data to /g/data/er8/users/cd3022/solar_drought/REZ_tilting/V/2016/12//V_timeseries_2016-12-07.nc
+2025-04-08 12:03:06,613:compute_solar:INFO: END OF SOLAR_WORKFLOW
+INFO:compute_solar:END OF SOLAR_WORKFLOW
+2025-04-08 12:03:06,614:compute_solar:INFO: reading data for 2016/12/16
+INFO:compute_solar:reading data for 2016/12/16
+2025-04-08 12:03:06,614:compute_solar:INFO: getting region shape for: V
+INFO:compute_solar:getting region shape for: V
+2025-04-08 12:03:06,711:compute_solar:INFO: chunking data with lat/lon size of: 50
+INFO:compute_solar:chunking data with lat/lon size of: 50
+2025-04-08 12:03:06,714:compute_solar:INFO: Loading 103 files
+INFO:compute_solar:Loading 103 files
+2025-04-08 12:03:09,078:compute_solar:INFO: Writing data to /g/data/er8/users/cd3022/solar_drought/REZ_tilting/V/2016/12//V_timeseries_2016-12-02.nc
+INFO:compute_solar:Writing data to /g/data/er8/users/cd3022/solar_drought/REZ_tilting/V/2016/12//V_timeseries_2016-12-02.nc
+2025-04-08 12:03:09,163:compute_solar:INFO: END OF SOLAR_WORKFLOW
+INFO:compute_solar:END OF SOLAR_WORKFLOW
+2025-04-08 12:03:09,164:compute_solar:INFO: reading data for 2016/12/17
+INFO:compute_solar:reading data for 2016/12/17
+2025-04-08 12:03:09,164:compute_solar:INFO: getting region shape for: V
+INFO:compute_solar:getting region shape for: V
+2025-04-08 12:03:09,271:compute_solar:INFO: chunking data with lat/lon size of: 50
+INFO:compute_solar:chunking data with lat/lon size of: 50
+2025-04-08 12:03:09,275:compute_solar:INFO: Loading 103 files
+INFO:compute_solar:Loading 103 files
+2025-04-08 12:03:11,310:compute_solar:INFO: apply mask for region: V
+INFO:compute_solar:apply mask for region: V
+2025-04-08 12:03:11,319:compute_solar:INFO: reading dataset variables
+INFO:compute_solar:reading dataset variables
+2025-04-08 12:03:11,583:compute_solar:INFO: Writing data to /g/data/er8/users/cd3022/solar_drought/REZ_tilting/V/2016/12//V_timeseries_2016-12-09.nc
+INFO:compute_solar:Writing data to /g/data/er8/users/cd3022/solar_drought/REZ_tilting/V/2016/12//V_timeseries_2016-12-09.nc
+2025-04-08 12:03:11,695:compute_solar:INFO: END OF SOLAR_WORKFLOW
+INFO:compute_solar:END OF SOLAR_WORKFLOW
+2025-04-08 12:03:11,696:compute_solar:INFO: reading data for 2016/12/18
+INFO:compute_solar:reading data for 2016/12/18
+2025-04-08 12:03:11,696:compute_solar:INFO: getting region shape for: V
+INFO:compute_solar:getting region shape for: V
+2025-04-08 12:03:11,783:compute_solar:INFO: chunking data with lat/lon size of: 50
+INFO:compute_solar:chunking data with lat/lon size of: 50
+2025-04-08 12:03:11,786:compute_solar:INFO: Loading 103 files
+INFO:compute_solar:Loading 103 files
+2025-04-08 12:03:13,055:compute_solar:INFO: apply mask for region: V
+INFO:compute_solar:apply mask for region: V
+2025-04-08 12:03:13,068:compute_solar:INFO: reading dataset variables
+INFO:compute_solar:reading dataset variables
+2025-04-08 12:03:14,562:compute_solar:INFO: apply mask for region: V
+INFO:compute_solar:apply mask for region: V
+2025-04-08 12:03:14,572:compute_solar:INFO: reading dataset variables
+INFO:compute_solar:reading dataset variables
+2025-04-08 12:03:14,671:compute_solar:INFO: apply mask for region: V
+INFO:compute_solar:apply mask for region: V
+2025-04-08 12:03:14,680:compute_solar:INFO: reading dataset variables
+INFO:compute_solar:reading dataset variables
+2025-04-08 12:03:14,743:compute_solar:INFO: irradiance read
+INFO:compute_solar:irradiance read
+2025-04-08 12:03:14,772:compute_solar:INFO: mask applied to irradiance
+INFO:compute_solar:mask applied to irradiance
+2025-04-08 12:03:14,817:compute_solar:INFO: running pvlib functions
+INFO:compute_solar:running pvlib functions
+2025-04-08 12:03:16,043:compute_solar:INFO: irradiance read
+INFO:compute_solar:irradiance read
+2025-04-08 12:03:16,085:compute_solar:INFO: mask applied to irradiance
+INFO:compute_solar:mask applied to irradiance
+2025-04-08 12:03:16,145:compute_solar:INFO: running pvlib functions
+INFO:compute_solar:running pvlib functions
+2025-04-08 12:03:16,830:compute_solar:INFO: apply mask for region: V
+INFO:compute_solar:apply mask for region: V
+2025-04-08 12:03:16,842:compute_solar:INFO: reading dataset variables
+INFO:compute_solar:reading dataset variables
+2025-04-08 12:03:19,243:compute_solar:INFO: apply mask for region: V
+INFO:compute_solar:apply mask for region: V
+2025-04-08 12:03:19,256:compute_solar:INFO: reading dataset variables
+INFO:compute_solar:reading dataset variables
+2025-04-08 12:03:26,100:compute_solar:INFO: Writing data to /g/data/er8/users/cd3022/solar_drought/REZ_tilting/V/2016/12//V_timeseries_2016-12-06.nc
+INFO:compute_solar:Writing data to /g/data/er8/users/cd3022/solar_drought/REZ_tilting/V/2016/12//V_timeseries_2016-12-06.nc
+2025-04-08 12:03:26,215:compute_solar:INFO: END OF SOLAR_WORKFLOW
+INFO:compute_solar:END OF SOLAR_WORKFLOW
+2025-04-08 12:03:26,216:compute_solar:INFO: reading data for 2016/12/19
+INFO:compute_solar:reading data for 2016/12/19
+2025-04-08 12:03:26,216:compute_solar:INFO: getting region shape for: V
+INFO:compute_solar:getting region shape for: V
+2025-04-08 12:03:26,324:compute_solar:INFO: chunking data with lat/lon size of: 50
+INFO:compute_solar:chunking data with lat/lon size of: 50
+2025-04-08 12:03:26,327:compute_solar:INFO: Loading 103 files
+INFO:compute_solar:Loading 103 files
+2025-04-08 12:03:27,485:compute_solar:INFO: Writing data to /g/data/er8/users/cd3022/solar_drought/REZ_tilting/V/2016/12//V_timeseries_2016-12-04.nc
+INFO:compute_solar:Writing data to /g/data/er8/users/cd3022/solar_drought/REZ_tilting/V/2016/12//V_timeseries_2016-12-04.nc
+2025-04-08 12:03:27,569:compute_solar:INFO: END OF SOLAR_WORKFLOW
+INFO:compute_solar:END OF SOLAR_WORKFLOW
+2025-04-08 12:03:27,570:compute_solar:INFO: reading data for 2016/12/20
+INFO:compute_solar:reading data for 2016/12/20
+2025-04-08 12:03:27,570:compute_solar:INFO: getting region shape for: V
+INFO:compute_solar:getting region shape for: V
+2025-04-08 12:03:27,643:compute_solar:INFO: chunking data with lat/lon size of: 50
+INFO:compute_solar:chunking data with lat/lon size of: 50
+2025-04-08 12:03:27,645:compute_solar:INFO: Loading 103 files
+INFO:compute_solar:Loading 103 files
+2025-04-08 12:03:34,279:compute_solar:INFO: apply mask for region: V
+INFO:compute_solar:apply mask for region: V
+2025-04-08 12:03:34,292:compute_solar:INFO: reading dataset variables
+INFO:compute_solar:reading dataset variables
+2025-04-08 12:03:36,098:compute_solar:INFO: apply mask for region: V
+INFO:compute_solar:apply mask for region: V
+2025-04-08 12:03:36,109:compute_solar:INFO: reading dataset variables
+INFO:compute_solar:reading dataset variables
+2025-04-08 12:03:58,046:compute_solar:INFO: irradiance read
+INFO:compute_solar:irradiance read
+2025-04-08 12:03:58,080:compute_solar:INFO: mask applied to irradiance
+INFO:compute_solar:mask applied to irradiance
+2025-04-08 12:03:58,129:compute_solar:INFO: running pvlib functions
+INFO:compute_solar:running pvlib functions
+2025-04-08 12:03:59,691:compute_solar:INFO: irradiance read
+INFO:compute_solar:irradiance read
+2025-04-08 12:03:59,720:compute_solar:INFO: mask applied to irradiance
+INFO:compute_solar:mask applied to irradiance
+2025-04-08 12:03:59,766:compute_solar:INFO: running pvlib functions
+INFO:compute_solar:running pvlib functions
+2025-04-08 12:04:05,559:compute_solar:INFO: Writing data to /g/data/er8/users/cd3022/solar_drought/REZ_tilting/V/2016/12//V_timeseries_2016-12-11.nc
+INFO:compute_solar:Writing data to /g/data/er8/users/cd3022/solar_drought/REZ_tilting/V/2016/12//V_timeseries_2016-12-11.nc
+2025-04-08 12:04:05,641:compute_solar:INFO: END OF SOLAR_WORKFLOW
+INFO:compute_solar:END OF SOLAR_WORKFLOW
+2025-04-08 12:04:05,642:compute_solar:INFO: reading data for 2016/12/21
+INFO:compute_solar:reading data for 2016/12/21
+2025-04-08 12:04:05,642:compute_solar:INFO: getting region shape for: V
+INFO:compute_solar:getting region shape for: V
+2025-04-08 12:04:06,060:compute_solar:INFO: chunking data with lat/lon size of: 50
+INFO:compute_solar:chunking data with lat/lon size of: 50
+2025-04-08 12:04:06,063:compute_solar:INFO: Loading 103 files
+INFO:compute_solar:Loading 103 files
+2025-04-08 12:04:07,349:compute_solar:INFO: Writing data to /g/data/er8/users/cd3022/solar_drought/REZ_tilting/V/2016/12//V_timeseries_2016-12-12.nc
+INFO:compute_solar:Writing data to /g/data/er8/users/cd3022/solar_drought/REZ_tilting/V/2016/12//V_timeseries_2016-12-12.nc
+2025-04-08 12:04:07,426:compute_solar:INFO: END OF SOLAR_WORKFLOW
+INFO:compute_solar:END OF SOLAR_WORKFLOW
+2025-04-08 12:04:07,426:compute_solar:INFO: reading data for 2016/12/22
+INFO:compute_solar:reading data for 2016/12/22
+2025-04-08 12:04:07,426:compute_solar:INFO: getting region shape for: V
+INFO:compute_solar:getting region shape for: V
+2025-04-08 12:04:07,582:compute_solar:INFO: chunking data with lat/lon size of: 50
+INFO:compute_solar:chunking data with lat/lon size of: 50
+2025-04-08 12:04:07,584:compute_solar:INFO: Loading 103 files
+INFO:compute_solar:Loading 103 files
+2025-04-08 12:04:07,765:compute_solar:INFO: irradiance read
+INFO:compute_solar:irradiance read
+2025-04-08 12:04:07,795:compute_solar:INFO: mask applied to irradiance
+INFO:compute_solar:mask applied to irradiance
+2025-04-08 12:04:07,827:compute_solar:INFO: irradiance read
+INFO:compute_solar:irradiance read
+2025-04-08 12:04:07,839:compute_solar:INFO: running pvlib functions
+INFO:compute_solar:running pvlib functions
+2025-04-08 12:04:07,856:compute_solar:INFO: mask applied to irradiance
+INFO:compute_solar:mask applied to irradiance
+2025-04-08 12:04:07,901:compute_solar:INFO: running pvlib functions
+INFO:compute_solar:running pvlib functions
+2025-04-08 12:04:09,519:compute_solar:INFO: irradiance read
+INFO:compute_solar:irradiance read
+2025-04-08 12:04:09,565:compute_solar:INFO: mask applied to irradiance
+INFO:compute_solar:mask applied to irradiance
+2025-04-08 12:04:09,610:compute_solar:INFO: running pvlib functions
+INFO:compute_solar:running pvlib functions
+2025-04-08 12:04:11,044:compute_solar:INFO: irradiance read
+INFO:compute_solar:irradiance read
+2025-04-08 12:04:11,075:compute_solar:INFO: mask applied to irradiance
+INFO:compute_solar:mask applied to irradiance
+2025-04-08 12:04:11,123:compute_solar:INFO: running pvlib functions
+INFO:compute_solar:running pvlib functions
+2025-04-08 12:04:12,630:compute_solar:INFO: irradiance read
+INFO:compute_solar:irradiance read
+2025-04-08 12:04:12,661:compute_solar:INFO: mask applied to irradiance
+INFO:compute_solar:mask applied to irradiance
+2025-04-08 12:04:12,706:compute_solar:INFO: running pvlib functions
+INFO:compute_solar:running pvlib functions
+2025-04-08 12:04:13,636:compute_solar:INFO: irradiance read
+INFO:compute_solar:irradiance read
+2025-04-08 12:04:13,667:compute_solar:INFO: mask applied to irradiance
+INFO:compute_solar:mask applied to irradiance
+2025-04-08 12:04:13,712:compute_solar:INFO: running pvlib functions
+INFO:compute_solar:running pvlib functions
+2025-04-08 12:04:15,078:compute_solar:INFO: Writing data to /g/data/er8/users/cd3022/solar_drought/REZ_tilting/V/2016/12//V_timeseries_2016-12-13.nc
+INFO:compute_solar:Writing data to /g/data/er8/users/cd3022/solar_drought/REZ_tilting/V/2016/12//V_timeseries_2016-12-13.nc
+2025-04-08 12:04:15,183:compute_solar:INFO: END OF SOLAR_WORKFLOW
+INFO:compute_solar:END OF SOLAR_WORKFLOW
+2025-04-08 12:04:15,184:compute_solar:INFO: reading data for 2016/12/23
+INFO:compute_solar:reading data for 2016/12/23
+2025-04-08 12:04:15,184:compute_solar:INFO: getting region shape for: V
+INFO:compute_solar:getting region shape for: V
+2025-04-08 12:04:15,516:compute_solar:INFO: Writing data to /g/data/er8/users/cd3022/solar_drought/REZ_tilting/V/2016/12//V_timeseries_2016-12-14.nc
+INFO:compute_solar:Writing data to /g/data/er8/users/cd3022/solar_drought/REZ_tilting/V/2016/12//V_timeseries_2016-12-14.nc
+2025-04-08 12:04:15,521:compute_solar:INFO: chunking data with lat/lon size of: 50
+INFO:compute_solar:chunking data with lat/lon size of: 50
+2025-04-08 12:04:15,524:compute_solar:INFO: Loading 103 files
+INFO:compute_solar:Loading 103 files
+2025-04-08 12:04:15,611:compute_solar:INFO: END OF SOLAR_WORKFLOW
+INFO:compute_solar:END OF SOLAR_WORKFLOW
+2025-04-08 12:04:15,612:compute_solar:INFO: reading data for 2016/12/24
+INFO:compute_solar:reading data for 2016/12/24
+2025-04-08 12:04:15,613:compute_solar:INFO: getting region shape for: V
+INFO:compute_solar:getting region shape for: V
+2025-04-08 12:04:15,946:compute_solar:INFO: chunking data with lat/lon size of: 50
+INFO:compute_solar:chunking data with lat/lon size of: 50
+2025-04-08 12:04:15,949:compute_solar:INFO: Loading 103 files
+INFO:compute_solar:Loading 103 files
+2025-04-08 12:04:18,589:compute_solar:INFO: Writing data to /g/data/er8/users/cd3022/solar_drought/REZ_tilting/V/2016/12//V_timeseries_2016-12-15.nc
+INFO:compute_solar:Writing data to /g/data/er8/users/cd3022/solar_drought/REZ_tilting/V/2016/12//V_timeseries_2016-12-15.nc
+2025-04-08 12:04:18,693:compute_solar:INFO: END OF SOLAR_WORKFLOW
+INFO:compute_solar:END OF SOLAR_WORKFLOW
+2025-04-08 12:04:18,694:compute_solar:INFO: reading data for 2016/12/25
+INFO:compute_solar:reading data for 2016/12/25
+2025-04-08 12:04:18,694:compute_solar:INFO: getting region shape for: V
+INFO:compute_solar:getting region shape for: V
+2025-04-08 12:04:18,863:compute_solar:INFO: Writing data to /g/data/er8/users/cd3022/solar_drought/REZ_tilting/V/2016/12//V_timeseries_2016-12-16.nc
+INFO:compute_solar:Writing data to /g/data/er8/users/cd3022/solar_drought/REZ_tilting/V/2016/12//V_timeseries_2016-12-16.nc
+2025-04-08 12:04:18,959:compute_solar:INFO: END OF SOLAR_WORKFLOW
+INFO:compute_solar:END OF SOLAR_WORKFLOW
+2025-04-08 12:04:18,960:compute_solar:INFO: reading data for 2016/12/26
+INFO:compute_solar:reading data for 2016/12/26
+2025-04-08 12:04:18,960:compute_solar:INFO: getting region shape for: V
+INFO:compute_solar:getting region shape for: V
+2025-04-08 12:04:19,056:compute_solar:INFO: chunking data with lat/lon size of: 50
+INFO:compute_solar:chunking data with lat/lon size of: 50
+2025-04-08 12:04:19,059:compute_solar:INFO: Loading 103 files
+INFO:compute_solar:Loading 103 files
+2025-04-08 12:04:19,274:compute_solar:INFO: chunking data with lat/lon size of: 50
+INFO:compute_solar:chunking data with lat/lon size of: 50
+2025-04-08 12:04:19,276:compute_solar:INFO: Loading 103 files
+INFO:compute_solar:Loading 103 files
+2025-04-08 12:04:20,933:compute_solar:INFO: Writing data to /g/data/er8/users/cd3022/solar_drought/REZ_tilting/V/2016/12//V_timeseries_2016-12-17.nc
+INFO:compute_solar:Writing data to /g/data/er8/users/cd3022/solar_drought/REZ_tilting/V/2016/12//V_timeseries_2016-12-17.nc
+2025-04-08 12:04:21,045:compute_solar:INFO: END OF SOLAR_WORKFLOW
+INFO:compute_solar:END OF SOLAR_WORKFLOW
+2025-04-08 12:04:21,046:compute_solar:INFO: reading data for 2016/12/27
+INFO:compute_solar:reading data for 2016/12/27
+2025-04-08 12:04:21,046:compute_solar:INFO: getting region shape for: V
+INFO:compute_solar:getting region shape for: V
+2025-04-08 12:04:21,088:compute_solar:INFO: Writing data to /g/data/er8/users/cd3022/solar_drought/REZ_tilting/V/2016/12//V_timeseries_2016-12-18.nc
+INFO:compute_solar:Writing data to /g/data/er8/users/cd3022/solar_drought/REZ_tilting/V/2016/12//V_timeseries_2016-12-18.nc
+2025-04-08 12:04:21,176:compute_solar:INFO: END OF SOLAR_WORKFLOW
+INFO:compute_solar:END OF SOLAR_WORKFLOW
+2025-04-08 12:04:21,177:compute_solar:INFO: reading data for 2016/12/28
+INFO:compute_solar:reading data for 2016/12/28
+2025-04-08 12:04:21,177:compute_solar:INFO: getting region shape for: V
+INFO:compute_solar:getting region shape for: V
+2025-04-08 12:04:21,366:compute_solar:INFO: chunking data with lat/lon size of: 50
+INFO:compute_solar:chunking data with lat/lon size of: 50
+2025-04-08 12:04:21,369:compute_solar:INFO: Loading 103 files
+INFO:compute_solar:Loading 103 files
+2025-04-08 12:04:21,510:compute_solar:INFO: chunking data with lat/lon size of: 50
+INFO:compute_solar:chunking data with lat/lon size of: 50
+2025-04-08 12:04:21,513:compute_solar:INFO: Loading 103 files
+INFO:compute_solar:Loading 103 files
+2025-04-08 12:04:26,160:compute_solar:INFO: apply mask for region: V
+INFO:compute_solar:apply mask for region: V
+2025-04-08 12:04:26,183:compute_solar:INFO: reading dataset variables
+INFO:compute_solar:reading dataset variables
+2025-04-08 12:04:28,433:compute_solar:INFO: irradiance read
+INFO:compute_solar:irradiance read
+2025-04-08 12:04:28,461:compute_solar:INFO: mask applied to irradiance
+INFO:compute_solar:mask applied to irradiance
+2025-04-08 12:04:28,506:compute_solar:INFO: running pvlib functions
+INFO:compute_solar:running pvlib functions
+2025-04-08 12:04:28,544:compute_solar:INFO: apply mask for region: V
+INFO:compute_solar:apply mask for region: V
+2025-04-08 12:04:28,567:compute_solar:INFO: reading dataset variables
+INFO:compute_solar:reading dataset variables
+2025-04-08 12:04:30,674:compute_solar:INFO: irradiance read
+INFO:compute_solar:irradiance read
+2025-04-08 12:04:30,703:compute_solar:INFO: mask applied to irradiance
+INFO:compute_solar:mask applied to irradiance
+2025-04-08 12:04:30,747:compute_solar:INFO: running pvlib functions
+INFO:compute_solar:running pvlib functions
+2025-04-08 12:04:35,544:compute_solar:INFO: Writing data to /g/data/er8/users/cd3022/solar_drought/REZ_tilting/V/2016/12//V_timeseries_2016-12-19.nc
+INFO:compute_solar:Writing data to /g/data/er8/users/cd3022/solar_drought/REZ_tilting/V/2016/12//V_timeseries_2016-12-19.nc
+2025-04-08 12:04:35,624:compute_solar:INFO: END OF SOLAR_WORKFLOW
+INFO:compute_solar:END OF SOLAR_WORKFLOW
+2025-04-08 12:04:35,624:compute_solar:INFO: reading data for 2016/12/29
+INFO:compute_solar:reading data for 2016/12/29
+2025-04-08 12:04:35,624:compute_solar:INFO: getting region shape for: V
+INFO:compute_solar:getting region shape for: V
+2025-04-08 12:04:35,779:compute_solar:INFO: chunking data with lat/lon size of: 50
+INFO:compute_solar:chunking data with lat/lon size of: 50
+2025-04-08 12:04:35,782:compute_solar:INFO: Loading 103 files
+INFO:compute_solar:Loading 103 files
+2025-04-08 12:04:36,547:compute_solar:INFO: apply mask for region: V
+INFO:compute_solar:apply mask for region: V
+2025-04-08 12:04:36,571:compute_solar:INFO: reading dataset variables
+INFO:compute_solar:reading dataset variables
+2025-04-08 12:04:37,889:compute_solar:INFO: apply mask for region: V
+INFO:compute_solar:apply mask for region: V
+2025-04-08 12:04:37,905:compute_solar:INFO: reading dataset variables
+INFO:compute_solar:reading dataset variables
+2025-04-08 12:04:37,980:compute_solar:INFO: Writing data to /g/data/er8/users/cd3022/solar_drought/REZ_tilting/V/2016/12//V_timeseries_2016-12-20.nc
+INFO:compute_solar:Writing data to /g/data/er8/users/cd3022/solar_drought/REZ_tilting/V/2016/12//V_timeseries_2016-12-20.nc
+2025-04-08 12:04:38,064:compute_solar:INFO: END OF SOLAR_WORKFLOW
+INFO:compute_solar:END OF SOLAR_WORKFLOW
+2025-04-08 12:04:38,064:compute_solar:INFO: reading data for 2016/12/30
+INFO:compute_solar:reading data for 2016/12/30
+2025-04-08 12:04:38,064:compute_solar:INFO: getting region shape for: V
+INFO:compute_solar:getting region shape for: V
+2025-04-08 12:04:38,391:compute_solar:INFO: chunking data with lat/lon size of: 50
+INFO:compute_solar:chunking data with lat/lon size of: 50
+2025-04-08 12:04:38,393:compute_solar:INFO: Loading 103 files
+INFO:compute_solar:Loading 103 files
+2025-04-08 12:04:39,751:compute_solar:INFO: apply mask for region: V
+INFO:compute_solar:apply mask for region: V
+2025-04-08 12:04:39,771:compute_solar:INFO: reading dataset variables
+INFO:compute_solar:reading dataset variables
+2025-04-08 12:04:40,334:compute_solar:INFO: apply mask for region: V
+INFO:compute_solar:apply mask for region: V
+2025-04-08 12:04:40,361:compute_solar:INFO: reading dataset variables
+INFO:compute_solar:reading dataset variables
+2025-04-08 12:04:41,908:compute_solar:INFO: apply mask for region: V
+INFO:compute_solar:apply mask for region: V
+2025-04-08 12:04:41,931:compute_solar:INFO: reading dataset variables
+INFO:compute_solar:reading dataset variables
+2025-04-08 12:04:45,157:compute_solar:INFO: apply mask for region: V
+INFO:compute_solar:apply mask for region: V
+2025-04-08 12:04:45,180:compute_solar:INFO: reading dataset variables
+INFO:compute_solar:reading dataset variables
+2025-04-08 12:04:57,860:compute_solar:INFO: apply mask for region: V
+INFO:compute_solar:apply mask for region: V
+2025-04-08 12:04:57,887:compute_solar:INFO: reading dataset variables
+INFO:compute_solar:reading dataset variables
+2025-04-08 12:04:58,934:compute_solar:INFO: apply mask for region: V
+INFO:compute_solar:apply mask for region: V
+2025-04-08 12:04:58,955:compute_solar:INFO: reading dataset variables
+INFO:compute_solar:reading dataset variables
+2025-04-08 12:05:21,853:compute_solar:INFO: irradiance read
+INFO:compute_solar:irradiance read
+2025-04-08 12:05:21,888:compute_solar:INFO: mask applied to irradiance
+INFO:compute_solar:mask applied to irradiance
+2025-04-08 12:05:21,937:compute_solar:INFO: running pvlib functions
+INFO:compute_solar:running pvlib functions
+2025-04-08 12:05:24,738:compute_solar:INFO: irradiance read
+INFO:compute_solar:irradiance read
+2025-04-08 12:05:24,767:compute_solar:INFO: mask applied to irradiance
+INFO:compute_solar:mask applied to irradiance
+2025-04-08 12:05:24,812:compute_solar:INFO: running pvlib functions
+INFO:compute_solar:running pvlib functions
+2025-04-08 12:05:29,205:compute_solar:INFO: Writing data to /g/data/er8/users/cd3022/solar_drought/REZ_tilting/V/2016/12//V_timeseries_2016-12-21.nc
+INFO:compute_solar:Writing data to /g/data/er8/users/cd3022/solar_drought/REZ_tilting/V/2016/12//V_timeseries_2016-12-21.nc
+2025-04-08 12:05:29,328:compute_solar:INFO: END OF SOLAR_WORKFLOW
+INFO:compute_solar:END OF SOLAR_WORKFLOW
+2025-04-08 12:05:29,329:compute_solar:INFO: reading data for 2016/12/31
+INFO:compute_solar:reading data for 2016/12/31
+2025-04-08 12:05:29,329:compute_solar:INFO: getting region shape for: V
+INFO:compute_solar:getting region shape for: V
+2025-04-08 12:05:29,614:compute_solar:INFO: chunking data with lat/lon size of: 50
+INFO:compute_solar:chunking data with lat/lon size of: 50
+2025-04-08 12:05:29,620:compute_solar:INFO: Loading 103 files
+INFO:compute_solar:Loading 103 files
+2025-04-08 12:05:30,507:compute_solar:INFO: irradiance read
+INFO:compute_solar:irradiance read
+2025-04-08 12:05:30,536:compute_solar:INFO: mask applied to irradiance
+INFO:compute_solar:mask applied to irradiance
+2025-04-08 12:05:30,582:compute_solar:INFO: running pvlib functions
+INFO:compute_solar:running pvlib functions
+2025-04-08 12:05:32,135:compute_solar:INFO: Writing data to /g/data/er8/users/cd3022/solar_drought/REZ_tilting/V/2016/12//V_timeseries_2016-12-22.nc
+INFO:compute_solar:Writing data to /g/data/er8/users/cd3022/solar_drought/REZ_tilting/V/2016/12//V_timeseries_2016-12-22.nc
+2025-04-08 12:05:32,251:compute_solar:INFO: END OF SOLAR_WORKFLOW
+INFO:compute_solar:END OF SOLAR_WORKFLOW
+2025-04-08 12:05:34,459:compute_solar:INFO: irradiance read
+INFO:compute_solar:irradiance read
+2025-04-08 12:05:34,490:compute_solar:INFO: mask applied to irradiance
+INFO:compute_solar:mask applied to irradiance
+2025-04-08 12:05:34,533:compute_solar:INFO: running pvlib functions
+INFO:compute_solar:running pvlib functions
+2025-04-08 12:05:34,548:compute_solar:INFO: irradiance read
+INFO:compute_solar:irradiance read
+2025-04-08 12:05:34,578:compute_solar:INFO: mask applied to irradiance
+INFO:compute_solar:mask applied to irradiance
+2025-04-08 12:05:34,624:compute_solar:INFO: running pvlib functions
+INFO:compute_solar:running pvlib functions
+2025-04-08 12:05:35,373:compute_solar:INFO: irradiance read
+INFO:compute_solar:irradiance read
+2025-04-08 12:05:35,420:compute_solar:INFO: mask applied to irradiance
+INFO:compute_solar:mask applied to irradiance
+2025-04-08 12:05:35,463:compute_solar:INFO: running pvlib functions
+INFO:compute_solar:running pvlib functions
+2025-04-08 12:05:37,860:compute_solar:INFO: Writing data to /g/data/er8/users/cd3022/solar_drought/REZ_tilting/V/2016/12//V_timeseries_2016-12-23.nc
+INFO:compute_solar:Writing data to /g/data/er8/users/cd3022/solar_drought/REZ_tilting/V/2016/12//V_timeseries_2016-12-23.nc
+2025-04-08 12:05:37,964:compute_solar:INFO: END OF SOLAR_WORKFLOW
+INFO:compute_solar:END OF SOLAR_WORKFLOW
+2025-04-08 12:05:38,496:compute_solar:INFO: irradiance read
+INFO:compute_solar:irradiance read
+2025-04-08 12:05:38,529:compute_solar:INFO: mask applied to irradiance
+INFO:compute_solar:mask applied to irradiance
+2025-04-08 12:05:38,573:compute_solar:INFO: running pvlib functions
+INFO:compute_solar:running pvlib functions
+2025-04-08 12:05:41,254:compute_solar:INFO: irradiance read
+INFO:compute_solar:irradiance read
+2025-04-08 12:05:41,285:compute_solar:INFO: mask applied to irradiance
+INFO:compute_solar:mask applied to irradiance
+2025-04-08 12:05:41,331:compute_solar:INFO: running pvlib functions
+INFO:compute_solar:running pvlib functions
+2025-04-08 12:05:42,040:compute_solar:INFO: Writing data to /g/data/er8/users/cd3022/solar_drought/REZ_tilting/V/2016/12//V_timeseries_2016-12-28.nc
+INFO:compute_solar:Writing data to /g/data/er8/users/cd3022/solar_drought/REZ_tilting/V/2016/12//V_timeseries_2016-12-28.nc
+2025-04-08 12:05:42,084:compute_solar:INFO: Writing data to /g/data/er8/users/cd3022/solar_drought/REZ_tilting/V/2016/12//V_timeseries_2016-12-24.nc
+INFO:compute_solar:Writing data to /g/data/er8/users/cd3022/solar_drought/REZ_tilting/V/2016/12//V_timeseries_2016-12-24.nc
+2025-04-08 12:05:42,131:compute_solar:INFO: END OF SOLAR_WORKFLOW
+INFO:compute_solar:END OF SOLAR_WORKFLOW
+2025-04-08 12:05:42,177:compute_solar:INFO: END OF SOLAR_WORKFLOW
+INFO:compute_solar:END OF SOLAR_WORKFLOW
+2025-04-08 12:05:43,138:compute_solar:INFO: Writing data to /g/data/er8/users/cd3022/solar_drought/REZ_tilting/V/2016/12//V_timeseries_2016-12-25.nc
+INFO:compute_solar:Writing data to /g/data/er8/users/cd3022/solar_drought/REZ_tilting/V/2016/12//V_timeseries_2016-12-25.nc
+2025-04-08 12:05:43,251:compute_solar:INFO: END OF SOLAR_WORKFLOW
+INFO:compute_solar:END OF SOLAR_WORKFLOW
+2025-04-08 12:05:46,061:compute_solar:INFO: Writing data to /g/data/er8/users/cd3022/solar_drought/REZ_tilting/V/2016/12//V_timeseries_2016-12-26.nc
+INFO:compute_solar:Writing data to /g/data/er8/users/cd3022/solar_drought/REZ_tilting/V/2016/12//V_timeseries_2016-12-26.nc
+2025-04-08 12:05:46,186:compute_solar:INFO: END OF SOLAR_WORKFLOW
+INFO:compute_solar:END OF SOLAR_WORKFLOW
+2025-04-08 12:05:48,482:compute_solar:INFO: Writing data to /g/data/er8/users/cd3022/solar_drought/REZ_tilting/V/2016/12//V_timeseries_2016-12-27.nc
+INFO:compute_solar:Writing data to /g/data/er8/users/cd3022/solar_drought/REZ_tilting/V/2016/12//V_timeseries_2016-12-27.nc
+2025-04-08 12:05:48,550:compute_solar:INFO: apply mask for region: V
+INFO:compute_solar:apply mask for region: V
+2025-04-08 12:05:48,565:compute_solar:INFO: reading dataset variables
+INFO:compute_solar:reading dataset variables
+2025-04-08 12:05:48,600:compute_solar:INFO: END OF SOLAR_WORKFLOW
+INFO:compute_solar:END OF SOLAR_WORKFLOW
+2025-04-08 12:05:52,426:compute_solar:INFO: irradiance read
+INFO:compute_solar:irradiance read
+2025-04-08 12:05:52,461:compute_solar:INFO: mask applied to irradiance
+INFO:compute_solar:mask applied to irradiance
+2025-04-08 12:05:52,512:compute_solar:INFO: running pvlib functions
+INFO:compute_solar:running pvlib functions
+2025-04-08 12:05:53,399:compute_solar:INFO: irradiance read
+INFO:compute_solar:irradiance read
+2025-04-08 12:05:53,429:compute_solar:INFO: mask applied to irradiance
+INFO:compute_solar:mask applied to irradiance
+2025-04-08 12:05:53,472:compute_solar:INFO: running pvlib functions
+INFO:compute_solar:running pvlib functions
+2025-04-08 12:05:59,648:compute_solar:INFO: Writing data to /g/data/er8/users/cd3022/solar_drought/REZ_tilting/V/2016/12//V_timeseries_2016-12-29.nc
+INFO:compute_solar:Writing data to /g/data/er8/users/cd3022/solar_drought/REZ_tilting/V/2016/12//V_timeseries_2016-12-29.nc
+2025-04-08 12:05:59,745:compute_solar:INFO: END OF SOLAR_WORKFLOW
+INFO:compute_solar:END OF SOLAR_WORKFLOW
+2025-04-08 12:06:00,610:compute_solar:INFO: Writing data to /g/data/er8/users/cd3022/solar_drought/REZ_tilting/V/2016/12//V_timeseries_2016-12-30.nc
+INFO:compute_solar:Writing data to /g/data/er8/users/cd3022/solar_drought/REZ_tilting/V/2016/12//V_timeseries_2016-12-30.nc
+2025-04-08 12:06:00,722:compute_solar:INFO: END OF SOLAR_WORKFLOW
+INFO:compute_solar:END OF SOLAR_WORKFLOW
+2025-04-08 12:06:42,315:compute_solar:INFO: irradiance read
+INFO:compute_solar:irradiance read
+2025-04-08 12:06:42,351:compute_solar:INFO: mask applied to irradiance
+INFO:compute_solar:mask applied to irradiance
+2025-04-08 12:06:42,412:compute_solar:INFO: running pvlib functions
+INFO:compute_solar:running pvlib functions
+2025-04-08 12:06:49,215:compute_solar:INFO: Writing data to /g/data/er8/users/cd3022/solar_drought/REZ_tilting/V/2016/12//V_timeseries_2016-12-31.nc
+INFO:compute_solar:Writing data to /g/data/er8/users/cd3022/solar_drought/REZ_tilting/V/2016/12//V_timeseries_2016-12-31.nc
+2025-04-08 12:06:49,362:compute_solar:INFO: END OF SOLAR_WORKFLOW
+INFO:compute_solar:END OF SOLAR_WORKFLOW
+
+======================================================================================
+                  Resource Usage on 2025-04-08 12:06:55:
+   Job Id:             138736545.gadi-pbs
+   Project:            er8
+   Exit Status:        0
+   Service Units:      8.83
+   NCPUs Requested:    13                     NCPUs Used: 13              
+                                           CPU Time Used: 00:39:04        
+   Memory Requested:   192.0GB               Memory Used: 41.4GB          
+   Walltime requested: 01:00:00            Walltime Used: 00:05:31        
+   JobFS requested:    10.0GB                 JobFS used: 0B              
+======================================================================================

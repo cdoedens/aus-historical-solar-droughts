@@ -1,0 +1,17 @@
+#!/bin/bash 
+#PBS -l walltime=01:00:00
+#PBS -l mem=192GB 
+#PBS -l ncpus=13
+#PBS -l jobfs=1GB 
+#PBS -l storage=gdata/hh5+gdata/er8+scratch/er8+gdata/rv74
+#PBS -l other=hyperthread
+#PBS -q normal
+#PBS -P er8
+
+#PBS -o /home/548/cd3022/aus-historical-solar-droughts/logs/dask-solar-pv.oe
+#PBS -j oe
+
+module use /g/data3/hh5/public/modules
+module load conda/analysis3
+
+python3 /home/548/cd3022/aus-historical-solar-droughts/code/python/scripts/DASK-SOLAR-PV.py

@@ -2,45 +2,156 @@ import pvlib
 import numpy as np
 import xarray as xr
 import pandas as pd
-import dask.array as da
-import dask
-from dask import delayed
+import geopandas as gpd
 import os
 import logger
+import rasterio
+from rasterstats import zonal_stats
+import odc.geo.xr
+from datetime import datetime
+from pathlib import Path
+from glob import glob
+import dask.array as da
 
-def clear_sky_performance(ds):
+LOG = logger.get_logger(__name__)
 
-    LOG = logger.get_logger(__name__)
-   
-    ghi = ds.surface_global_irradiance.data
-    dni = ds.direct_normal_irradiance.data
-    dhi = ds.surface_diffuse_irradiance.data
-    nan_mask = da.isnan(ghi)
-    nan_mask_flat = nan_mask.ravel()
+
+def solar_workflow(date, region, var):
+    ds = read_data(date, region)
+    solar = clear_sky_performance(ds, var)
+    save_timeseries(solar, date, region, var)
+    del ds, solar
+    LOG.info('END OF SOLAR_WORKFLOW')
+    return
+
     
-    # Apply mask lazily with Dask
-    ghi_clean = da.compress(~nan_mask_flat, ghi, axis=None)
-    dni_clean = da.compress(~nan_mask_flat, dni, axis=None)
-    dhi_clean = da.compress(~nan_mask_flat, dhi, axis=None)
+def read_data(date, region):
+    LOG.info(f'reading data for {date}')
+    # get correct file path based on the date
+    if len(date) > 7:
+        dir_dt = datetime.strptime(date, "%Y/%m/%d")
+    else:
+        dir_dt = datetime.strptime(date, "%Y/%m")
+        
+    if dir_dt <= datetime.strptime('2019-03-31', '%Y-%m-%d'):
+        version = 'v1.0'
+    else:
+        version = 'v1.1'
+
+    region_geo = get_region(region)
+    lon_min, lat_min, lon_max, lat_max = region_geo.total_bounds
+
+    # ensures lat_min etc. is available to _preprocess
+    def _preprocess(ds):
+        return ds[
+        ['surface_global_irradiance', 'direct_normal_irradiance', 'surface_diffuse_irradiance']
+        ].sel(latitude=slice(lat_min, lat_max), longitude=slice(lon_min, lon_max))
+
+    chunk_size = 50
+    LOG.info(f'chunking data with lat/lon size of: {chunk_size}')
+    
+    files = get_files(date, version)
+    LOG.info(f"Loading {len(files)} files")
+    ds = xr.open_mfdataset(
+        files,
+        preprocess=_preprocess,
+        combine='by_coords',
+        engine="h5netcdf",
+    )
+    ds = ds.chunk({'time':5, 'latitude':chunk_size, 'longitude':chunk_size})
+
+    # apply mask
+    LOG.info(f'applying regional mask')
+    mask = rasterio.features.geometry_mask(
+                region_geo.geometry,
+                out_shape=ds.odc.geobox.shape,
+                transform=ds.odc.geobox.affine,
+                all_touched=False,
+                invert=False)
+    mask = xr.DataArray(~mask, dims=('latitude', 'longitude'),coords=dict(
+            longitude=ds.longitude,
+            latitude=ds.latitude)
+                       ).chunk({'latitude':chunk_size, 'longitude':chunk_size})
+   
+    return ds.where(mask)
+
+def get_files(date, version):
+    directory = Path(f'/g/data/rv74/satellite-products/arc/der/himawari-ahi/solar/p1s/{version}/{date}')
+    return sorted(str(p) for p in directory.rglob("*.nc"))
+    
+def get_region(region):
+    ########################
+    # UPDATING FUNCTION TO WORK WITH OTHER SHAPEFILES
+    ########################
+
+    region_type, region_name = region.split('_')
+    LOG.info(f'getting region shape for: {region_type}, {region_name}')
+    if region_type == 'REZ':
+        # UPDATE
+        # REGION SHOULD BE STRING WITH FORMAT "<TYPE>_<NAME>"
+        shapefile = '/home/548/cd3022/aus-historical-solar-droughts/data/boundary_files/REZ-boundaries.shx'
+        gdf = gpd.read_file(shapefile)
+        
+        zones_to_ignore = [ # no solar in these zones
+            'Q1 Far North QLD',
+            'N7 Tumut',
+            'N8 Cooma-Monaro',
+            'N10 Hunter Coast',
+            'N11 Illawarra Coast',
+            'V3 Western Victoria',
+            'V4 South West Victoria',
+            'V7 Gippsland Coast',
+            'V8 Southern Ocean',
+            'T4 North Tasmania Coast',
+            'S1 South East SA',
+            'S3 Mid-North SA',
+            'S4 Yorke Peninsula',
+            'S5 Northern SA',
+            'S10 South East SA Coast'
+        ]
+        
+        gdf = gdf[~gdf["Name"].isin(zones_to_ignore)]
+    
+        if region_name.upper() == 'ALL':
+            return gdf
+        else:
+            return gdf[gdf["Name"].str.startswith(region_name)]
+    # GET CITY REGION GOES HERE
+    # if region_type == 'city':
+    #     return
+    else:
+        LOG.info(f'unsuported region type "{region_type}" supplied')
+        return
+
+def clear_sky_performance(ds, var):
+
+    LOG.info('reading dataset variables')
+    ghi = ds.surface_global_irradiance.values.ravel()
+    dni = ds.direct_normal_irradiance.values.ravel()
+    dhi = ds.surface_diffuse_irradiance.values.ravel()
+    LOG.info('irradiance read')
+    nan_mask = np.isnan(ghi) # same for all vars
+    ghi_clean = ghi[~nan_mask]
+    dni_clean = dni[~nan_mask]
+    dhi_clean = dhi[~nan_mask]
+    LOG.info('mask applied to irradiance')
 
     # get correct time and coordinate data, so that it matches up with the remaining irradiance values
-    lat_1d = ds.latitude.data
-    lon_1d = ds.longitude.data
+    lat_1d = ds.latitude.values
+    lon_1d = ds.longitude.values
     lon_grid, lat_grid = np.meshgrid(lon_1d, lat_1d, indexing="xy")
-
     lat_grid_1d = lat_grid.ravel()
     lon_grid_1d = lon_grid.ravel()
-
-    lat_1d_expanded = da.tile(lat_grid_1d, ds.sizes["time"])
-    lon_1d_expanded = da.tile(lon_grid_1d, ds.sizes["time"])
-    time_1d = da.repeat(da.from_array(ds.time.data, chunks="auto"), len(lat_grid_1d))
-
-    lat_1d_expanded_clean = da.compress(~nan_mask_flat, lat_1d_expanded, axis=None)
-    lon_1d_expanded_clean = da.compress(~nan_mask_flat, lon_1d_expanded, axis=None)
-    time_1d_clean = da.compress(~nan_mask_flat, time_1d, axis=None)
+    lat_1d_expanded = np.tile(lat_grid_1d, ds.sizes["time"])  # Tile lat for all times
+    lon_1d_expanded = np.tile(lon_grid_1d, ds.sizes["time"])  # Tile lon for all times
+    time_1d = np.repeat(ds.time.values, len(lat_grid_1d))  # Repeat time for all lat/lon
+    lat_1d_expanded_clean = lat_1d_expanded[~nan_mask]
+    lon_1d_expanded_clean = lon_1d_expanded[~nan_mask]
+    time_1d_clean = time_1d[~nan_mask]
 
     # calculate capacity factors using pvlib
-    actual_ideal_ratio = tilting_panel_pr(
+    LOG.info(f'running pvlib functions')
+    solar_output = solar_pv_generation(
         pv_model = 'Canadian_Solar_CS5P_220M___2009_',
         inverter_model = 'ABB__MICRO_0_25_I_OUTD_US_208__208V_',
         ghi=ghi_clean,
@@ -48,37 +159,38 @@ def clear_sky_performance(ds):
         dhi=dhi_clean,
         time=time_1d_clean,
         lat=lat_1d_expanded_clean,
-        lon=lon_1d_expanded_clean
+        lon=lon_1d_expanded_clean,
+        var=var
     )
     
-    # Create a full flattened output array, filling with NaN (or another default value)
-    result_flat = np.full(ghi.size, np.nan)
+    mask_template = ds.surface_global_irradiance
+    filled = np.empty_like(ghi)
+    filled[nan_mask] = np.nan
+    filled[~nan_mask] = solar_output
+    reshaped = filled.reshape(mask_template.shape)
     
-    # Insert the processed values into the correct positions.
-    result_flat[~nan_mask_flat] = actual_ideal_ratio
-    
-    # Reshape the flat array back into the original shape.
-    result = result_flat.reshape(ghi.shape)
-    ratio_da = xr.DataArray(result, coords=ds.coords, dims=ds.dims)
-    
-    return ratio_da
+    return xr.DataArray(reshaped, coords=mask_template.coords, dims=mask_template.dims)
 
-def save_NEM_timeseries(da):
-    LOG = logger.get_logger(__name__)
+    
+def save_timeseries(da, date, region, var):
+
+    region_type, region_name = region.split('_')
 
     nem_timeseries = da.mean(dim=["latitude", "longitude"], skipna=True)
+    year=date[:4]
+    month=date[5:7]
+    day=date[8:10]
+
+    file_name = f'{region_name}_timeseries_{year}-{month}-{day}.nc'
+    file_path = f'/g/data/er8/users/cd3022/solar_drought/{region_type}/{var}/{region_name}/{year}/{month}/'
     
-    file_path = '/g/data/er8/users/cd3022/solar_drought/REZ_tilting/TEST'
     os.makedirs(file_path, exist_ok=True)
-    LOG.info(f'Writing data to {file_path}/TEST.nc')
-    nem_timeseries.to_netcdf(f'{file_path}/TEST.nc')
+    LOG.info(f'Writing data to: {file_path}/{file_name}')
+    nem_timeseries.to_netcdf(f'{file_path}/{file_name}')
     return
 
 
-
-
-
-def tilting_panel_pr(
+def solar_pv_generation(
     pv_model,
     inverter_model,
     time,
@@ -86,12 +198,16 @@ def tilting_panel_pr(
     lon,
     dni,
     ghi,
-    dhi
-    
+    dhi,
+    var
 ):
     '''
     Other than pv and inverter models, all other arguments must be a flat 1D array of equal size
     '''
+    if var not in ['clear_sky_generation', 'capacity_factor']:
+        LOG.info(f'Unrecognised var: {var}. Var must be "clear_sky_generation" or "capacity_factor"')
+        return 'WRONG VAR'
+
     
     # get the module and inverter specifications from SAM
     sandia_modules = pvlib.pvsystem.retrieve_sam('SandiaMod')
@@ -118,7 +234,7 @@ def tilting_panel_pr(
         airmass_relative,
     )
 
-    # copmute irradiances
+    # compute irradiances
     total_irradiance = pvlib.irradiance.get_total_irradiance(
         surface_tilt=tracking['surface_tilt'],
         surface_azimuth=tracking['surface_azimuth'],
@@ -190,6 +306,8 @@ def tilting_panel_pr(
         inverter=inverter
     )
     ac_ideal_QC = np.where(ac_ideal < 0, np.nan, ac_ideal)
-    actual_ideal_ratio = ac_QC / ac_ideal_QC
-
-    return actual_ideal_ratio
+    if var == 'clear_sky_generation':
+        return ac_QC / ac_ideal_QC
+    if var == 'capacity_factor':
+        return ac_QC # NEED TO ADD PROPER CF EQUATION HERE
+        

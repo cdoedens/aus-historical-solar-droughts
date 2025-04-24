@@ -265,5 +265,5 @@ def tilting_panel_pr(
     ac_ideal_QC = np.where(ac_ideal < 0, np.nan, ac_ideal)
     actual_ideal_ratio = ac_QC / ac_ideal_QC
 
-    return actual_ideal_ratio
+    return ac_QC ######################### CURRENTLY GETTING ACTUAL GENERATION
 

@@ -1,0 +1,671 @@
+usage: conda [-h] [-V] command ...
+
+conda is a tool for managing and deploying applications, environments and packages.
+
+Options:
+
+positional arguments:
+  command
+    clean        Remove unused packages and caches.
+    compare      Compare packages between conda environments.
+    config       Modify configuration values in .condarc. This is modeled
+                 after the git config command. Writes to the user .condarc
+                 file (/home/548/cd3022/.condarc) by default.
+    create       Create a new conda environment from a list of specified
+                 packages.
+    info         Display information about current conda install.
+    init         Initialize conda for shell interaction. [Experimental]
+    install      Installs a list of packages into a specified conda
+                 environment.
+    list         List linked packages in a conda environment.
+    package      Low-level conda package utility. (EXPERIMENTAL)
+    remove       Remove a list of packages from a specified conda environment.
+    uninstall    Alias for conda remove.
+    run          Run an executable in a conda environment.
+    search       Search for packages and display associated information. The
+                 input is a MatchSpec, a query language for conda packages.
+                 See examples below.
+    update       Updates conda packages to the latest compatible version.
+    upgrade      Alias for conda update.
+
+optional arguments:
+  -h, --help     Show this help message and exit.
+  -V, --version  Show the conda version number and exit.
+
+conda commands available from other packages:
+  build
+  content-trust
+  convert
+  debug
+  develop
+  env
+  index
+  inspect
+  metapackage
+  render
+  server
+  skeleton
+2025-04-21 15:25:45,473:__main__:INFO: Computing ratio of tilting to clearsky irradiance for 2024/07/01
+2025-04-21 15:25:45,518:__main__:INFO: Computing ratio of tilting to clearsky irradiance for 2024/07/02
+2025-04-21 15:25:45,519:__main__:INFO: Computing ratio of tilting to clearsky irradiance for 2024/07/03
+2025-04-21 15:25:45,519:__main__:INFO: Computing ratio of tilting to clearsky irradiance for 2024/07/04
+2025-04-21 15:25:45,519:__main__:INFO: Computing ratio of tilting to clearsky irradiance for 2024/07/05
+2025-04-21 15:25:45,519:__main__:INFO: Computing ratio of tilting to clearsky irradiance for 2024/07/06
+2025-04-21 15:25:45,519:__main__:INFO: Computing ratio of tilting to clearsky irradiance for 2024/07/07
+2025-04-21 15:25:45,519:__main__:INFO: Computing ratio of tilting to clearsky irradiance for 2024/07/08
+2025-04-21 15:25:45,519:__main__:INFO: Computing ratio of tilting to clearsky irradiance for 2024/07/09
+2025-04-21 15:25:45,519:__main__:INFO: Computing ratio of tilting to clearsky irradiance for 2024/07/10
+2025-04-21 15:25:45,519:__main__:INFO: Computing ratio of tilting to clearsky irradiance for 2024/07/11
+2025-04-21 15:25:45,519:__main__:INFO: Computing ratio of tilting to clearsky irradiance for 2024/07/12
+2025-04-21 15:25:45,519:__main__:INFO: Computing ratio of tilting to clearsky irradiance for 2024/07/13
+2025-04-21 15:25:45,519:__main__:INFO: Computing ratio of tilting to clearsky irradiance for 2024/07/14
+2025-04-21 15:25:45,519:__main__:INFO: Computing ratio of tilting to clearsky irradiance for 2024/07/15
+2025-04-21 15:25:45,519:__main__:INFO: Computing ratio of tilting to clearsky irradiance for 2024/07/16
+2025-04-21 15:25:45,519:__main__:INFO: Computing ratio of tilting to clearsky irradiance for 2024/07/17
+2025-04-21 15:25:45,519:__main__:INFO: Computing ratio of tilting to clearsky irradiance for 2024/07/18
+2025-04-21 15:25:45,519:__main__:INFO: Computing ratio of tilting to clearsky irradiance for 2024/07/19
+2025-04-21 15:25:45,519:__main__:INFO: Computing ratio of tilting to clearsky irradiance for 2024/07/20
+2025-04-21 15:25:45,520:__main__:INFO: Computing ratio of tilting to clearsky irradiance for 2024/07/21
+2025-04-21 15:25:45,520:__main__:INFO: Computing ratio of tilting to clearsky irradiance for 2024/07/22
+2025-04-21 15:25:45,520:__main__:INFO: Computing ratio of tilting to clearsky irradiance for 2024/07/23
+2025-04-21 15:25:45,520:__main__:INFO: Computing ratio of tilting to clearsky irradiance for 2024/07/24
+2025-04-21 15:25:45,520:__main__:INFO: Computing ratio of tilting to clearsky irradiance for 2024/07/25
+2025-04-21 15:25:45,520:__main__:INFO: Computing ratio of tilting to clearsky irradiance for 2024/07/26
+2025-04-21 15:25:45,520:__main__:INFO: Computing ratio of tilting to clearsky irradiance for 2024/07/27
+2025-04-21 15:25:45,520:__main__:INFO: Computing ratio of tilting to clearsky irradiance for 2024/07/28
+2025-04-21 15:25:45,520:__main__:INFO: Computing ratio of tilting to clearsky irradiance for 2024/07/29
+2025-04-21 15:25:45,520:__main__:INFO: Computing ratio of tilting to clearsky irradiance for 2024/07/30
+2025-04-21 15:25:45,520:__main__:INFO: Computing ratio of tilting to clearsky irradiance for 2024/07/31
+2025-04-21 15:25:45,523:compute_solar:INFO: reading data for 2024/07/01
+2025-04-21 15:25:45,524:compute_solar:INFO: reading data for 2024/07/02
+2025-04-21 15:25:45,524:compute_solar:INFO: reading data for 2024/07/03
+2025-04-21 15:25:45,525:compute_solar:INFO: reading data for 2024/07/04
+2025-04-21 15:25:45,525:compute_solar:INFO: reading data for 2024/07/05
+2025-04-21 15:25:45,525:compute_solar:INFO: reading data for 2024/07/06
+2025-04-21 15:25:45,525:compute_solar:INFO: reading data for 2024/07/07
+2025-04-21 15:25:45,525:compute_solar:INFO: reading data for 2024/07/08
+2025-04-21 15:25:45,526:compute_solar:INFO: reading data for 2024/07/10
+2025-04-21 15:25:45,526:compute_solar:INFO: reading data for 2024/07/09
+2025-04-21 15:25:45,527:compute_solar:INFO: getting region shape for: REZ, N
+2025-04-21 15:25:45,527:compute_solar:INFO: getting region shape for: REZ, N
+2025-04-21 15:25:45,528:compute_solar:INFO: getting region shape for: REZ, N
+2025-04-21 15:25:45,528:compute_solar:INFO: getting region shape for: REZ, N
+2025-04-21 15:25:45,528:compute_solar:INFO: getting region shape for: REZ, N
+2025-04-21 15:25:45,528:compute_solar:INFO: getting region shape for: REZ, N
+2025-04-21 15:25:45,528:compute_solar:INFO: getting region shape for: REZ, N
+2025-04-21 15:25:45,528:compute_solar:INFO: getting region shape for: REZ, N
+2025-04-21 15:25:45,528:compute_solar:INFO: getting region shape for: REZ, N
+2025-04-21 15:25:45,528:compute_solar:INFO: getting region shape for: REZ, N
+2025-04-21 15:25:45,768:compute_solar:INFO: chunking data with lat/lon size of: 50
+2025-04-21 15:25:45,768:compute_solar:INFO: chunking data with lat/lon size of: 50
+2025-04-21 15:25:45,768:compute_solar:INFO: chunking data with lat/lon size of: 50
+2025-04-21 15:25:45,772:compute_solar:INFO: Loading 103 files
+2025-04-21 15:25:45,773:compute_solar:INFO: Loading 103 files
+2025-04-21 15:25:45,774:compute_solar:INFO: Loading 103 files
+2025-04-21 15:25:45,798:compute_solar:INFO: chunking data with lat/lon size of: 50
+2025-04-21 15:25:45,800:compute_solar:INFO: Loading 103 files
+2025-04-21 15:25:45,802:compute_solar:INFO: chunking data with lat/lon size of: 50
+2025-04-21 15:25:45,804:compute_solar:INFO: chunking data with lat/lon size of: 50
+2025-04-21 15:25:45,804:compute_solar:INFO: Loading 103 files
+2025-04-21 15:25:45,806:compute_solar:INFO: Loading 103 files
+2025-04-21 15:25:45,853:compute_solar:INFO: chunking data with lat/lon size of: 50
+2025-04-21 15:25:45,853:compute_solar:INFO: chunking data with lat/lon size of: 50
+2025-04-21 15:25:45,856:compute_solar:INFO: Loading 103 files
+2025-04-21 15:25:45,856:compute_solar:INFO: Loading 103 files
+2025-04-21 15:25:45,856:compute_solar:INFO: chunking data with lat/lon size of: 50
+2025-04-21 15:25:45,859:compute_solar:INFO: Loading 103 files
+2025-04-21 15:25:45,889:compute_solar:INFO: chunking data with lat/lon size of: 50
+2025-04-21 15:25:45,892:compute_solar:INFO: Loading 103 files
+2025-04-21 15:26:22,988:compute_solar:INFO: applying regional mask
+INFO:compute_solar:applying regional mask
+2025-04-21 15:26:23,020:compute_solar:INFO: reading dataset variables
+INFO:compute_solar:reading dataset variables
+2025-04-21 15:26:23,250:compute_solar:INFO: applying regional mask
+INFO:compute_solar:applying regional mask
+2025-04-21 15:26:23,281:compute_solar:INFO: reading dataset variables
+INFO:compute_solar:reading dataset variables
+2025-04-21 15:26:24,342:compute_solar:INFO: applying regional mask
+INFO:compute_solar:applying regional mask
+2025-04-21 15:26:24,373:compute_solar:INFO: reading dataset variables
+INFO:compute_solar:reading dataset variables
+2025-04-21 15:26:27,854:compute_solar:INFO: applying regional mask
+INFO:compute_solar:applying regional mask
+2025-04-21 15:26:27,885:compute_solar:INFO: reading dataset variables
+INFO:compute_solar:reading dataset variables
+2025-04-21 15:26:32,750:compute_solar:INFO: applying regional mask
+INFO:compute_solar:applying regional mask
+2025-04-21 15:26:32,781:compute_solar:INFO: reading dataset variables
+INFO:compute_solar:reading dataset variables
+2025-04-21 15:26:37,788:compute_solar:INFO: applying regional mask
+INFO:compute_solar:applying regional mask
+2025-04-21 15:26:37,822:compute_solar:INFO: reading dataset variables
+INFO:compute_solar:reading dataset variables
+2025-04-21 15:26:40,836:compute_solar:INFO: applying regional mask
+INFO:compute_solar:applying regional mask
+2025-04-21 15:26:40,868:compute_solar:INFO: reading dataset variables
+INFO:compute_solar:reading dataset variables
+2025-04-21 15:26:41,036:compute_solar:INFO: applying regional mask
+INFO:compute_solar:applying regional mask
+2025-04-21 15:26:41,068:compute_solar:INFO: reading dataset variables
+INFO:compute_solar:reading dataset variables
+2025-04-21 15:26:41,738:compute_solar:INFO: applying regional mask
+INFO:compute_solar:applying regional mask
+2025-04-21 15:26:41,771:compute_solar:INFO: reading dataset variables
+INFO:compute_solar:reading dataset variables
+2025-04-21 15:26:49,917:compute_solar:INFO: applying regional mask
+INFO:compute_solar:applying regional mask
+2025-04-21 15:26:49,950:compute_solar:INFO: reading dataset variables
+INFO:compute_solar:reading dataset variables
+2025-04-21 15:27:15,198:compute_solar:INFO: irradiance read
+INFO:compute_solar:irradiance read
+2025-04-21 15:27:15,282:compute_solar:INFO: mask applied to irradiance
+INFO:compute_solar:mask applied to irradiance
+2025-04-21 15:27:15,406:compute_solar:INFO: running pvlib functions
+INFO:compute_solar:running pvlib functions
+2025-04-21 15:27:15,406:compute_solar:INFO: Unrecognised var: clear_sky. Var must be "clear_sky_generation" or "capacity_factor"
+INFO:compute_solar:Unrecognised var: clear_sky. Var must be "clear_sky_generation" or "capacity_factor"
+2025-04-21 15:27:15,441:compute_solar:INFO: irradiance read
+INFO:compute_solar:irradiance read
+2025-04-21 15:27:15,515:compute_solar:INFO: mask applied to irradiance
+INFO:compute_solar:mask applied to irradiance
+2025-04-21 15:27:15,544:compute_solar:INFO: reading data for 2024/07/11
+INFO:compute_solar:reading data for 2024/07/11
+2025-04-21 15:27:15,544:compute_solar:INFO: getting region shape for: REZ, N
+INFO:compute_solar:getting region shape for: REZ, N
+2025-04-21 15:27:15,640:compute_solar:INFO: running pvlib functions
+INFO:compute_solar:running pvlib functions
+2025-04-21 15:27:15,640:compute_solar:INFO: Unrecognised var: clear_sky. Var must be "clear_sky_generation" or "capacity_factor"
+INFO:compute_solar:Unrecognised var: clear_sky. Var must be "clear_sky_generation" or "capacity_factor"
+2025-04-21 15:27:15,656:compute_solar:INFO: chunking data with lat/lon size of: 50
+INFO:compute_solar:chunking data with lat/lon size of: 50
+2025-04-21 15:27:15,659:compute_solar:INFO: Loading 103 files
+INFO:compute_solar:Loading 103 files
+2025-04-21 15:27:15,771:compute_solar:INFO: reading data for 2024/07/12
+INFO:compute_solar:reading data for 2024/07/12
+2025-04-21 15:27:15,772:compute_solar:INFO: getting region shape for: REZ, N
+INFO:compute_solar:getting region shape for: REZ, N
+2025-04-21 15:27:15,869:compute_solar:INFO: chunking data with lat/lon size of: 50
+INFO:compute_solar:chunking data with lat/lon size of: 50
+2025-04-21 15:27:15,872:compute_solar:INFO: Loading 103 files
+INFO:compute_solar:Loading 103 files
+2025-04-21 15:27:17,594:compute_solar:INFO: irradiance read
+INFO:compute_solar:irradiance read
+2025-04-21 15:27:17,664:compute_solar:INFO: mask applied to irradiance
+INFO:compute_solar:mask applied to irradiance
+2025-04-21 15:27:17,786:compute_solar:INFO: running pvlib functions
+INFO:compute_solar:running pvlib functions
+2025-04-21 15:27:17,786:compute_solar:INFO: Unrecognised var: clear_sky. Var must be "clear_sky_generation" or "capacity_factor"
+INFO:compute_solar:Unrecognised var: clear_sky. Var must be "clear_sky_generation" or "capacity_factor"
+2025-04-21 15:27:17,855:compute_solar:INFO: irradiance read
+INFO:compute_solar:irradiance read
+2025-04-21 15:27:17,898:compute_solar:INFO: reading data for 2024/07/13
+INFO:compute_solar:reading data for 2024/07/13
+2025-04-21 15:27:17,898:compute_solar:INFO: getting region shape for: REZ, N
+INFO:compute_solar:getting region shape for: REZ, N
+2025-04-21 15:27:17,927:compute_solar:INFO: mask applied to irradiance
+INFO:compute_solar:mask applied to irradiance
+2025-04-21 15:27:17,994:compute_solar:INFO: chunking data with lat/lon size of: 50
+INFO:compute_solar:chunking data with lat/lon size of: 50
+2025-04-21 15:27:17,997:compute_solar:INFO: Loading 103 files
+INFO:compute_solar:Loading 103 files
+2025-04-21 15:27:18,056:compute_solar:INFO: running pvlib functions
+INFO:compute_solar:running pvlib functions
+2025-04-21 15:27:18,056:compute_solar:INFO: Unrecognised var: clear_sky. Var must be "clear_sky_generation" or "capacity_factor"
+INFO:compute_solar:Unrecognised var: clear_sky. Var must be "clear_sky_generation" or "capacity_factor"
+2025-04-21 15:27:18,194:compute_solar:INFO: reading data for 2024/07/14
+INFO:compute_solar:reading data for 2024/07/14
+2025-04-21 15:27:18,195:compute_solar:INFO: getting region shape for: REZ, N
+INFO:compute_solar:getting region shape for: REZ, N
+2025-04-21 15:27:18,294:compute_solar:INFO: chunking data with lat/lon size of: 50
+INFO:compute_solar:chunking data with lat/lon size of: 50
+2025-04-21 15:27:18,297:compute_solar:INFO: Loading 103 files
+INFO:compute_solar:Loading 103 files
+2025-04-21 15:27:21,914:compute_solar:INFO: irradiance read
+INFO:compute_solar:irradiance read
+2025-04-21 15:27:21,983:compute_solar:INFO: mask applied to irradiance
+INFO:compute_solar:mask applied to irradiance
+2025-04-21 15:27:22,102:compute_solar:INFO: running pvlib functions
+INFO:compute_solar:running pvlib functions
+2025-04-21 15:27:22,102:compute_solar:INFO: Unrecognised var: clear_sky. Var must be "clear_sky_generation" or "capacity_factor"
+INFO:compute_solar:Unrecognised var: clear_sky. Var must be "clear_sky_generation" or "capacity_factor"
+2025-04-21 15:27:22,214:compute_solar:INFO: reading data for 2024/07/15
+INFO:compute_solar:reading data for 2024/07/15
+2025-04-21 15:27:22,214:compute_solar:INFO: getting region shape for: REZ, N
+INFO:compute_solar:getting region shape for: REZ, N
+2025-04-21 15:27:22,311:compute_solar:INFO: chunking data with lat/lon size of: 50
+INFO:compute_solar:chunking data with lat/lon size of: 50
+2025-04-21 15:27:22,313:compute_solar:INFO: Loading 103 files
+INFO:compute_solar:Loading 103 files
+2025-04-21 15:27:30,727:compute_solar:INFO: irradiance read
+INFO:compute_solar:irradiance read
+2025-04-21 15:27:30,783:compute_solar:INFO: irradiance read
+INFO:compute_solar:irradiance read
+2025-04-21 15:27:30,798:compute_solar:INFO: mask applied to irradiance
+INFO:compute_solar:mask applied to irradiance
+2025-04-21 15:27:30,851:compute_solar:INFO: mask applied to irradiance
+INFO:compute_solar:mask applied to irradiance
+2025-04-21 15:27:30,918:compute_solar:INFO: running pvlib functions
+INFO:compute_solar:running pvlib functions
+2025-04-21 15:27:30,918:compute_solar:INFO: Unrecognised var: clear_sky. Var must be "clear_sky_generation" or "capacity_factor"
+INFO:compute_solar:Unrecognised var: clear_sky. Var must be "clear_sky_generation" or "capacity_factor"
+2025-04-21 15:27:30,970:compute_solar:INFO: running pvlib functions
+INFO:compute_solar:running pvlib functions
+2025-04-21 15:27:30,970:compute_solar:INFO: Unrecognised var: clear_sky. Var must be "clear_sky_generation" or "capacity_factor"
+INFO:compute_solar:Unrecognised var: clear_sky. Var must be "clear_sky_generation" or "capacity_factor"
+2025-04-21 15:27:31,041:compute_solar:INFO: reading data for 2024/07/16
+INFO:compute_solar:reading data for 2024/07/16
+2025-04-21 15:27:31,041:compute_solar:INFO: getting region shape for: REZ, N
+INFO:compute_solar:getting region shape for: REZ, N
+2025-04-21 15:27:31,080:compute_solar:INFO: reading data for 2024/07/17
+INFO:compute_solar:reading data for 2024/07/17
+2025-04-21 15:27:31,081:compute_solar:INFO: getting region shape for: REZ, N
+INFO:compute_solar:getting region shape for: REZ, N
+2025-04-21 15:27:31,121:compute_solar:INFO: chunking data with lat/lon size of: 50
+INFO:compute_solar:chunking data with lat/lon size of: 50
+2025-04-21 15:27:31,123:compute_solar:INFO: Loading 103 files
+INFO:compute_solar:Loading 103 files
+2025-04-21 15:27:31,178:compute_solar:INFO: chunking data with lat/lon size of: 50
+INFO:compute_solar:chunking data with lat/lon size of: 50
+2025-04-21 15:27:31,180:compute_solar:INFO: Loading 103 files
+INFO:compute_solar:Loading 103 files
+2025-04-21 15:27:32,543:compute_solar:INFO: irradiance read
+INFO:compute_solar:irradiance read
+2025-04-21 15:27:32,614:compute_solar:INFO: mask applied to irradiance
+INFO:compute_solar:mask applied to irradiance
+2025-04-21 15:27:32,738:compute_solar:INFO: running pvlib functions
+INFO:compute_solar:running pvlib functions
+2025-04-21 15:27:32,738:compute_solar:INFO: Unrecognised var: clear_sky. Var must be "clear_sky_generation" or "capacity_factor"
+INFO:compute_solar:Unrecognised var: clear_sky. Var must be "clear_sky_generation" or "capacity_factor"
+2025-04-21 15:27:32,850:compute_solar:INFO: reading data for 2024/07/18
+INFO:compute_solar:reading data for 2024/07/18
+2025-04-21 15:27:32,850:compute_solar:INFO: getting region shape for: REZ, N
+INFO:compute_solar:getting region shape for: REZ, N
+2025-04-21 15:27:32,942:compute_solar:INFO: chunking data with lat/lon size of: 50
+INFO:compute_solar:chunking data with lat/lon size of: 50
+2025-04-21 15:27:32,945:compute_solar:INFO: Loading 103 files
+INFO:compute_solar:Loading 103 files
+2025-04-21 15:27:33,897:compute_solar:INFO: irradiance read
+INFO:compute_solar:irradiance read
+2025-04-21 15:27:33,969:compute_solar:INFO: mask applied to irradiance
+INFO:compute_solar:mask applied to irradiance
+2025-04-21 15:27:34,090:compute_solar:INFO: running pvlib functions
+INFO:compute_solar:running pvlib functions
+2025-04-21 15:27:34,091:compute_solar:INFO: Unrecognised var: clear_sky. Var must be "clear_sky_generation" or "capacity_factor"
+INFO:compute_solar:Unrecognised var: clear_sky. Var must be "clear_sky_generation" or "capacity_factor"
+2025-04-21 15:27:34,206:compute_solar:INFO: reading data for 2024/07/19
+INFO:compute_solar:reading data for 2024/07/19
+2025-04-21 15:27:34,206:compute_solar:INFO: getting region shape for: REZ, N
+INFO:compute_solar:getting region shape for: REZ, N
+2025-04-21 15:27:34,300:compute_solar:INFO: chunking data with lat/lon size of: 50
+INFO:compute_solar:chunking data with lat/lon size of: 50
+2025-04-21 15:27:34,302:compute_solar:INFO: Loading 103 files
+INFO:compute_solar:Loading 103 files
+2025-04-21 15:27:40,765:compute_solar:INFO: applying regional mask
+INFO:compute_solar:applying regional mask
+2025-04-21 15:27:40,790:compute_solar:INFO: reading dataset variables
+INFO:compute_solar:reading dataset variables
+2025-04-21 15:27:41,999:compute_solar:INFO: irradiance read
+INFO:compute_solar:irradiance read
+2025-04-21 15:27:42,069:compute_solar:INFO: mask applied to irradiance
+INFO:compute_solar:mask applied to irradiance
+2025-04-21 15:27:42,188:compute_solar:INFO: running pvlib functions
+INFO:compute_solar:running pvlib functions
+2025-04-21 15:27:42,188:compute_solar:INFO: Unrecognised var: clear_sky. Var must be "clear_sky_generation" or "capacity_factor"
+INFO:compute_solar:Unrecognised var: clear_sky. Var must be "clear_sky_generation" or "capacity_factor"
+2025-04-21 15:27:42,314:compute_solar:INFO: reading data for 2024/07/20
+INFO:compute_solar:reading data for 2024/07/20
+2025-04-21 15:27:42,314:compute_solar:INFO: getting region shape for: REZ, N
+INFO:compute_solar:getting region shape for: REZ, N
+2025-04-21 15:27:42,392:compute_solar:INFO: chunking data with lat/lon size of: 50
+INFO:compute_solar:chunking data with lat/lon size of: 50
+2025-04-21 15:27:42,395:compute_solar:INFO: Loading 103 files
+INFO:compute_solar:Loading 103 files
+2025-04-21 15:27:44,131:compute_solar:INFO: applying regional mask
+INFO:compute_solar:applying regional mask
+2025-04-21 15:27:44,157:compute_solar:INFO: reading dataset variables
+INFO:compute_solar:reading dataset variables
+2025-04-21 15:27:44,765:compute_solar:INFO: applying regional mask
+INFO:compute_solar:applying regional mask
+2025-04-21 15:27:44,790:compute_solar:INFO: reading dataset variables
+INFO:compute_solar:reading dataset variables
+2025-04-21 15:27:45,439:compute_solar:INFO: applying regional mask
+INFO:compute_solar:applying regional mask
+2025-04-21 15:27:45,464:compute_solar:INFO: reading dataset variables
+INFO:compute_solar:reading dataset variables
+2025-04-21 15:27:48,728:compute_solar:INFO: applying regional mask
+INFO:compute_solar:applying regional mask
+2025-04-21 15:27:48,753:compute_solar:INFO: reading dataset variables
+INFO:compute_solar:reading dataset variables
+2025-04-21 15:27:57,621:compute_solar:INFO: applying regional mask
+INFO:compute_solar:applying regional mask
+2025-04-21 15:27:57,649:compute_solar:INFO: reading dataset variables
+INFO:compute_solar:reading dataset variables
+2025-04-21 15:28:01,038:compute_solar:INFO: applying regional mask
+INFO:compute_solar:applying regional mask
+2025-04-21 15:28:01,064:compute_solar:INFO: reading dataset variables
+INFO:compute_solar:reading dataset variables
+2025-04-21 15:28:01,243:compute_solar:INFO: applying regional mask
+INFO:compute_solar:applying regional mask
+2025-04-21 15:28:01,270:compute_solar:INFO: reading dataset variables
+INFO:compute_solar:reading dataset variables
+2025-04-21 15:28:02,706:compute_solar:INFO: applying regional mask
+INFO:compute_solar:applying regional mask
+2025-04-21 15:28:02,731:compute_solar:INFO: reading dataset variables
+INFO:compute_solar:reading dataset variables
+2025-04-21 15:28:09,632:compute_solar:INFO: applying regional mask
+INFO:compute_solar:applying regional mask
+2025-04-21 15:28:09,660:compute_solar:INFO: reading dataset variables
+INFO:compute_solar:reading dataset variables
+2025-04-21 15:28:32,358:compute_solar:INFO: irradiance read
+INFO:compute_solar:irradiance read
+2025-04-21 15:28:32,484:compute_solar:INFO: mask applied to irradiance
+INFO:compute_solar:mask applied to irradiance
+2025-04-21 15:28:32,611:compute_solar:INFO: running pvlib functions
+INFO:compute_solar:running pvlib functions
+2025-04-21 15:28:32,611:compute_solar:INFO: Unrecognised var: clear_sky. Var must be "clear_sky_generation" or "capacity_factor"
+INFO:compute_solar:Unrecognised var: clear_sky. Var must be "clear_sky_generation" or "capacity_factor"
+2025-04-21 15:28:32,763:compute_solar:INFO: reading data for 2024/07/21
+INFO:compute_solar:reading data for 2024/07/21
+2025-04-21 15:28:32,763:compute_solar:INFO: getting region shape for: REZ, N
+INFO:compute_solar:getting region shape for: REZ, N
+2025-04-21 15:28:32,891:compute_solar:INFO: chunking data with lat/lon size of: 50
+INFO:compute_solar:chunking data with lat/lon size of: 50
+2025-04-21 15:28:32,894:compute_solar:INFO: Loading 103 files
+INFO:compute_solar:Loading 103 files
+2025-04-21 15:28:34,656:compute_solar:INFO: irradiance read
+INFO:compute_solar:irradiance read
+2025-04-21 15:28:34,722:compute_solar:INFO: mask applied to irradiance
+INFO:compute_solar:mask applied to irradiance
+2025-04-21 15:28:34,843:compute_solar:INFO: running pvlib functions
+INFO:compute_solar:running pvlib functions
+2025-04-21 15:28:34,844:compute_solar:INFO: Unrecognised var: clear_sky. Var must be "clear_sky_generation" or "capacity_factor"
+INFO:compute_solar:Unrecognised var: clear_sky. Var must be "clear_sky_generation" or "capacity_factor"
+2025-04-21 15:28:34,955:compute_solar:INFO: reading data for 2024/07/22
+INFO:compute_solar:reading data for 2024/07/22
+2025-04-21 15:28:34,955:compute_solar:INFO: getting region shape for: REZ, N
+INFO:compute_solar:getting region shape for: REZ, N
+2025-04-21 15:28:34,957:compute_solar:INFO: irradiance read
+INFO:compute_solar:irradiance read
+2025-04-21 15:28:35,025:compute_solar:INFO: mask applied to irradiance
+INFO:compute_solar:mask applied to irradiance
+2025-04-21 15:28:35,054:compute_solar:INFO: chunking data with lat/lon size of: 50
+INFO:compute_solar:chunking data with lat/lon size of: 50
+2025-04-21 15:28:35,057:compute_solar:INFO: Loading 103 files
+INFO:compute_solar:Loading 103 files
+2025-04-21 15:28:35,149:compute_solar:INFO: running pvlib functions
+INFO:compute_solar:running pvlib functions
+2025-04-21 15:28:35,149:compute_solar:INFO: Unrecognised var: clear_sky. Var must be "clear_sky_generation" or "capacity_factor"
+INFO:compute_solar:Unrecognised var: clear_sky. Var must be "clear_sky_generation" or "capacity_factor"
+2025-04-21 15:28:35,269:compute_solar:INFO: reading data for 2024/07/23
+INFO:compute_solar:reading data for 2024/07/23
+2025-04-21 15:28:35,269:compute_solar:INFO: getting region shape for: REZ, N
+INFO:compute_solar:getting region shape for: REZ, N
+2025-04-21 15:28:35,368:compute_solar:INFO: chunking data with lat/lon size of: 50
+INFO:compute_solar:chunking data with lat/lon size of: 50
+2025-04-21 15:28:35,370:compute_solar:INFO: Loading 103 files
+INFO:compute_solar:Loading 103 files
+2025-04-21 15:28:37,125:compute_solar:INFO: irradiance read
+INFO:compute_solar:irradiance read
+2025-04-21 15:28:37,193:compute_solar:INFO: mask applied to irradiance
+INFO:compute_solar:mask applied to irradiance
+2025-04-21 15:28:37,311:compute_solar:INFO: running pvlib functions
+INFO:compute_solar:running pvlib functions
+2025-04-21 15:28:37,311:compute_solar:INFO: Unrecognised var: clear_sky. Var must be "clear_sky_generation" or "capacity_factor"
+INFO:compute_solar:Unrecognised var: clear_sky. Var must be "clear_sky_generation" or "capacity_factor"
+2025-04-21 15:28:37,431:compute_solar:INFO: reading data for 2024/07/24
+INFO:compute_solar:reading data for 2024/07/24
+2025-04-21 15:28:37,431:compute_solar:INFO: getting region shape for: REZ, N
+INFO:compute_solar:getting region shape for: REZ, N
+2025-04-21 15:28:37,532:compute_solar:INFO: chunking data with lat/lon size of: 50
+INFO:compute_solar:chunking data with lat/lon size of: 50
+2025-04-21 15:28:37,536:compute_solar:INFO: Loading 103 files
+INFO:compute_solar:Loading 103 files
+2025-04-21 15:28:39,562:compute_solar:INFO: irradiance read
+INFO:compute_solar:irradiance read
+2025-04-21 15:28:39,628:compute_solar:INFO: mask applied to irradiance
+INFO:compute_solar:mask applied to irradiance
+2025-04-21 15:28:39,749:compute_solar:INFO: running pvlib functions
+INFO:compute_solar:running pvlib functions
+2025-04-21 15:28:39,750:compute_solar:INFO: Unrecognised var: clear_sky. Var must be "clear_sky_generation" or "capacity_factor"
+INFO:compute_solar:Unrecognised var: clear_sky. Var must be "clear_sky_generation" or "capacity_factor"
+2025-04-21 15:28:39,879:compute_solar:INFO: reading data for 2024/07/25
+INFO:compute_solar:reading data for 2024/07/25
+2025-04-21 15:28:39,879:compute_solar:INFO: getting region shape for: REZ, N
+INFO:compute_solar:getting region shape for: REZ, N
+2025-04-21 15:28:39,970:compute_solar:INFO: chunking data with lat/lon size of: 50
+INFO:compute_solar:chunking data with lat/lon size of: 50
+2025-04-21 15:28:39,973:compute_solar:INFO: Loading 103 files
+INFO:compute_solar:Loading 103 files
+2025-04-21 15:28:49,858:compute_solar:INFO: irradiance read
+INFO:compute_solar:irradiance read
+2025-04-21 15:28:49,926:compute_solar:INFO: mask applied to irradiance
+INFO:compute_solar:mask applied to irradiance
+2025-04-21 15:28:50,046:compute_solar:INFO: running pvlib functions
+INFO:compute_solar:running pvlib functions
+2025-04-21 15:28:50,046:compute_solar:INFO: Unrecognised var: clear_sky. Var must be "clear_sky_generation" or "capacity_factor"
+INFO:compute_solar:Unrecognised var: clear_sky. Var must be "clear_sky_generation" or "capacity_factor"
+2025-04-21 15:28:50,167:compute_solar:INFO: reading data for 2024/07/26
+INFO:compute_solar:reading data for 2024/07/26
+2025-04-21 15:28:50,167:compute_solar:INFO: getting region shape for: REZ, N
+INFO:compute_solar:getting region shape for: REZ, N
+2025-04-21 15:28:50,269:compute_solar:INFO: chunking data with lat/lon size of: 50
+INFO:compute_solar:chunking data with lat/lon size of: 50
+2025-04-21 15:28:50,271:compute_solar:INFO: Loading 103 files
+INFO:compute_solar:Loading 103 files
+2025-04-21 15:28:52,251:compute_solar:INFO: irradiance read
+INFO:compute_solar:irradiance read
+2025-04-21 15:28:52,321:compute_solar:INFO: mask applied to irradiance
+INFO:compute_solar:mask applied to irradiance
+2025-04-21 15:28:52,422:compute_solar:INFO: irradiance read
+INFO:compute_solar:irradiance read
+2025-04-21 15:28:52,444:compute_solar:INFO: running pvlib functions
+INFO:compute_solar:running pvlib functions
+2025-04-21 15:28:52,444:compute_solar:INFO: Unrecognised var: clear_sky. Var must be "clear_sky_generation" or "capacity_factor"
+INFO:compute_solar:Unrecognised var: clear_sky. Var must be "clear_sky_generation" or "capacity_factor"
+2025-04-21 15:28:52,489:compute_solar:INFO: mask applied to irradiance
+INFO:compute_solar:mask applied to irradiance
+2025-04-21 15:28:52,559:compute_solar:INFO: reading data for 2024/07/27
+INFO:compute_solar:reading data for 2024/07/27
+2025-04-21 15:28:52,559:compute_solar:INFO: getting region shape for: REZ, N
+INFO:compute_solar:getting region shape for: REZ, N
+2025-04-21 15:28:52,607:compute_solar:INFO: running pvlib functions
+INFO:compute_solar:running pvlib functions
+2025-04-21 15:28:52,607:compute_solar:INFO: Unrecognised var: clear_sky. Var must be "clear_sky_generation" or "capacity_factor"
+INFO:compute_solar:Unrecognised var: clear_sky. Var must be "clear_sky_generation" or "capacity_factor"
+2025-04-21 15:28:52,637:compute_solar:INFO: chunking data with lat/lon size of: 50
+INFO:compute_solar:chunking data with lat/lon size of: 50
+2025-04-21 15:28:52,639:compute_solar:INFO: Loading 103 files
+INFO:compute_solar:Loading 103 files
+2025-04-21 15:28:52,716:compute_solar:INFO: reading data for 2024/07/28
+INFO:compute_solar:reading data for 2024/07/28
+2025-04-21 15:28:52,716:compute_solar:INFO: getting region shape for: REZ, N
+INFO:compute_solar:getting region shape for: REZ, N
+2025-04-21 15:28:52,740:compute_solar:INFO: irradiance read
+INFO:compute_solar:irradiance read
+2025-04-21 15:28:52,806:compute_solar:INFO: chunking data with lat/lon size of: 50
+INFO:compute_solar:chunking data with lat/lon size of: 50
+2025-04-21 15:28:52,809:compute_solar:INFO: Loading 103 files
+INFO:compute_solar:Loading 103 files
+2025-04-21 15:28:52,809:compute_solar:INFO: mask applied to irradiance
+INFO:compute_solar:mask applied to irradiance
+2025-04-21 15:28:52,933:compute_solar:INFO: running pvlib functions
+INFO:compute_solar:running pvlib functions
+2025-04-21 15:28:52,933:compute_solar:INFO: Unrecognised var: clear_sky. Var must be "clear_sky_generation" or "capacity_factor"
+INFO:compute_solar:Unrecognised var: clear_sky. Var must be "clear_sky_generation" or "capacity_factor"
+2025-04-21 15:28:53,052:compute_solar:INFO: reading data for 2024/07/29
+INFO:compute_solar:reading data for 2024/07/29
+2025-04-21 15:28:53,053:compute_solar:INFO: getting region shape for: REZ, N
+INFO:compute_solar:getting region shape for: REZ, N
+2025-04-21 15:28:53,128:compute_solar:INFO: chunking data with lat/lon size of: 50
+INFO:compute_solar:chunking data with lat/lon size of: 50
+2025-04-21 15:28:53,130:compute_solar:INFO: Loading 103 files
+INFO:compute_solar:Loading 103 files
+2025-04-21 15:28:57,839:compute_solar:INFO: applying regional mask
+INFO:compute_solar:applying regional mask
+2025-04-21 15:28:57,868:compute_solar:INFO: reading dataset variables
+INFO:compute_solar:reading dataset variables
+2025-04-21 15:28:58,876:compute_solar:INFO: applying regional mask
+INFO:compute_solar:applying regional mask
+2025-04-21 15:28:58,901:compute_solar:INFO: reading dataset variables
+INFO:compute_solar:reading dataset variables
+2025-04-21 15:29:01,014:compute_solar:INFO: applying regional mask
+INFO:compute_solar:applying regional mask
+2025-04-21 15:29:01,040:compute_solar:INFO: reading dataset variables
+INFO:compute_solar:reading dataset variables
+2025-04-21 15:29:01,910:compute_solar:INFO: irradiance read
+INFO:compute_solar:irradiance read
+2025-04-21 15:29:01,978:compute_solar:INFO: mask applied to irradiance
+INFO:compute_solar:mask applied to irradiance
+2025-04-21 15:29:02,099:compute_solar:INFO: running pvlib functions
+INFO:compute_solar:running pvlib functions
+2025-04-21 15:29:02,099:compute_solar:INFO: Unrecognised var: clear_sky. Var must be "clear_sky_generation" or "capacity_factor"
+INFO:compute_solar:Unrecognised var: clear_sky. Var must be "clear_sky_generation" or "capacity_factor"
+2025-04-21 15:29:02,234:compute_solar:INFO: reading data for 2024/07/30
+INFO:compute_solar:reading data for 2024/07/30
+2025-04-21 15:29:02,235:compute_solar:INFO: getting region shape for: REZ, N
+INFO:compute_solar:getting region shape for: REZ, N
+2025-04-21 15:29:02,336:compute_solar:INFO: chunking data with lat/lon size of: 50
+INFO:compute_solar:chunking data with lat/lon size of: 50
+2025-04-21 15:29:02,339:compute_solar:INFO: Loading 103 files
+INFO:compute_solar:Loading 103 files
+2025-04-21 15:29:04,870:compute_solar:INFO: applying regional mask
+INFO:compute_solar:applying regional mask
+2025-04-21 15:29:04,895:compute_solar:INFO: reading dataset variables
+INFO:compute_solar:reading dataset variables
+2025-04-21 15:29:07,525:compute_solar:INFO: applying regional mask
+INFO:compute_solar:applying regional mask
+2025-04-21 15:29:07,549:compute_solar:INFO: reading dataset variables
+INFO:compute_solar:reading dataset variables
+2025-04-21 15:29:15,895:compute_solar:INFO: applying regional mask
+INFO:compute_solar:applying regional mask
+2025-04-21 15:29:15,922:compute_solar:INFO: reading dataset variables
+INFO:compute_solar:reading dataset variables
+2025-04-21 15:29:17,956:compute_solar:INFO: applying regional mask
+INFO:compute_solar:applying regional mask
+2025-04-21 15:29:17,982:compute_solar:INFO: reading dataset variables
+INFO:compute_solar:reading dataset variables
+2025-04-21 15:29:18,716:compute_solar:INFO: applying regional mask
+INFO:compute_solar:applying regional mask
+2025-04-21 15:29:18,741:compute_solar:INFO: reading dataset variables
+INFO:compute_solar:reading dataset variables
+2025-04-21 15:29:20,770:compute_solar:INFO: applying regional mask
+INFO:compute_solar:applying regional mask
+2025-04-21 15:29:20,797:compute_solar:INFO: reading dataset variables
+INFO:compute_solar:reading dataset variables
+2025-04-21 15:29:26,949:compute_solar:INFO: applying regional mask
+INFO:compute_solar:applying regional mask
+2025-04-21 15:29:26,977:compute_solar:INFO: reading dataset variables
+INFO:compute_solar:reading dataset variables
+2025-04-21 15:29:48,277:compute_solar:INFO: irradiance read
+INFO:compute_solar:irradiance read
+2025-04-21 15:29:48,346:compute_solar:INFO: mask applied to irradiance
+INFO:compute_solar:mask applied to irradiance
+2025-04-21 15:29:48,469:compute_solar:INFO: running pvlib functions
+INFO:compute_solar:running pvlib functions
+2025-04-21 15:29:48,469:compute_solar:INFO: Unrecognised var: clear_sky. Var must be "clear_sky_generation" or "capacity_factor"
+INFO:compute_solar:Unrecognised var: clear_sky. Var must be "clear_sky_generation" or "capacity_factor"
+2025-04-21 15:29:48,603:compute_solar:INFO: reading data for 2024/07/31
+INFO:compute_solar:reading data for 2024/07/31
+2025-04-21 15:29:48,603:compute_solar:INFO: getting region shape for: REZ, N
+INFO:compute_solar:getting region shape for: REZ, N
+2025-04-21 15:29:48,692:compute_solar:INFO: chunking data with lat/lon size of: 50
+INFO:compute_solar:chunking data with lat/lon size of: 50
+2025-04-21 15:29:48,695:compute_solar:INFO: Loading 103 files
+INFO:compute_solar:Loading 103 files
+2025-04-21 15:29:50,416:compute_solar:INFO: irradiance read
+INFO:compute_solar:irradiance read
+2025-04-21 15:29:50,486:compute_solar:INFO: mask applied to irradiance
+INFO:compute_solar:mask applied to irradiance
+2025-04-21 15:29:50,614:compute_solar:INFO: running pvlib functions
+INFO:compute_solar:running pvlib functions
+2025-04-21 15:29:50,614:compute_solar:INFO: Unrecognised var: clear_sky. Var must be "clear_sky_generation" or "capacity_factor"
+INFO:compute_solar:Unrecognised var: clear_sky. Var must be "clear_sky_generation" or "capacity_factor"
+2025-04-21 15:29:50,922:compute_solar:INFO: irradiance read
+INFO:compute_solar:irradiance read
+2025-04-21 15:29:50,991:compute_solar:INFO: mask applied to irradiance
+INFO:compute_solar:mask applied to irradiance
+2025-04-21 15:29:51,117:compute_solar:INFO: running pvlib functions
+INFO:compute_solar:running pvlib functions
+2025-04-21 15:29:51,117:compute_solar:INFO: Unrecognised var: clear_sky. Var must be "clear_sky_generation" or "capacity_factor"
+INFO:compute_solar:Unrecognised var: clear_sky. Var must be "clear_sky_generation" or "capacity_factor"
+2025-04-21 15:29:56,815:compute_solar:INFO: irradiance read
+INFO:compute_solar:irradiance read
+2025-04-21 15:29:56,885:compute_solar:INFO: mask applied to irradiance
+INFO:compute_solar:mask applied to irradiance
+2025-04-21 15:29:57,009:compute_solar:INFO: running pvlib functions
+INFO:compute_solar:running pvlib functions
+2025-04-21 15:29:57,009:compute_solar:INFO: Unrecognised var: clear_sky. Var must be "clear_sky_generation" or "capacity_factor"
+INFO:compute_solar:Unrecognised var: clear_sky. Var must be "clear_sky_generation" or "capacity_factor"
+2025-04-21 15:29:58,379:compute_solar:INFO: irradiance read
+INFO:compute_solar:irradiance read
+2025-04-21 15:29:58,447:compute_solar:INFO: mask applied to irradiance
+INFO:compute_solar:mask applied to irradiance
+2025-04-21 15:29:58,569:compute_solar:INFO: running pvlib functions
+INFO:compute_solar:running pvlib functions
+2025-04-21 15:29:58,569:compute_solar:INFO: Unrecognised var: clear_sky. Var must be "clear_sky_generation" or "capacity_factor"
+INFO:compute_solar:Unrecognised var: clear_sky. Var must be "clear_sky_generation" or "capacity_factor"
+2025-04-21 15:30:08,473:compute_solar:INFO: irradiance read
+INFO:compute_solar:irradiance read
+2025-04-21 15:30:08,540:compute_solar:INFO: mask applied to irradiance
+INFO:compute_solar:mask applied to irradiance
+2025-04-21 15:30:08,660:compute_solar:INFO: running pvlib functions
+INFO:compute_solar:running pvlib functions
+2025-04-21 15:30:08,660:compute_solar:INFO: Unrecognised var: clear_sky. Var must be "clear_sky_generation" or "capacity_factor"
+INFO:compute_solar:Unrecognised var: clear_sky. Var must be "clear_sky_generation" or "capacity_factor"
+2025-04-21 15:30:08,764:compute_solar:INFO: irradiance read
+INFO:compute_solar:irradiance read
+2025-04-21 15:30:08,832:compute_solar:INFO: mask applied to irradiance
+INFO:compute_solar:mask applied to irradiance
+2025-04-21 15:30:08,952:compute_solar:INFO: running pvlib functions
+INFO:compute_solar:running pvlib functions
+2025-04-21 15:30:08,952:compute_solar:INFO: Unrecognised var: clear_sky. Var must be "clear_sky_generation" or "capacity_factor"
+INFO:compute_solar:Unrecognised var: clear_sky. Var must be "clear_sky_generation" or "capacity_factor"
+2025-04-21 15:30:10,266:compute_solar:INFO: irradiance read
+INFO:compute_solar:irradiance read
+2025-04-21 15:30:10,335:compute_solar:INFO: mask applied to irradiance
+INFO:compute_solar:mask applied to irradiance
+2025-04-21 15:30:10,460:compute_solar:INFO: running pvlib functions
+INFO:compute_solar:running pvlib functions
+2025-04-21 15:30:10,460:compute_solar:INFO: Unrecognised var: clear_sky. Var must be "clear_sky_generation" or "capacity_factor"
+INFO:compute_solar:Unrecognised var: clear_sky. Var must be "clear_sky_generation" or "capacity_factor"
+2025-04-21 15:30:12,022:compute_solar:INFO: irradiance read
+INFO:compute_solar:irradiance read
+2025-04-21 15:30:12,057:compute_solar:INFO: applying regional mask
+INFO:compute_solar:applying regional mask
+2025-04-21 15:30:12,087:compute_solar:INFO: reading dataset variables
+INFO:compute_solar:reading dataset variables
+2025-04-21 15:30:12,089:compute_solar:INFO: mask applied to irradiance
+INFO:compute_solar:mask applied to irradiance
+2025-04-21 15:30:12,212:compute_solar:INFO: running pvlib functions
+INFO:compute_solar:running pvlib functions
+2025-04-21 15:30:12,212:compute_solar:INFO: Unrecognised var: clear_sky. Var must be "clear_sky_generation" or "capacity_factor"
+INFO:compute_solar:Unrecognised var: clear_sky. Var must be "clear_sky_generation" or "capacity_factor"
+2025-04-21 15:30:19,024:compute_solar:INFO: irradiance read
+INFO:compute_solar:irradiance read
+2025-04-21 15:30:19,093:compute_solar:INFO: mask applied to irradiance
+INFO:compute_solar:mask applied to irradiance
+2025-04-21 15:30:19,213:compute_solar:INFO: running pvlib functions
+INFO:compute_solar:running pvlib functions
+2025-04-21 15:30:19,213:compute_solar:INFO: Unrecognised var: clear_sky. Var must be "clear_sky_generation" or "capacity_factor"
+INFO:compute_solar:Unrecognised var: clear_sky. Var must be "clear_sky_generation" or "capacity_factor"
+2025-04-21 15:31:02,237:compute_solar:INFO: irradiance read
+INFO:compute_solar:irradiance read
+2025-04-21 15:31:02,308:compute_solar:INFO: mask applied to irradiance
+INFO:compute_solar:mask applied to irradiance
+2025-04-21 15:31:02,433:compute_solar:INFO: running pvlib functions
+INFO:compute_solar:running pvlib functions
+2025-04-21 15:31:02,433:compute_solar:INFO: Unrecognised var: clear_sky. Var must be "clear_sky_generation" or "capacity_factor"
+INFO:compute_solar:Unrecognised var: clear_sky. Var must be "clear_sky_generation" or "capacity_factor"
+
+======================================================================================
+                  Resource Usage on 2025-04-21 15:31:06:
+   Job Id:             139699129.gadi-pbs
+   Project:            er8
+   Exit Status:        0
+   Service Units:      8.91
+   NCPUs Requested:    48                     NCPUs Used: 48              
+                                           CPU Time Used: 00:34:27        
+   Memory Requested:   192.0GB               Memory Used: 33.78GB         
+   Walltime requested: 01:00:00            Walltime Used: 00:05:34        
+   JobFS requested:    10.0GB                 JobFS used: 0B              
+======================================================================================
