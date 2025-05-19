@@ -103,7 +103,14 @@ def mean_below_threshold(da, threshold, max_hours):
 '''
 LOTS OF ROOM IN THIS FUNCTION TO PLAY WITH THRESHOLD DEFINITIONS
 '''
-def daily_drought(da, threshold):
+def daily_drought(
+    da,
+    threshold=0.0001,
+    tot_time=999,
+    max_len=999,
+    day_mean=0.0001,
+    day_sum=0.0001
+): # default args set to extreme, so if arg is not given in function call it does not influence results
     res = []
     dates = []
     for date, day_data in da.groupby('time.date'):
@@ -121,14 +128,15 @@ def daily_drought(da, threshold):
     
         
         # Different criteria for assessing if this day is a "drought"
-        if np.sum(day_drought) > 12: # total 2 hrs below threshold
+        if np.sum(day_drought) >= tot_time: # total cumulativ time below threshold
             res.append(1)
-        elif max_length >= 6: # at least 1 hour below threshold
+        elif max_length >= max_len: # longest time interval constantly below threshold
+            res.append(1)
+        elif day_data.mean().data < day_mean: # mean for the whole day below threshold
+            res.append(1)
+        elif day_data.sum().data < day_sum: # sum of the days values below threshold
+            res.append(1)
             
-            res.append(1)
-        elif day_data.mean().data < threshold: # mean for the whole day below threshold
-            
-            res.append(1)
         else:
             res.append(0)
         dates.append(np.datetime64(date))
@@ -171,11 +179,6 @@ def day_time_df(da):
     da_f.coords['time_of_day'] = ('time', time.time)
     da_f.coords['day_of_year'] = ('time', time.dayofyear)
     
-    da_f = da_f.assign_coords(
-        time_of_day=("time", time.time),
-        day_of_year=("time", time.dayofyear)
-    )
-    
     df = da_f.to_dataframe(name="value").reset_index()
     full_times = pd.date_range("04:30", "21:30", freq="10min").time
     
@@ -210,13 +213,60 @@ def day_time_heatmap(df, vrange=(1,0)):
     plt.tight_layout()
     plt.show()
 
+def day_time_droughts(da, threshold, time):
+    # threshold for counting a drought
+    data = xr.where(da < threshold, 1, 0).values
 
-def spectral_fft(da, time_res='1D', clim=False):
-    daily_mean = da.resample(time=time_res).mean()
+    for i in range(1, len(data)):
+        if (data[i] != 0) and (data[i-1] != 0):
+            data[i] += data[i-1]
+    da_f = xr.DataArray(data, coords=da.coords, dims=da.dims)
+
+    # minimum time of drought to show in plot
+    da_f = xr.where(da_f >= time, 1, 0)
+    
+    time = da['time'].to_index()
+    
+    da_f.coords['time_of_day'] = ('time', time.time)
+    da_f.coords['day_of_year'] = ('time', time.dayofyear)
+    
+    df = da_f.to_dataframe(name="value").reset_index()
+    full_times = pd.date_range("04:30", "21:30", freq="10min").time
+    
+    return df.pivot_table(
+        index="day_of_year",
+        columns="time_of_day",
+        values="value",
+        aggfunc="mean"
+    ).reindex(columns=full_times)
+
+def day_year_df(da, aggfunc='mean'):
+    
+    da_f = da.copy()
+    
+    time = da['time'].to_index()
+    years = years = list(range(2016, 2025))
+    
+    da_f.coords['day_of_year'] = ('time', time.dayofyear)
+    da_f.coords['year'] = ('time', time.year)
+    
+    df = da_f.to_dataframe(name="value").reset_index()
+    
+    return df.pivot_table(
+        index="day_of_year",
+        columns="year",
+        values="value",
+        aggfunc=aggfunc
+    ).reindex(columns=years)
+
+
+def spectral_fft(da, time_res=False, clim=False):
+    if time_res:
+        da = da.resample(time=time_res).mean()
     if clim:
-        clim = daily_mean.groupby("time.dayofyear").mean("time")
-        daily_mean = daily_mean.groupby("time.dayofyear") - clim
-    clean = daily_mean.dropna(dim="time")
+        climatology = da.groupby("time.dayofyear").mean("time")
+        da = da.groupby("time.dayofyear") - climatology
+    clean = da.dropna(dim="time")
     data = (clean - clean.mean(dim='time')).values
 
     N = len(data)
@@ -234,10 +284,14 @@ def spectral_fft(da, time_res='1D', clim=False):
     periods = 1 / freqs_pos
     return periods, power
 
-def spectral_multitaper(da, NW=3, k=5):
-    daily = da.resample(time="1D").mean()
-    clean = daily.dropna(dim="time")
-    signal = (clean - clean.mean(dim="time")).values
+def spectral_multitaper(da, NW=3, k=5, time_res=False, clim=False):
+    if time_res:
+        da = da.resample(time=time_res).mean()
+    if clim:
+        climatology = da.groupby("time.dayofyear").mean("time")
+        da = da.groupby("time.dayofyear") - climatology
+    da = da.dropna(dim="time")
+    signal = (da - da.mean(dim="time")).values
 
     Sk, weights, _ = pmtm(signal, NW=NW, k=k, method='adapt', show=False)
     weights = weights.T  # Ensure correct shape
@@ -253,12 +307,13 @@ def spectral_multitaper(da, NW=3, k=5):
     power = power[1:]
     return periods, power
 
-def spectral_welch(da, nperseg=2048, time_res='1D', clim=False):
-    daily_mean = da.resample(time=time_res).mean()
+def spectral_welch(da, nperseg=2048, time_res=False, clim=False):
+    if time_res:
+        da = da.resample(time=time_res).mean()
     if clim:
-        clim = daily_mean.groupby("time.dayofyear").mean("time")
-        daily_mean = daily_mean.groupby("time.dayofyear") - clim
-    clean = daily_mean.dropna(dim="time")
+        climatology = da.groupby("time.dayofyear").mean("time")
+        da = da.groupby("time.dayofyear") - climatology
+    clean = da.dropna(dim="time")
     signal = (clean - clean.mean(dim="time")).values
 
     fs = 1  # cycles/day

@@ -234,7 +234,7 @@ def solar_pv_generation(
         airmass_relative,
     )
 
-    # copmute irradiances
+    # compute irradiances
     total_irradiance = pvlib.irradiance.get_total_irradiance(
         surface_tilt=tracking['surface_tilt'],
         surface_azimuth=tracking['surface_azimuth'],
