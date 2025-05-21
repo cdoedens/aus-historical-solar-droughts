@@ -6,12 +6,8 @@ import pandas as pd
 from spectrum import pmtm
 import pywt
 from scipy.signal import welch
+from scipy.signal import convolve
 
-
-'''
-UPDATE DROUGHT FUNCTIONS TO JUST PRODUCE DATA, PLOTTING DONE MANUALLY IN SCRIPT.
-WILL HELP TRANSFERABILITY TO DIFFERENT TIME SCALES
-'''
 
 def clip_dusk_dawn(da, n=1):
     """Set the first and last `n` non-NaN values of each day in a 1D time series to NaN."""
@@ -63,46 +59,41 @@ def constant_below_threshold(da, threshold, linestyle='-', multiplot=False, save
 
     return results
 
-def mean_below_threshold(da, threshold, max_hours):
-    seasons = {
-        'summer': [12,1,2],
-        'autumn': [3,4,5],
-        'winter': [6,7,8],
-        'spring': [9,10,11]
-    }
-
+def mean_below_threshold(da, threshold, drought_lengths):
+    drought_lengths.sort(reverse=True)
     drought_dict = {
-        'window_size (hrs)':[],
-        'summer':[],
-        'autumn':[],
-        'winter':[],
-        'spring':[]
+        'window_size (hrs)': [],
+        'DJF': [],
+        'MAM': [],
+        'JJA': [],
+        'SON': []
     }
     
-    windows = range(1, max_hours * 6)
+    n_years = len(np.unique(da.time.dt.year))
+    counted_droughts = xr.zeros_like(da, dtype=bool)
+    for time in drought_lengths:
     
-    for window in windows:
+        drought_dict['window_size (hrs)'].append(time / 6)
+        rolling_mean = da.rolling(time=time, center=False).mean()
+        droughts = xr.where(rolling_mean < threshold, 1, 0)
+        new_droughts = droughts & (~counted_droughts)
+        shifted = new_droughts.shift(time=1, fill_value=0)
+        drought_starts = xr.where((new_droughts == 1) & (shifted == 0), 1, 0)
     
-        drought_dict['window_size (hrs)'].append(window / 6)
-        window_mean = da.rolling(time=window, center=False).mean()
-        window_droughts = xr.where(window_mean < threshold, 1, 0)
+        for season, group in drought_starts.groupby('time.season'):
 
-        # 
-        shifted = window_droughts.shift(time=1, fill_value=0)
-        drought_starts = xr.where((window_droughts == 1) & (shifted == 0), 1, 0)
-    
-        for season in seasons:
-            droughts = drought_starts.where(drought_starts.time.dt.month.isin(seasons[season]), drop=True).values.sum() / len(np.unique(da.time.dt.year))
-            drought_dict[season].append(droughts)
+            count = group.sum().item() / n_years
+            drought_dict[season].append(count)
+
+        counted_droughts = counted_droughts | new_droughts
+        
     
     drought_df = pd.DataFrame(drought_dict)
     drought_df.set_index('window_size (hrs)', inplace = True)
     return drought_df
 
 
-'''
-LOTS OF ROOM IN THIS FUNCTION TO PLAY WITH THRESHOLD DEFINITIONS
-'''
+
 def daily_drought(
     da,
     threshold=0.0001,
@@ -111,6 +102,9 @@ def daily_drought(
     day_mean=0.0001,
     day_sum=0.0001
 ): # default args set to extreme, so if arg is not given in function call it does not influence results
+    '''
+    LOTS OF ROOM IN THIS FUNCTION TO PLAY WITH THRESHOLD DEFINITIONS
+    '''
     res = []
     dates = []
     for date, day_data in da.groupby('time.date'):
@@ -231,6 +225,36 @@ def day_time_droughts(da, threshold, time):
     da_f.coords['day_of_year'] = ('time', time.dayofyear)
     
     df = da_f.to_dataframe(name="value").reset_index()
+    full_times = pd.date_range("04:30", "21:30", freq="10min").time
+    
+    return df.pivot_table(
+        index="day_of_year",
+        columns="time_of_day",
+        values="value",
+        aggfunc="mean"
+    ).reindex(columns=full_times)
+
+def day_time_mbt(da, threshold, drought_length):
+    n_time_steps = drought_length * 6
+    rolling_mean = da.rolling(time=n_time_steps, center=False).mean()
+    drought_end = xr.where(rolling_mean < threshold, 1, 0)
+    
+    # Get all drought times
+    drought_signal = drought_end.values
+    kernel = np.ones(n_time_steps, dtype=int)
+    convolved = convolve(drought_signal, kernel[::-1], mode='full')
+    drought_mask = xr.DataArray(
+        convolved[n_time_steps - 1 : len(drought_signal) + n_time_steps - 1] > 0,
+        coords=da.coords,
+        dims=da.dims
+    )
+    
+    time = da['time'].to_index()
+    
+    drought_mask.coords['time_of_day'] = ('time', time.time)
+    drought_mask.coords['day_of_year'] = ('time', time.dayofyear)
+    
+    df = drought_mask.to_dataframe(name="value").reset_index()
     full_times = pd.date_range("04:30", "21:30", freq="10min").time
     
     return df.pivot_table(
