@@ -77,6 +77,7 @@ def mean_below_threshold(da, threshold, drought_lengths):
         rolling_mean = da.rolling(time=time, center=False).mean()
         droughts = xr.where(rolling_mean < threshold, 1, 0)
         new_droughts = droughts & (~counted_droughts)
+        # ensure droughts lasting longer than the given window are not counted multiple times
         shifted = new_droughts.shift(time=1, fill_value=0)
         drought_starts = xr.where((new_droughts == 1) & (shifted == 0), 1, 0)
     
@@ -225,6 +226,36 @@ def day_time_droughts(da, threshold, time):
     da_f.coords['day_of_year'] = ('time', time.dayofyear)
     
     df = da_f.to_dataframe(name="value").reset_index()
+    full_times = pd.date_range("04:30", "21:30", freq="10min").time
+    
+    return df.pivot_table(
+        index="day_of_year",
+        columns="time_of_day",
+        values="value",
+        aggfunc="mean"
+    ).reindex(columns=full_times)
+
+def day_time_mbt(da, threshold, drought_length):
+    n_time_steps = drought_length * 6
+    rolling_mean = da.rolling(time=n_time_steps, center=False).mean()
+    drought_end = xr.where(rolling_mean < threshold, 1, 0)
+    
+    # Get all drought times
+    drought_signal = drought_end.values
+    kernel = np.ones(n_time_steps, dtype=int)
+    convolved = convolve(drought_signal, kernel[::-1], mode='full')
+    drought_mask = xr.DataArray(
+        convolved[n_time_steps - 1 : len(drought_signal) + n_time_steps - 1] > 0,
+        coords=da.coords,
+        dims=da.dims
+    )
+    
+    time = da['time'].to_index()
+    
+    drought_mask.coords['time_of_day'] = ('time', time.time)
+    drought_mask.coords['day_of_year'] = ('time', time.dayofyear)
+    
+    df = drought_mask.to_dataframe(name="value").reset_index()
     full_times = pd.date_range("04:30", "21:30", freq="10min").time
     
     return df.pivot_table(
