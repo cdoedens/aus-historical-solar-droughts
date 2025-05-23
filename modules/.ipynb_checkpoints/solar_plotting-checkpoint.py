@@ -95,74 +95,28 @@ def mean_below_threshold(da, threshold, drought_lengths):
 
 
 
-def daily_drought(
-    da,
-    threshold=0.0001,
-    tot_time=999,
-    max_len=999,
-    day_mean=0.0001,
-    day_sum=0.0001
-): # default args set to extreme, so if arg is not given in function call it does not influence results
-    '''
-    LOTS OF ROOM IN THIS FUNCTION TO PLAY WITH THRESHOLD DEFINITIONS
-    '''
-    res = []
-    dates = []
-    for date, day_data in da.groupby('time.date'):
-        day_drought = xr.where(day_data < threshold, 1, 0).data
-    
-        # get the maximum "drought" length for this day
-        drought_lengths = [0]
-        for i in range(1, len(day_drought)):
-            drought_past = day_drought[i - 1]
-            drought_now = day_drought[i]
-            if (drought_now != 0) and (drought_past != 0):
-                drought_now += drought_lengths[i - 1]
-            drought_lengths.append(drought_now)
-        max_length = np.max(drought_lengths)
-    
-        
-        # Different criteria for assessing if this day is a "drought"
-        if np.sum(day_drought) >= tot_time: # total cumulativ time below threshold
-            res.append(1)
-        elif max_length >= max_len: # longest time interval constantly below threshold
-            res.append(1)
-        elif day_data.mean().data < day_mean: # mean for the whole day below threshold
-            res.append(1)
-        elif day_data.sum().data < day_sum: # sum of the days values below threshold
-            res.append(1)
-            
-        else:
-            res.append(0)
-        dates.append(np.datetime64(date))
-    
-    temp_da = xr.DataArray(res, coords={'time': dates}, dims='time')
-    
-    seasons = {
-        'summer': [12,1,2],
-        'autumn': [3,4,5],
-        'winter': [6,7,8],
-        'spring': [9,10,11]
-    }
-        
-    results = {}
-    for season in seasons:
-        data = temp_da.where(temp_da.time.dt.month.isin(seasons[season]), drop=True).values
-    
-        drought_lengths = [0]
-        for i_time in range(1, len(data)):
-            drought_past = data[i_time - 1]
-            drought_now = data[i_time]
-            if (drought_now != 0) and (drought_past != 0):
-                drought_now += drought_lengths[i_time - 1]
-            drought_lengths.append(drought_now)
-    
-        length, freq = np.unique(drought_lengths, return_counts = True)
-        length = np.array(length[1:])
-        # num / season in data
-        freq = freq[1:] / len(np.unique(temp_da.time.dt.year))
-        results[season] = (length, freq)
-    return results
+def daily_drought(da, rolling_threshold, day_threshold, window):
+    da_rolling = da.rolling(time=window, center=False).mean()
+    rolling_droughts = xr.where(da_rolling < rolling_threshold, 1, 0)
+    day_droughts_rolling = rolling_droughts.resample(time='1D').max()
+
+    day_means = da.resample(time='1D').mean()
+    day_droughts_mean = xr.where(day_means < day_threshold, 1, 0)
+
+    droughts_total = xr.where((day_droughts_rolling + day_droughts_mean) >= 1, 1, 0).values
+
+    drought_lengths = [droughts_total[0]]
+    for i_time in range(1, len(droughts_total)):
+        drought_past = droughts_total[i_time - 1]
+        drought_now = droughts_total[i_time]
+        if (drought_now != 0) and (drought_past != 0):
+            drought_now += drought_lengths[i_time - 1]
+        drought_lengths.append(drought_now)
+
+    duration, freq = np.unique(drought_lengths, return_counts = True)
+    duration = duration[1:]
+    freq = freq[1:] / len(np.unique(da.time.dt.year))
+    return duration, freq
 
 
 def day_time_df(da):
