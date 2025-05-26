@@ -16,9 +16,22 @@ import dask.array as da
 LOG = logger.get_logger(__name__)
 
 
-def solar_workflow(date, region, var):
+# STRUCTURE OF FUNCTIONS
+'''
+SOLAR_WORKFLOW
+    | READ_DATA
+    |   | GET_REGION
+    |   | _PREPROCESS
+    |   | GET_FILES
+    | CLEAR_SKY_PERFORMANCE
+    |   | SOLAR_PV_GENERATION
+    | SAVE_TIMESERIES
+'''
+
+
+def solar_workflow(date, region, var, tilt):
     ds = read_data(date, region)
-    solar = clear_sky_performance(ds, var)
+    solar = clear_sky_performance(ds, var, tilt)
     save_timeseries(solar, date, region, var)
     del ds, solar
     LOG.info('END OF SOLAR_WORKFLOW')
@@ -117,24 +130,28 @@ def get_region(region):
         else:
             return gdf[gdf["Name"].str.startswith(region_name)]
     # GET CITY REGION GOES HERE
-    # if region_type == 'city':
-    #     return
+    if region_type == 'GCCSA':
+        shapefile = '/home/548/cd3022/aus-historical-solar-droughts/data/boundary_files/GCCSA/GCCSA_2021_AUST_GDA2020.shp'
+        gdf = gpd.read_file(shapefile)
+        if region_name.upper() == 'ALL':
+            return gdf
+        else:
+            return gdf[gdf['GCC_CODE21'] == region_name]
+        
     else:
         LOG.info(f'unsuported region type "{region_type}" supplied')
         return
 
-def clear_sky_performance(ds, var):
+def clear_sky_performance(ds, var, tilt):
 
     LOG.info('reading dataset variables')
     ghi = ds.surface_global_irradiance.values.ravel()
     dni = ds.direct_normal_irradiance.values.ravel()
     dhi = ds.surface_diffuse_irradiance.values.ravel()
-    LOG.info('irradiance read')
     nan_mask = np.isnan(ghi) # same for all vars
     ghi_clean = ghi[~nan_mask]
     dni_clean = dni[~nan_mask]
     dhi_clean = dhi[~nan_mask]
-    LOG.info('mask applied to irradiance')
 
     # get correct time and coordinate data, so that it matches up with the remaining irradiance values
     lat_1d = ds.latitude.values
@@ -149,6 +166,31 @@ def clear_sky_performance(ds, var):
     lon_1d_expanded_clean = lon_1d_expanded[~nan_mask]
     time_1d_clean = time_1d[~nan_mask]
 
+    # ERA5 temperature data
+    LOG.info('getting ERA5 temperature')
+    year = pd.to_datetime(ds.isel(time=50).time.values.item()).year
+    month = pd.to_datetime(ds.isel(time=50).time.values.item()).month
+    era5_dirs = [Path(f"/g/data/rt52/era5/single-levels/reanalysis/2t/{year}")]
+    era5_file = [f for d in era5_dirs for f in d.glob(f"2t_era5_oper_sfc_{year}{month}*.nc")][0]
+    era5 = xr.open_dataset(
+        era5_file,
+        engine='h5netcdf'
+    )
+    points = xr.Dataset(
+        {
+            "latitude": ("points", lat_1d_expanded_clean),
+            "longitude": ("points", lon_1d_expanded_clean),
+            "time": ("points", time_1d_clean),
+        }
+    )
+    temp_era5 = era5["t2m"].sel(
+        latitude=points["latitude"],
+        longitude=points["longitude"],
+        time=points["time"],
+        method="nearest"
+    )
+    temp_clean = temp_era5.values - 273.15
+
     # calculate capacity factors using pvlib
     LOG.info(f'running pvlib functions')
     solar_output = solar_pv_generation(
@@ -160,7 +202,9 @@ def clear_sky_performance(ds, var):
         time=time_1d_clean,
         lat=lat_1d_expanded_clean,
         lon=lon_1d_expanded_clean,
-        var=var
+        temp=temp_clean,
+        var=var,
+        tilt=tilt
     )
     
     mask_template = ds.surface_global_irradiance
@@ -199,15 +243,20 @@ def solar_pv_generation(
     dni,
     ghi,
     dhi,
-    var
+    temp,
+    var,
+    tilt
 ):
     '''
     Other than pv and inverter models, all other arguments must be a flat 1D array of equal size
     '''
-    if var not in ['clear_sky_generation', 'capacity_factor']:
-        LOG.info(f'Unrecognised var: {var}. Var must be "clear_sky_generation" or "capacity_factor"')
+    if var not in ['clear_sky_index', 'capacity_factor']:
+        LOG.info(f'Unrecognised var: {var}. Var must be "clear_sky_index" or "capacity_factor"')
         return 'WRONG VAR'
 
+    if tilt not in ['fixed', 'single_axis']:
+        LOG.info(f'Unrecognised panel tilt: {tilt}. Tilt must be "fixed" or "single_axis"')
+        return 'WRONG TILT'
     
     # get the module and inverter specifications from SAM
     sandia_modules = pvlib.pvsystem.retrieve_sam('SandiaMod')
@@ -221,11 +270,30 @@ def solar_pv_generation(
         lat,
         lon,
     )
-    # get panel/solar angles for a tilting panel system
-    tracking = pvlib.tracking.singleaxis(
-        apparent_zenith=solpos["apparent_zenith"],
-        apparent_azimuth=solpos["azimuth"]
-    )
+
+    # TILTING VS FIXED AXIS VALUES
+    if tilt == 'single_axis':  
+        # get panel/solar angles for a tilting panel system
+        tracking = pvlib.tracking.singleaxis(
+            apparent_zenith=solpos["apparent_zenith"],
+            apparent_azimuth=solpos["azimuth"]
+        )
+        surface_tilt = tracking['surface_tilt']
+        surface_azimuth = tracking['surface_azimuth']
+        aoi = tracking['aoi']
+    
+    elif tilt == 'fixed':
+        # Find the angle of incidence
+        surface_tilt = -lat.ravel()
+        surface_azimuth = [0] * len(lat)
+
+        aoi = pvlib.irradiance.aoi(
+            surface_tilt=surface_tilt.data,
+            surface_azimuth=surface_azimuth,
+            solar_zenith=solpos["apparent_zenith"],
+            solar_azimuth=solpos["azimuth"],
+        )
+
     # compute airmass data
     airmass_relative = pvlib.atmosphere.get_relative_airmass(
         solpos['apparent_zenith'].values
@@ -236,8 +304,8 @@ def solar_pv_generation(
 
     # compute irradiances
     total_irradiance = pvlib.irradiance.get_total_irradiance(
-        surface_tilt=tracking['surface_tilt'],
-        surface_azimuth=tracking['surface_azimuth'],
+        surface_tilt=surface_tilt,
+        surface_azimuth=surface_azimuth,
         dni=dni,
         ghi=ghi,
         dhi=dhi,
@@ -249,12 +317,12 @@ def solar_pv_generation(
         poa_direct=total_irradiance['poa_direct'],
         poa_diffuse=total_irradiance['poa_diffuse'],
         airmass_absolute=airmass_absolute,
-        aoi=tracking['aoi'],
+        aoi=aoi,
         module=module,
     )
 
     # compute ideal conditions
-    linke_turbidity = np.maximum(2 + 0.1 * airmass_absolute, 2.5) # simplified parameterisation from ChatGPT as pvlib function was not working with array
+    linke_turbidity = np.maximum(2 + 0.1 * airmass_absolute, 2.5)
     doy = pd.to_datetime(time).dayofyear
     dni_extra = pvlib.irradiance.get_extra_radiation(doy)
     ideal_conditions = pvlib.clearsky.ineichen(
@@ -264,8 +332,8 @@ def solar_pv_generation(
         dni_extra=dni_extra
     )
     ideal_total_irradiance = pvlib.irradiance.get_total_irradiance(
-        surface_tilt=tracking['surface_tilt'],
-        surface_azimuth=tracking['surface_azimuth'],
+        surface_tilt=surface_tilt,
+        surface_azimuth=surface_azimuth,
         dni=ideal_conditions['dni'],
         ghi=ideal_conditions['ghi'],
         dhi=ideal_conditions['dhi'],
@@ -277,14 +345,14 @@ def solar_pv_generation(
         poa_direct=ideal_total_irradiance['poa_direct'],
         poa_diffuse=ideal_total_irradiance['poa_diffuse'],
         airmass_absolute=airmass_absolute,
-        aoi=tracking['aoi'],
+        aoi=aoi,
         module=module,
     )
 
     # Compute power outputs
     dc = pvlib.pvsystem.sapm(
         effective_irradiance=effective_irradiance.values,
-        temp_cell=np.full_like(effective_irradiance, 18), # assume temperature of 18 deg C
+        temp_cell=temp,
         module=module
     )
     
@@ -297,7 +365,7 @@ def solar_pv_generation(
     # ideal power output
     dc_ideal = pvlib.pvsystem.sapm(
         effective_irradiance=ideal_effective_irradiance.values,
-        temp_cell=np.full_like(effective_irradiance, 18), # assume temperature of 18 deg C
+        temp_cell=temp, # assume temperature of 18 deg C
         module=module
     )
     ac_ideal = pvlib.inverter.sandia(
@@ -306,7 +374,7 @@ def solar_pv_generation(
         inverter=inverter
     )
     ac_ideal_QC = np.where(ac_ideal < 0, np.nan, ac_ideal)
-    if var == 'clear_sky_generation':
+    if var == 'clear_sky_index':
         return ac_QC / ac_ideal_QC
     if var == 'capacity_factor':
         return ac_QC # NEED TO ADD PROPER CF EQUATION HERE
