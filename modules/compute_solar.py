@@ -171,7 +171,7 @@ def clear_sky_performance(ds, var, tilt):
     year = pd.to_datetime(ds.isel(time=50).time.values.item()).year
     month = pd.to_datetime(ds.isel(time=50).time.values.item()).month
     era5_dirs = [Path(f"/g/data/rt52/era5/single-levels/reanalysis/2t/{year}")]
-    era5_file = [f for d in era5_dirs for f in d.glob(f"2t_era5_oper_sfc_{year}{month}*.nc")][0]
+    era5_file = [f for d in era5_dirs for f in d.glob(f"2t_era5_oper_sfc_{year}{month:02d}*.nc")][0]
     era5 = xr.open_dataset(
         era5_file,
         engine='h5netcdf'

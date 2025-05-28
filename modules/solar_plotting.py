@@ -60,38 +60,28 @@ def constant_below_threshold(da, threshold, linestyle='-', multiplot=False, save
     return results
 
 def mean_below_threshold(da, threshold, drought_lengths):
-    drought_lengths.sort(reverse=True)
-    drought_dict = {
-        'window_size (hrs)': [],
-        'DJF': [],
-        'MAM': [],
-        'JJA': [],
-        'SON': []
-    }
+    drought_lengths = sorted(drought_lengths.tolist(), reverse=True)
+
+    n_droughts = []
     
     n_years = len(np.unique(da.time.dt.year))
     counted_droughts = xr.zeros_like(da, dtype=bool)
     for time in drought_lengths:
+        time = int(time)
     
-        drought_dict['window_size (hrs)'].append(time / 6)
         rolling_mean = da.rolling(time=time, center=False).mean()
         droughts = xr.where(rolling_mean < threshold, 1, 0)
+        # only count droughts not counted in a longer period
         new_droughts = droughts & (~counted_droughts)
         # ensure droughts lasting longer than the given window are not counted multiple times
         shifted = new_droughts.shift(time=1, fill_value=0)
         drought_starts = xr.where((new_droughts == 1) & (shifted == 0), 1, 0)
-    
-        for season, group in drought_starts.groupby('time.season'):
 
-            count = group.sum().item() / n_years
-            drought_dict[season].append(count)
+        n_droughts.append(drought_starts.sum().item() / n_years)
 
         counted_droughts = counted_droughts | new_droughts
-        
-    
-    drought_df = pd.DataFrame(drought_dict)
-    drought_df.set_index('window_size (hrs)', inplace = True)
-    return drought_df
+
+    return np.divide(drought_lengths, 6), n_droughts
 
 
 
@@ -137,30 +127,6 @@ def day_time_df(da):
         values="value",
         aggfunc="mean"
     ).reindex(columns=full_times)
-
-
-def day_time_heatmap(df, vrange=(1,0)):
-    
-    plt.figure(figsize=(15, 8))
-    cmap = plt.cm.viridis
-    cmap.set_bad(color='white')
-    plt.imshow(df, aspect="auto", origin="lower", cmap=cmap, vmin=vrange[0], vmax=vrange[1])
-    
-    # Set x-axis labels (time of day)
-    xticks = np.linspace(0, len(df.columns) - 1, 12, dtype=int)  # Select 12 evenly spaced time labels
-    xtick_labels = [df.columns[i].strftime("%H:%M") for i in xticks]  # Format as HH:MM
-    plt.xticks(xticks, xtick_labels, rotation=45)
-    
-    # Y-axis (Convert Day of Year → Month-Day)
-    yticks = np.linspace(0, len(df.index) - 1, 11, dtype=int)  # Select 10 evenly spaced day labels
-    ytick_labels = [(pd.Timestamp(f"2024-01-01") + pd.Timedelta(days=int(df.index[i]) - 1)).strftime("%b %d") for i in yticks]
-    plt.yticks(yticks, ytick_labels)
-    
-    plt.xlabel("Time of Day")
-    plt.ylabel("Day of Year")
-    plt.colorbar(label="Mean Performance")
-    plt.tight_layout()
-    plt.show()
 
 def day_time_droughts(da, threshold, time):
     # threshold for counting a drought

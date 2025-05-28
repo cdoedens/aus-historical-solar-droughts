@@ -25,8 +25,6 @@ if __name__ == '__main__':
     date_range = [start_dt + timedelta(days=i) for i in range((end_dt - start_dt).days + 1)]
     
     futures = {}
-    
-    
     # Loop over the dates
     for date in date_range: 
         date_s = date.strftime('%Y/%m/%d')
