@@ -250,8 +250,8 @@ def solar_pv_generation(
     '''
     Other than pv and inverter models, all other arguments must be a flat 1D array of equal size
     '''
-    if var not in ['clear_sky_index', 'capacity_factor']:
-        LOG.info(f'Unrecognised var: {var}. Var must be "clear_sky_index" or "capacity_factor"')
+    if var not in ['ideal', 'actual']:
+        LOG.info(f'Unrecognised var: {var}. Var must be "ideal" or "actual"')
         return 'WRONG VAR'
 
     if tilt not in ['fixed', 'single_axis']:
@@ -374,8 +374,8 @@ def solar_pv_generation(
         inverter=inverter
     )
     ac_ideal_QC = np.where(ac_ideal < 0, np.nan, ac_ideal)
-    if var == 'clear_sky_index':
-        return ac_QC / ac_ideal_QC
-    if var == 'capacity_factor':
-        return ac_QC # NEED TO ADD PROPER CF EQUATION HERE
+    if var == 'ideal':
+        return ac_ideal_QC
+    if var == 'actual':
+        return ac_QC 
         

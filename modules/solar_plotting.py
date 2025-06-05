@@ -10,7 +10,9 @@ from scipy.signal import convolve
 
 
 def clip_dusk_dawn(da, n=1):
-    """Set the first and last `n` non-NaN values of each day in a 1D time series to NaN."""
+    """
+    Set the first and last `n` non-NaN values of each day in a 1D time series to NaN.
+    """
     da_out = da.copy()
     grouped = da.groupby('time.date')
 
