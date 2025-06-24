@@ -29,10 +29,10 @@ SOLAR_WORKFLOW
 '''
 
 
-def solar_workflow(date, region, var, tilt):
+def solar_workflow(date, region, tilt):
     ds = read_data(date, region)
-    solar = clear_sky_performance(ds, var, tilt)
-    save_timeseries(solar, date, region, var)
+    solar = clear_sky_performance(ds, tilt)
+    save_timeseries(solar, date, region)
     del ds, solar
     LOG.info('END OF SOLAR_WORKFLOW')
     return
@@ -142,7 +142,7 @@ def get_region(region):
         LOG.info(f'unsuported region type "{region_type}" supplied')
         return
 
-def clear_sky_performance(ds, var, tilt):
+def clear_sky_performance(ds, tilt):
 
     LOG.info('reading dataset variables')
     ghi = ds.surface_global_irradiance.values.ravel()
@@ -166,6 +166,7 @@ def clear_sky_performance(ds, var, tilt):
     lon_1d_expanded_clean = lon_1d_expanded[~nan_mask]
     time_1d_clean = time_1d[~nan_mask]
 
+    '''
     # ERA5 temperature data
     LOG.info('getting ERA5 temperature')
     year = pd.to_datetime(ds.isel(time=50).time.values.item()).year
@@ -190,9 +191,39 @@ def clear_sky_performance(ds, var, tilt):
         method="nearest"
     )
     temp_clean = temp_era5.values - 273.15
+    '''
+
+    # BARRA-R2 temperature data
+    LOG.info('getting BARRA-R2 temperature')
+    year = pd.to_datetime(ds.isel(time=50).time.values.item()).year
+    month = pd.to_datetime(ds.isel(time=50).time.values.item()).month
+    # barra_dirs = Path(f"/g/data/ob53/BARRA2/output/reanalysis/AUS-11/BOM/ERA5/historical/hres/BARRA-R2/v1/1hr/tas/latest")
+    # barra_file = next(barra_dir.glob(f"*{year}{month:02d}*.nc"))
+
+    barra_file = f'/g/data/ob53/BARRA2/output/reanalysis/AUS-11/BOM/ERA5/historical/hres/BARRA-R2/v1/1hr/tas/latest/tas_AUS-11_ERA5_historical_hres_BOM_BARRA-R2_v1_1hr_{year}{month:02d}-{year}{month:02d}.nc'
+    barra = xr.open_dataset(
+        barra_file,
+        engine='h5netcdf'
+    )
+    points = xr.Dataset(
+        {
+            "latitude": ("points", lat_1d_expanded_clean),
+            "longitude": ("points", lon_1d_expanded_clean),
+            "time": ("points", time_1d_clean),
+        }
+    )
+    temp_barra = barra["tas"].sel(
+        lat=points["latitude"],
+        lon=points["longitude"],
+        time=points["time"],
+        method="nearest"
+    )
+    temp_clean = temp_barra.values - 273.15
+
 
     # calculate capacity factors using pvlib
     LOG.info(f'running pvlib functions')
+    '''
     solar_output = solar_pv_generation(
         pv_model = 'Canadian_Solar_CS5P_220M___2009_',
         inverter_model = 'ABB__MICRO_0_25_I_OUTD_US_208__208V_',
@@ -203,7 +234,6 @@ def clear_sky_performance(ds, var, tilt):
         lat=lat_1d_expanded_clean,
         lon=lon_1d_expanded_clean,
         temp=temp_clean,
-        var=var,
         tilt=tilt
     )
     
@@ -214,23 +244,58 @@ def clear_sky_performance(ds, var, tilt):
     reshaped = filled.reshape(mask_template.shape)
     
     return xr.DataArray(reshaped, coords=mask_template.coords, dims=mask_template.dims)
+    '''
+    actual, ideal = solar_pv_generation(
+        pv_model = 'Canadian_Solar_CS5P_220M___2009_',
+        inverter_model = 'ABB__MICRO_0_25_I_OUTD_US_208__208V_',
+        ghi=ghi_clean,
+        dni=dni_clean,
+        dhi=dhi_clean,
+        time=time_1d_clean,
+        lat=lat_1d_expanded_clean,
+        lon=lon_1d_expanded_clean,
+        temp=temp_clean,
+        tilt=tilt
+    )
+
+    mask_template = ds.surface_global_irradiance
+    actual_filled = np.empty_like(ghi)
+    ideal_filled = np.empty_like(ghi)
+
+    actual_filled[nan_mask] = np.nan
+    actual_filled[~nan_mask] = actual
+
+    ideal_filled[nan_mask] = np.nan
+    ideal_filled[~nan_mask] = ideal
+
+    actual_reshaped = actual_filled.reshape(mask_template.shape)
+    ideal_reshaped = ideal_filled.reshape(mask_template.shape)
+    
+    return xr.Dataset(
+        data_vars={
+            "actual": (mask_template.dims, actual_reshaped),
+            "ideal": (mask_template.dims, ideal_reshaped)
+        },
+        coords=mask_template.coords,
+        )
+
 
     
-def save_timeseries(da, date, region, var):
+def save_timeseries(ds, date, region):
 
     region_type, region_name = region.split('_')
 
-    nem_timeseries = da.mean(dim=["latitude", "longitude"], skipna=True)
+    timeseries = ds.mean(dim=["latitude", "longitude"], skipna=True)
     year=date[:4]
     month=date[5:7]
     day=date[8:10]
 
-    file_name = f'{region_name}_timeseries_{year}-{month}-{day}.nc'
-    file_path = f'/g/data/er8/users/cd3022/solar_drought/{region_type}/{var}/{region_name}/{year}/{month}/'
+    file_name = f'{region_name}_solar-pv_{year}-{month}-{day}.nc'
+    file_path = f'/g/data/er8/users/cd3022/solar_drought/{region_type}/{region_name}/{year}/{month}/'
     
     os.makedirs(file_path, exist_ok=True)
     LOG.info(f'Writing data to: {file_path}/{file_name}')
-    nem_timeseries.to_netcdf(f'{file_path}/{file_name}')
+    timeseries.to_netcdf(f'{file_path}/{file_name}')
     return
 
 
@@ -244,19 +309,14 @@ def solar_pv_generation(
     ghi,
     dhi,
     temp,
-    var,
     tilt
 ):
     '''
     Other than pv and inverter models, all other arguments must be a flat 1D array of equal size
     '''
-    if var not in ['ideal', 'actual']:
-        LOG.info(f'Unrecognised var: {var}. Var must be "ideal" or "actual"')
-        return 'WRONG VAR'
 
     if tilt not in ['fixed', 'single_axis']:
-        LOG.info(f'Unrecognised panel tilt: {tilt}. Tilt must be "fixed" or "single_axis"')
-        return 'WRONG TILT'
+        raise ValueError(f'Unrecognised tilt: {tilt}. tilt must be "fixed" or "single_axis"')
     
     # get the module and inverter specifications from SAM
     sandia_modules = pvlib.pvsystem.retrieve_sam('SandiaMod')
@@ -362,6 +422,7 @@ def solar_pv_generation(
         inverter=inverter
     )
     ac_QC = np.where(ac < 0, np.nan, ac)
+    
     # ideal power output
     dc_ideal = pvlib.pvsystem.sapm(
         effective_irradiance=ideal_effective_irradiance.values,
@@ -374,8 +435,5 @@ def solar_pv_generation(
         inverter=inverter
     )
     ac_ideal_QC = np.where(ac_ideal < 0, np.nan, ac_ideal)
-    if var == 'ideal':
-        return ac_ideal_QC
-    if var == 'actual':
-        return ac_QC 
-        
+
+    return ac_QC, ac_ideal_QC
