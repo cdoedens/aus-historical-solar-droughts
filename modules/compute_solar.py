@@ -30,6 +30,7 @@ SOLAR_WORKFLOW
 
 
 def solar_workflow(date, region, tilt):
+    LOG.info(f'START SOLAR_WORKFLOW with: date = {date}, region = {region}, tilt = {tilt}')
     ds = read_data(date, region)
     solar = clear_sky_performance(ds, tilt)
     save_timeseries(solar, date, region)
@@ -123,10 +124,10 @@ def get_region(region):
             'S10 South East SA Coast'
         ]
         
-        gdf = gdf[~gdf["Name"].isin(zones_to_ignore)]
+        gdf_solar = gdf[~gdf["Name"].isin(zones_to_ignore)]
     
         if region_name.upper() == 'ALL':
-            return gdf
+            return gdf_solar
         else:
             return gdf[gdf["Name"].str.startswith(region_name)]
     # GET CITY REGION GOES HERE
@@ -205,6 +206,7 @@ def clear_sky_performance(ds, tilt):
         barra_file,
         engine='h5netcdf'
     )
+    LOG.info('BARRA file opened')
     points = xr.Dataset(
         {
             "latitude": ("points", lat_1d_expanded_clean),
