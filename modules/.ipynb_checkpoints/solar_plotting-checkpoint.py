@@ -87,20 +87,20 @@ def mean_below_threshold(da, threshold, drought_lengths):
 
 
 
-def daily_drought(da, rolling_threshold, day_threshold, window):
-    da_rolling = da.rolling(time=window, center=False).mean()
-    rolling_droughts = xr.where(da_rolling < rolling_threshold, 1, 0)
-    day_droughts_rolling = rolling_droughts.resample(time='1D').max()
+def daily_drought(da, threshold):
+    da_f = da.copy()
+    
+    # So days of different lengths have comparable daily mean
+    da_f = xr.where(da_f.isnull(), 0, da_f)
 
-    day_means = da.resample(time='1D').mean()
-    day_droughts_mean = xr.where(day_means < day_threshold, 1, 0)
+    day_means = da_f.resample(time='1D').mean()
+    day_droughts = xr.where(day_means < threshold, 1, 0).values
 
-    droughts_total = xr.where((day_droughts_rolling + day_droughts_mean) >= 1, 1, 0).values
-
-    drought_lengths = [droughts_total[0]]
-    for i_time in range(1, len(droughts_total)):
-        drought_past = droughts_total[i_time - 1]
-        drought_now = droughts_total[i_time]
+    # count the consecutive drought days
+    drought_lengths = [day_droughts[0]]
+    for i_time in range(1, len(day_droughts)):
+        drought_past = day_droughts[i_time - 1]
+        drought_now = day_droughts[i_time]
         if (drought_now != 0) and (drought_past != 0):
             drought_now += drought_lengths[i_time - 1]
         drought_lengths.append(drought_now)
@@ -109,6 +109,41 @@ def daily_drought(da, rolling_threshold, day_threshold, window):
     duration = duration[1:]
     freq = freq[1:] / len(np.unique(da.time.dt.year))
     return duration, freq
+
+#####################################
+def daily_mbt(da, threshold):
+    '''
+    da should be xarray.dataarray with daily resolution
+    threshold should be a numeric value
+    '''
+
+    # Durations of time to find droughts
+    drought_lengths = sorted(np.linspace(1,20,20), reverse=True)
+    
+    n_years = len(np.unique(da.time.dt.year))
+    counted_droughts = xr.zeros_like(da, dtype=bool)
+    n_droughts = []
+    for time in drought_lengths:
+        time = int(time)
+    
+        rolling_mean = da.rolling(time=time, center=False).mean()
+        droughts = xr.where(rolling_mean < threshold, 1, 0)
+        # only count droughts not counted in a longer period
+        new_droughts = droughts & (~counted_droughts)
+        
+        # # ensure droughts lasting longer than the given window are not counted multiple times
+        # shifted = new_droughts.shift(time=1, fill_value=0)
+        # drought_starts = xr.where((new_droughts == 1) & (shifted == 0), 1, 0)
+
+        # n_droughts.append(drought_starts.sum().item() / n_years)
+
+        n_droughts.append(new_droughts.sum().item() / n_years)
+
+        counted_droughts = counted_droughts | new_droughts
+    return drought_lengths, n_droughts
+################################
+    
+    
 
 
 def day_time_df(da):
