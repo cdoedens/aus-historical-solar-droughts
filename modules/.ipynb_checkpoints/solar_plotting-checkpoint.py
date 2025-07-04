@@ -113,33 +113,37 @@ def daily_drought(da, threshold):
 #####################################
 def daily_mbt(da, threshold):
     '''
-    da should be xarray.dataarray with daily resolution
-    threshold should be a numeric value
+    da: xarray.DataArray with daily resolution and a time dimension
+    threshold: drought threshold (e.g., temperature, precipitation)
     '''
-
-    # Durations of time to find droughts
-    drought_lengths = sorted(np.linspace(1,20,20), reverse=True)
-    
+    drought_lengths = sorted(np.linspace(1, 20, 20), reverse=True)
     n_years = len(np.unique(da.time.dt.year))
     counted_droughts = xr.zeros_like(da, dtype=bool)
     n_droughts = []
-    for time in drought_lengths:
-        time = int(time)
-    
-        rolling_mean = da.rolling(time=time, center=False).mean()
-        droughts = xr.where(rolling_mean < threshold, 1, 0)
-        # only count droughts not counted in a longer period
-        new_droughts = droughts & (~counted_droughts)
-        
-        # # ensure droughts lasting longer than the given window are not counted multiple times
-        # shifted = new_droughts.shift(time=1, fill_value=0)
-        # drought_starts = xr.where((new_droughts == 1) & (shifted == 0), 1, 0)
 
-        # n_droughts.append(drought_starts.sum().item() / n_years)
+    for window in drought_lengths:
+        window = int(window)
 
-        n_droughts.append(new_droughts.sum().item() / n_years)
+        # Step 1: compute rolling mean and detect droughts
+        rolling_mean = da.rolling(time=window, center=True).mean()
+        drought_flags = (rolling_mean < threshold)
 
-        counted_droughts = counted_droughts | new_droughts
+        # Step 2: exclude previously counted periods
+        drought_flags = drought_flags & (~counted_droughts)
+
+        # Step 3: identify drought starts
+        drought_starts = drought_flags & (~drought_flags.shift(time=1, fill_value=False))
+
+        # Step 4: count starts
+        n_droughts.append(drought_starts.sum().item() / n_years)
+
+        # Step 5: mask entire window around drought starts using rolling max
+        # This expands start points to full-length droughts
+        full_drought_mask = drought_starts.rolling(time=window, center=True, min_periods=1).max().astype(bool)
+
+        # Step 6: update counted mask
+        counted_droughts = counted_droughts | full_drought_mask
+
     return drought_lengths, n_droughts
 ################################
     
