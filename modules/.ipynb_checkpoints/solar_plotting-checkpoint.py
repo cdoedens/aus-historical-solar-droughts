@@ -2,10 +2,6 @@ import xarray as xr
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-
-from spectrum import pmtm
-import pywt
-from scipy.signal import welch
 from scipy.signal import convolve
 
 
@@ -116,7 +112,7 @@ def daily_mbt(da, threshold):
     da: xarray.DataArray with daily resolution and a time dimension
     threshold: drought threshold (e.g., temperature, precipitation)
     '''
-    drought_lengths = sorted(np.linspace(1, 20, 20), reverse=True)
+    drought_lengths = sorted(np.linspace(1, 10, 10), reverse=True)
     n_years = len(np.unique(da.time.dt.year))
     counted_droughts = xr.zeros_like(da, dtype=bool)
     n_droughts = []
@@ -143,6 +139,33 @@ def daily_mbt(da, threshold):
 
         # Step 6: update counted mask
         counted_droughts = counted_droughts | full_drought_mask
+
+    return drought_lengths, n_droughts
+################################
+
+
+#####################################
+def daily_mbt_cumulative(da, threshold):
+    '''
+    da: xarray.DataArray with daily resolution and a time dimension
+    threshold: drought threshold (e.g., temperature, precipitation)
+    '''
+    drought_lengths = sorted(np.linspace(1, 10, 10), reverse=True)
+    n_years = len(np.unique(da.time.dt.year))
+    n_droughts = []
+
+    for window in drought_lengths:
+        window = int(window)
+
+        # compute rolling mean and detect droughts
+        rolling_mean = da.rolling(time=window, center=True).mean()
+        drought_flags = (rolling_mean < threshold)
+
+        # identify drought starts
+        drought_starts = drought_flags & (~drought_flags.shift(time=1, fill_value=False))
+
+        # Step 4: count starts
+        n_droughts.append(drought_starts.sum().item() / n_years)
 
     return drought_lengths, n_droughts
 ################################
@@ -274,72 +297,3 @@ def day_year_df(da, aggfunc='mean'):
         values="value",
         aggfunc=aggfunc
     ).reindex(columns=years)
-
-
-def spectral_fft(da, time_res=False, clim=False):
-    if time_res:
-        da = da.resample(time=time_res).mean()
-    if clim:
-        climatology = da.groupby("time.dayofyear").mean("time")
-        da = da.groupby("time.dayofyear") - climatology
-    clean = da.dropna(dim="time")
-    data = (clean - clean.mean(dim='time')).values
-
-    N = len(data)
-    fft_vals = np.fft.fft(data)
-    freqs = np.fft.fftfreq(N, d=1)
-    
-    positive = freqs > 0
-    freqs_pos = freqs[positive]
-    power = np.abs(fft_vals[positive])**2 / N**2
-
-    # Normalize to match variance via Parseval
-    delta_f = freqs_pos[1] - freqs_pos[0]
-    power *= np.var(data) / (np.sum(power) * delta_f)
-
-    periods = 1 / freqs_pos
-    return periods, power
-
-def spectral_multitaper(da, NW=3, k=5, time_res=False, clim=False):
-    if time_res:
-        da = da.resample(time=time_res).mean()
-    if clim:
-        climatology = da.groupby("time.dayofyear").mean("time")
-        da = da.groupby("time.dayofyear") - climatology
-    da = da.dropna(dim="time")
-    signal = (da - da.mean(dim="time")).values
-
-    Sk, weights, _ = pmtm(signal, NW=NW, k=k, method='adapt', show=False)
-    weights = weights.T  # Ensure correct shape
-    power = (np.abs(Sk)**2 * weights).mean(axis=0)
-
-    freqs = np.linspace(0, 1, len(power), endpoint=False)  # cycles/day
-    delta_f = freqs[1] - freqs[0]
-
-    # Normalize using Parseval
-    power *= np.var(signal) / (np.sum(power) * delta_f)
-
-    periods = 1 / freqs[1:]
-    power = power[1:]
-    return periods, power
-
-def spectral_welch(da, nperseg=2048, time_res=False, clim=False):
-    if time_res:
-        da = da.resample(time=time_res).mean()
-    if clim:
-        climatology = da.groupby("time.dayofyear").mean("time")
-        da = da.groupby("time.dayofyear") - climatology
-    clean = da.dropna(dim="time")
-    signal = (clean - clean.mean(dim="time")).values
-
-    fs = 1  # cycles/day
-    freqs, pxx = welch(signal, fs=fs, nperseg=min(nperseg, len(signal)))
-
-    # Normalize using Parseval
-    delta_f = freqs[1] - freqs[0]
-    pxx *= np.var(signal) / (np.sum(pxx) * delta_f)
-
-    valid = freqs > 0
-    periods = 1 / freqs[valid]
-    power = pxx[valid]
-    return periods, power 
