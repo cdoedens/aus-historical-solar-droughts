@@ -94,10 +94,7 @@ def get_files(date, version):
     return sorted(str(p) for p in directory.rglob("*.nc"))
     
 def get_region(region):
-    ########################
-    # UPDATING FUNCTION TO WORK WITH OTHER SHAPEFILES
-    ########################
-
+    # REGION SHOULD BE STRING WITH FORMAT "<TYPE>_<NAME>"
     region_type, region_name = region.split('_')
     LOG.info(f'getting region shape for: {region_type}, {region_name}')
     if region_type == 'REZ':
@@ -130,7 +127,7 @@ def get_region(region):
             return gdf_solar
         else:
             return gdf[gdf["Name"].str.startswith(region_name)]
-    # GET CITY REGION GOES HERE
+    
     if region_type == 'GCCSA':
         shapefile = '/home/548/cd3022/aus-historical-solar-droughts/data/boundary_files/GCCSA/GCCSA_2021_AUST_GDA2020.shp'
         gdf = gpd.read_file(shapefile)
@@ -167,39 +164,10 @@ def clear_sky_performance(ds, tilt):
     lon_1d_expanded_clean = lon_1d_expanded[~nan_mask]
     time_1d_clean = time_1d[~nan_mask]
 
-    '''
-    # ERA5 temperature data
-    LOG.info('getting ERA5 temperature')
-    year = pd.to_datetime(ds.isel(time=50).time.values.item()).year
-    month = pd.to_datetime(ds.isel(time=50).time.values.item()).month
-    era5_dirs = [Path(f"/g/data/rt52/era5/single-levels/reanalysis/2t/{year}")]
-    era5_file = [f for d in era5_dirs for f in d.glob(f"2t_era5_oper_sfc_{year}{month:02d}*.nc")][0]
-    era5 = xr.open_dataset(
-        era5_file,
-        engine='h5netcdf'
-    )
-    points = xr.Dataset(
-        {
-            "latitude": ("points", lat_1d_expanded_clean),
-            "longitude": ("points", lon_1d_expanded_clean),
-            "time": ("points", time_1d_clean),
-        }
-    )
-    temp_era5 = era5["t2m"].sel(
-        latitude=points["latitude"],
-        longitude=points["longitude"],
-        time=points["time"],
-        method="nearest"
-    )
-    temp_clean = temp_era5.values - 273.15
-    '''
-
     # BARRA-R2 temperature data
     LOG.info('getting BARRA-R2 temperature')
     year = pd.to_datetime(ds.isel(time=50).time.values.item()).year
     month = pd.to_datetime(ds.isel(time=50).time.values.item()).month
-    # barra_dirs = Path(f"/g/data/ob53/BARRA2/output/reanalysis/AUS-11/BOM/ERA5/historical/hres/BARRA-R2/v1/1hr/tas/latest")
-    # barra_file = next(barra_dir.glob(f"*{year}{month:02d}*.nc"))
 
     barra_file = f'/g/data/ob53/BARRA2/output/reanalysis/AUS-11/BOM/ERA5/historical/hres/BARRA-R2/v1/1hr/tas/latest/tas_AUS-11_ERA5_historical_hres_BOM_BARRA-R2_v1_1hr_{year}{month:02d}-{year}{month:02d}.nc'
     barra = xr.open_dataset(
@@ -225,28 +193,6 @@ def clear_sky_performance(ds, tilt):
 
     # calculate capacity factors using pvlib
     LOG.info(f'running pvlib functions')
-    '''
-    solar_output = solar_pv_generation(
-        pv_model = 'Canadian_Solar_CS5P_220M___2009_',
-        inverter_model = 'ABB__MICRO_0_25_I_OUTD_US_208__208V_',
-        ghi=ghi_clean,
-        dni=dni_clean,
-        dhi=dhi_clean,
-        time=time_1d_clean,
-        lat=lat_1d_expanded_clean,
-        lon=lon_1d_expanded_clean,
-        temp=temp_clean,
-        tilt=tilt
-    )
-    
-    mask_template = ds.surface_global_irradiance
-    filled = np.empty_like(ghi)
-    filled[nan_mask] = np.nan
-    filled[~nan_mask] = solar_output
-    reshaped = filled.reshape(mask_template.shape)
-    
-    return xr.DataArray(reshaped, coords=mask_template.coords, dims=mask_template.dims)
-    '''
     actual, ideal = solar_pv_generation(
         pv_model = 'Canadian_Solar_CS5P_220M___2009_',
         inverter_model = 'ABB__MICRO_0_25_I_OUTD_US_208__208V_',
