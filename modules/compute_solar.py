@@ -11,7 +11,9 @@ import odc.geo.xr
 from datetime import datetime
 from pathlib import Path
 from glob import glob
-import dask.array as da
+import shutil
+from pathlib import Path
+# import dask.array as da
 
 LOG = logger.get_logger(__name__)
 
@@ -71,6 +73,8 @@ def read_data(date, region):
         preprocess=_preprocess,
         combine='by_coords',
         engine="h5netcdf",
+        data_vars="minimal",
+        coords="minimal",
     )
     ds = ds.chunk({'time':5, 'latitude':chunk_size, 'longitude':chunk_size})
 
@@ -100,7 +104,7 @@ def get_region(region):
     if region_type == 'REZ':
         # UPDATE
         # REGION SHOULD BE STRING WITH FORMAT "<TYPE>_<NAME>"
-        shapefile = '/home/548/cd3022/aus-historical-solar-droughts/data/boundary_files/REZ-boundaries.shx'
+        shapefile = '/g/data/er8/users/cd3022/data/boundary_files/REZ-boundaries.shx'
         gdf = gpd.read_file(shapefile)
         
         zones_to_ignore = [ # no solar in these zones
@@ -129,7 +133,7 @@ def get_region(region):
             return gdf[gdf["Name"].str.startswith(region_name)]
     
     if region_type == 'GCCSA':
-        shapefile = '/home/548/cd3022/aus-historical-solar-droughts/data/boundary_files/GCCSA/GCCSA_2021_AUST_GDA2020.shp'
+        shapefile = '/g/data/er8/users/cd3022/data/boundary_files/GCCSA/GCCSA_2021_AUST_GDA2020.shp'
         gdf = gpd.read_file(shapefile)
         if region_name.upper() == 'ALL':
             return gdf
