@@ -16,7 +16,6 @@ if __name__ == "__main__":
     end_dt   = datetime.strptime(end_date, "%d-%m-%Y")
     date_range = [start_dt + timedelta(days=i) for i in range((end_dt - start_dt).days + 1)]
 
-    # Keep it <= PBS ncpus; or set from env: int(os.environ.get("PBS_NCPUS", 1))
     max_workers = int(os.environ.get("PBS_NCPUS", "1"))
 
     with concurrent.futures.ProcessPoolExecutor(max_workers=max_workers) as pool:

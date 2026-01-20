@@ -288,7 +288,7 @@ def solar_pv_generation(
         # get panel/solar angles for a tilting panel system
         tracking = pvlib.tracking.singleaxis(
             apparent_zenith=solpos["apparent_zenith"],
-            apparent_azimuth=solpos["azimuth"]
+            solar_azimuth=solpos["azimuth"]
         )
         surface_tilt = tracking['surface_tilt']
         surface_azimuth = tracking['surface_azimuth']
