@@ -135,6 +135,7 @@ def get_region(region):
     if region_type == 'GCCSA':
         shapefile = '/g/data/er8/users/cd3022/data/boundary_files/GCCSA/GCCSA_2021_AUST_GDA2020.shp'
         gdf = gpd.read_file(shapefile)
+        gdf = gdf.to_crs("EPSG:4326")
         if region_name.upper() == 'ALL':
             return gdf
         else:
